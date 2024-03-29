@@ -100,7 +100,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
+                <!-- This check box will only be able to be functional
+                     with database -->
                 <CheckBox
+                    android:id="@+id/checkBoxRememberMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -109,6 +112,7 @@
                     android:text="@string/remember" />
 
                 <TextView
+                    android:id="@+id/textViewForgotPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

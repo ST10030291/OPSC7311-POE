@@ -1,26 +1,59 @@
 package com.example.time_compassopsc7311_part1
 
+import UserData
+import UserDetails
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
+
+    private val userList = mutableListOf<UserDetails>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.openLoginActivity.setOnClickListener(this)
+        binding.buttonCreateAccount.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v?.id) {
+            // Opens Login Screen
             R.id.openLoginActivity -> {
-                // Opens Login Activity
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+            }
+            // Creates and saves a new user to a list
+            // This will be saved to the firebase database in the next part
+            R.id.buttonCreateAccount -> {
+                val editTextEmail = findViewById<EditText>(R.id.editTextEmailSignUp)
+                val editTextPassword = findViewById<EditText>(R.id.editTextPasswordSignUp)
+                val editTextUsername = findViewById<EditText>(R.id.editTextUsernameSignUp)
+
+                val enteredEmail = editTextEmail.text.toString()
+                val enteredPassword = editTextPassword.text.toString()
+                val enteredUsername = editTextUsername.text.toString()
+
+                val user = UserData.users.find { it.email == enteredEmail }
+
+                if(enteredEmail.isEmpty() || enteredPassword.isEmpty() || enteredUsername.isEmpty()){
+                    Toast.makeText(this, "Enter required details", Toast.LENGTH_SHORT).show()
+                }
+                if (user != null){
+                    Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername)
+                    UserData.users.add(newUser)
+                    Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
