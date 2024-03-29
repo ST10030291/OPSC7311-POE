@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.loginUser -> {
-                // Get email and password from EditText fields
+                // Get email and password
                 val editTextEmail = findViewById<EditText>(R.id.editTextEmailLogin)
                 val editTextPassword = findViewById<EditText>(R.id.editTextPasswordLogin)
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 if (isCredentialsValid) {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                     // Proceed to the next screen or perform desired action
+                     // Proceed to the Home Screen
                 } else {
                     Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show()
                 }
