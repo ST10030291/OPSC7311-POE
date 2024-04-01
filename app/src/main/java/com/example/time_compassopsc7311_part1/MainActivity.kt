@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                      // Proceed to the Home Screen
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show()
                 }

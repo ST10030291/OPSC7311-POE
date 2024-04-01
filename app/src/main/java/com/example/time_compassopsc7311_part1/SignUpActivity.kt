@@ -57,6 +57,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     //Proceed to Home Screen
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
