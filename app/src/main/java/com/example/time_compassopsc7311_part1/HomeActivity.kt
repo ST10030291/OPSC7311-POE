@@ -23,7 +23,6 @@ class HomeActivity : AppCompatActivity() {
             showPopupTray()
         }
 
-        // Set listener for bottom navigation item selection
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.profile_icon -> {

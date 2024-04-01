@@ -37,6 +37,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                 val editTextPassword = findViewById<EditText>(R.id.editTextPasswordSignUp)
                 val editTextUsername = findViewById<EditText>(R.id.editTextUsernameSignUp)
 
+                // RE for Email Auth
+                val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+
                 val enteredEmail = editTextEmail.text.toString()
                 val enteredPassword = editTextPassword.text.toString()
                 val enteredUsername = editTextUsername.text.toString()
@@ -45,8 +48,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
                 if(enteredEmail.isEmpty() || enteredPassword.isEmpty() || enteredUsername.isEmpty()){
                     Toast.makeText(this, "Enter required details", Toast.LENGTH_SHORT).show()
-                }
-                if (user != null){
+                } else if (!enteredEmail.matches(emailPattern.toRegex())) {
+                    Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show()
+                } else if (user != null){
                     Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
                 }
                 else {
