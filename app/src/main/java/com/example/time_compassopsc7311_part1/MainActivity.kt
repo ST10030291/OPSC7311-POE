@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (isCredentialsValid) {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                      // Proceed to the Home Screen
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                 } else {
                     Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show()
                 }

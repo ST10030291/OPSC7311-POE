@@ -53,6 +53,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername)
                     UserData.users.add(newUser)
                     Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
+
+                    //Proceed to Home Screen
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
