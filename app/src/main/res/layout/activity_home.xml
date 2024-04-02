@@ -26,6 +26,31 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-15dp"
         android:importantForAccessibility="no"
-
         android:src="@drawable/plus_icon" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:background="@color/dark_background"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="112dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="-20dp"
+            android:background="@color/dark_background"
+            android:src="@drawable/time_compass_icon" />
+
+        <TextView
+            android:layout_width="218dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/HomePage"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 </RelativeLayout>

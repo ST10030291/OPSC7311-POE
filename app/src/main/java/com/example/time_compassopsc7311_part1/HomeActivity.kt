@@ -3,10 +3,12 @@ package com.example.time_compassopsc7311_part1
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -19,9 +21,7 @@ class HomeActivity : AppCompatActivity() {
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray
 
-        fabPopupTray.setOnClickListener {
-            showPopupTray()
-        }
+        fabPopupTray.setOnClickListener(this)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -54,11 +54,20 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPopupTray() {
-
-    }
-
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    override fun onClick(v: View?) {
+        v?.let {
+            when (it.id) {
+                R.id.fabPopupTray -> {
+                    val popUpMenu = PopupMenu(this@HomeActivity, v)
+                    popUpMenu.inflate(R.menu.popup_menu)
+                    popUpMenu.show()
+                }
+            }
+        }
+    }
 }
+
