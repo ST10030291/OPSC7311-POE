@@ -1,29 +1,19 @@
 package com.example.time_compassopsc7311_part1
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.PopupMenu
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity(), View.OnClickListener {
-
+class TaskActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityHomeBinding
-    lateinit var addTaskButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        addTaskButton = findViewById(R.id.addTask)
-
-        addTaskButton.setOnClickListener {
-            val intent = Intent(this, TaskActivity::class.java)
-            startActivity(intent)
-        }
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
@@ -62,15 +52,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
     override fun onClick(v: View?) {
         v?.let {
             when (it.id) {
                 R.id.fabPopupTray -> {
-                    val popUpMenu = PopupMenu(this@HomeActivity, v)
+                    val popUpMenu = PopupMenu(this@TaskActivity, v)
                     popUpMenu.inflate(R.menu.popup_menu)
                     popUpMenu.show()
                 }
@@ -78,4 +64,3 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 }
-

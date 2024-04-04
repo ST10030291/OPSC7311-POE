@@ -5,23 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_background"
-    tools:context=".HomeActivity">
+    tools:context=".TaskActivity">
 
     <!-- Bottom Navigation View -->
-
-    <!-- Floating Action Button -->
-
-    <Button
-        android:id="@+id/addTask"
-        android:layout_width="165dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="93dp"
-        android:backgroundTint="@color/blue"
-        android:text="Add Task"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -33,20 +19,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
+
+    <!-- Bottom Navigation View -->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPopupTray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomNavigationView"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="176dp"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="177dp"
+        tools:layout_editor_absoluteY="536dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/dark_background"
@@ -67,10 +55,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:fontFamily="sans-serif"
-            android:text="@string/HomePage"
+            android:paddingLeft="0dp"
+            android:text="Tasks Available"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
