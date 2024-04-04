@@ -20,4 +20,14 @@
     <string name="HomePage">Home</string>
     <string name="add_category">Add Category</string>
     <string name="add_task">Add Task</string>
+    <string name="continue_">Continue</string>
+    <string name="time_remaining">Time Remaining</string>
+    <string name="time">Time</string>
+    <string name="task_name">Task Name</string>
+    <string name="description">Description</string>
+    <string name="current_task">Current Task</string>
+    <string name="tasks_available">Tasks Available</string>
+    <string name="gain_points">Gain Points</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="date">Date</string>
 </resources>

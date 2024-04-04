@@ -8,31 +8,34 @@
     tools:context=".HomeActivity">
 
     <!-- Bottom Navigation View -->
+
+    <!-- Floating Action Button -->
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation_menu"
         android:background="@color/light_background"
-        app:itemTextColor="@color/grey"/>
+        app:itemTextColor="@color/grey"
+        app:menu="@menu/bottom_navigation_menu" />
 
-    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPopupTray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomNavigationView"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-15dp"
+        android:layout_marginStart="176dp"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon" />
-    
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:orientation="horizontal"
         android:background="@color/dark_background"
+        android:orientation="horizontal"
         android:padding="5dp">
 
         <ImageView
