@@ -30,4 +30,9 @@
     <string name="gain_points">Gain Points</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="date">Date</string>
+    <string-array name="categories">
+        <item>PROG</item>
+        <item>CLDV</item>
+        <item>SAND</item>
+    </string-array>
 </resources>

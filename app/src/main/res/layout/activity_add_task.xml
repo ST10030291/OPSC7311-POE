@@ -14,89 +14,82 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/infolayout"
         android:layout_width="321dp"
-        android:layout_height="450dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="590dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="110dp"
         android:background="@drawable/rounded_corners">
 
-        <!--still fixing this
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="89dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="116dp"
-            android:src="@tools:sample/avatars"
+            android:layout_width="115dp"
+            android:layout_height="94dp"
+            android:layout_marginStart="103dp"
+            android:layout_marginTop="11dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/galleryButton" />
+
+        <Button
+            android:id="@+id/galleryButton"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/dark_grey"
+            android:text="Gallery"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descrptionText"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/cameraButton"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/dark_grey"
+            android:text="Camera"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText3"
-            tools:srcCompat="@drawable/time_compass_icon" /> -->
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="256dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/inputbox"
-            android:paddingLeft="15dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
+            app:layout_constraintTop_toBottomOf="@+id/descrptionText"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp" />
 
         <EditText
-            android:id="@+id/editTextTime"
-            android:layout_width="112dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/inputbox"
-            android:ems="10"
-            android:inputType="time"
-            android:paddingLeft="15dp"
-            android:text="@string/time"
-            app:layout_constraintStart_toEndOf="@+id/editTextDate"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
-
-        <EditText
-            android:id="@+id/descriptionbox"
+            android:id="@+id/descrptionText"
             android:layout_width="256dp"
-            android:layout_height="65dp"
+            android:layout_height="80dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="7dp"
             android:background="@drawable/inputbox"
             android:ems="10"
+            android:hint="Description"
             android:inputType="text"
-            android:paddingLeft="15dp"
-            android:text="@string/description"
+            android:paddingLeft="24dp"
+            android:textColorHint="@color/black"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/startText" />
 
         <EditText
-            android:id="@+id/editTextDate"
+            android:id="@+id/startText"
             android:layout_width="112dp"
-            android:layout_height="47dp"
+            android:layout_height="50dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/inputbox"
-            android:ems="10"
-            android:inputType="date"
-            android:paddingLeft="15dp"
-            android:text="@string/date"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:paddingLeft="14dp"
+            android:text="Start Time"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
-
-        <EditText
-            android:id="@+id/editTextText2"
-            android:layout_width="256dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/inputbox"
-            android:ems="10"
-            android:inputType="text"
-            android:paddingLeft="15dp"
-            android:text="Name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/dateText"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/savebutton"
@@ -113,6 +106,70 @@
             app:layout_constraintStart_toStartOf="parent"
             app:strokeColor="@color/black"
             app:strokeWidth="4dp" />
+
+        <EditText
+            android:id="@+id/taskNameText"
+            android:layout_width="256dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/inputbox"
+            android:ems="10"
+            android:hint="Task Name"
+            android:inputType="text"
+            android:paddingLeft="24dp"
+            android:textColorHint="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/categoryOption"
+            android:layout_width="256dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/inputbox"
+            android:entries="@array/categories"
+            android:paddingLeft="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskNameText" />
+
+        <EditText
+            android:id="@+id/dateText"
+            android:layout_width="256dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/inputbox"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="Date"
+            android:paddingLeft="24dp"
+            android:textColorHint="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categoryOption" />
+
+        <EditText
+            android:id="@+id/endText"
+            android:layout_width="112dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="33dp"
+            android:background="@drawable/inputbox"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:paddingLeft="14dp"
+            android:text="End Time"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateText"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -133,6 +190,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="176dp"
+        android:layout_marginBottom="-25dp"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon" />
 
