@@ -7,16 +7,17 @@
     android:background="@color/dark_background"
     tools:context=".CurrentTask">
 
+    <!-- Bottom Navigation View -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/infolayout"
-        android:layout_width="315dp"
-        android:layout_height="409dp"
+        android:layout_width="332dp"
+        android:layout_height="605dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/bluebox"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -32,12 +33,21 @@
                     app:layout_constraintTop_toBottomOf="@+id/editTextText3"
                     tools:srcCompat="@drawable/time_compass_icon" /> -->
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="187dp"
+            android:layout_height="182dp"
+            android:layout_marginEnd="72dp"
+            android:layout_marginBottom="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="115dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginBottom="37dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="278dp"
             android:background="@drawable/darkgreyround"
             android:src="@drawable/play_pause_icon"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -45,10 +55,10 @@
 
         <Button
             android:id="@+id/continuebtn"
-            android:layout_width="115dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="37dp"
+            android:layout_width="116dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginBottom="276dp"
             android:backgroundTint="@color/dark_background"
             android:text="@string/continue_"
             android:textAlignment="center"
@@ -61,23 +71,23 @@
             android:id="@+id/timeremaining"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:layout_marginBottom="14dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/time_remaining"
             android:textAlignment="center"
             android:textColor="@color/dark_background"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="96dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/darkgreyround"
             android:fontFamily="sans-serif-black"
             android:text="@string/time"
@@ -85,44 +95,40 @@
             android:textColor="@color/white"
             android:textSize="34sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeremaining" />
 
         <TextView
             android:id="@+id/taskname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
+            android:layout_marginStart="46dp"
             android:layout_marginTop="16dp"
             android:background="@color/blue"
             android:text="@string/task_name"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="34sp"
+            android:textSize="48sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/description"
-            android:layout_width="282dp"
-            android:layout_height="51dp"
+            android:layout_width="289dp"
+            android:layout_height="72dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="52dp"
+            android:layout_marginTop="13dp"
             android:background="@color/blue"
             android:text="@string/description"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskname" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -143,7 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomNavigationView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="180dp"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon"
