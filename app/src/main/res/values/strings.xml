@@ -35,6 +35,7 @@
     <string name="start_time">Start Time</string>
     <string name="save">Save</string>
     <string name="end_time">End Time</string>
+    <string name="categories_available">Categories Available</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>
