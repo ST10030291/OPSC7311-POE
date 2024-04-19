@@ -86,8 +86,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
             else -> return false
         }
     }
-
-
     // Methods to navigate to different pages
     private fun navigateToProfile() {
         val intent = Intent(this, Profile::class.java)

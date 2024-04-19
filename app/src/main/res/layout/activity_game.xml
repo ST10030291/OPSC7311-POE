@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,80 +7,14 @@
     android:background="@color/dark_background"
     tools:context=".Game">
 
-    <!-- Bottom Navigation View -->
-
+    <!-- Header -->
     <LinearLayout
-        android:layout_width="398dp"
-        android:layout_height="394dp"
-        android:background="@drawable/rounded_corners"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="601dp"></LinearLayout>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gain Points"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="556dp" />
-
-    <TextView
-        android:id="@+id/usernametext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="91dp" />
-
-    <LinearLayout
-        android:layout_width="374dp"
-        android:layout_height="389dp"
-        android:background="@drawable/lightgreyround"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="152dp"></LinearLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/light_background"
-        app:itemTextColor="@color/grey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
-
-
-    <!-- Bottom Navigation View -->
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPopupTray"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottomNavigationView"
-        android:layout_centerHorizontal="true"
-        android:importantForAccessibility="no"
-        android:src="@drawable/plus_icon"
-        tools:layout_editor_absoluteX="190dp"
-        tools:layout_editor_absoluteY="1624dp" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/dark_background"
         android:orientation="horizontal"
-        android:padding="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="5dp">
 
         <ImageView
             android:layout_width="112dp"
@@ -90,16 +24,95 @@
             android:src="@drawable/time_compass_icon" />
 
         <TextView
-            android:layout_width="218dp"
-            android:layout_height="wrap_content"
+            android:layout_width="242dp"
+            android:layout_height="70dp"
             android:layout_marginStart="40dp"
             android:fontFamily="sans-serif"
-            android:paddingLeft="0dp"
-            android:text="@string/leaderboard"
+            android:text="@string/games"
             android:textColor="@color/white"
-            android:textSize="34sp"
+            android:textSize="50sp"
             android:textStyle="bold" />
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPopupTray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="176dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/plus_icon" />
+
+    <!-- Bottom Navigation View -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/light_background"
+        app:itemTextColor="@color/grey"
+        app:menu="@menu/bottom_navigation_menu" />
+
+    <!-- ScrollView with Buttons -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigationView"
+        android:layout_below="@id/linearLayout2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!-- Put your design inside here  -->
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
+
+<!--
+<LinearLayout
+    android:layout_width="398dp"
+    android:layout_height="394dp"
+    android:background="@drawable/rounded_corners"
+    android:orientation="horizontal"
+    tools:layout_editor_absoluteX="18dp"
+    tools:layout_editor_absoluteY="601dp"></LinearLayout>
+
+<TextView
+android:id="@+id/textView3"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Gain Points"
+android:textColor="@color/white"
+android:textSize="34sp"
+android:textStyle="bold"
+tools:layout_editor_absoluteX="18dp"
+tools:layout_editor_absoluteY="556dp" />
+
+<TextView
+android:id="@+id/usernametext"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Username"
+android:textColor="@color/white"
+android:textSize="34sp"
+android:textStyle="bold"
+tools:layout_editor_absoluteX="139dp"
+tools:layout_editor_absoluteY="91dp" />
+
+<LinearLayout
+android:layout_width="374dp"
+android:layout_height="389dp"
+android:background="@drawable/lightgreyround"
+android:orientation="horizontal"
+tools:layout_editor_absoluteX="21dp"
+tools:layout_editor_absoluteY="152dp"></LinearLayout>
+-->
