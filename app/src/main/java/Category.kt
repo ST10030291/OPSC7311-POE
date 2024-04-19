@@ -1,4 +1,6 @@
-
+object CategoryList{//this is how we can access data everywhere
+    val categroyList = mutableListOf<Category>()
+}
 data class Category(
     val categoryName: String,
     val color: String,

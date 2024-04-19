@@ -1,6 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
 import Task
+import TaskList
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -25,7 +26,7 @@ import java.util.Calendar
 
 class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
-    private val taskList = mutableListOf<Task>()
+    //private val taskList = mutableListOf<Task>()
     private lateinit var popupMenu: PopupMenu
     private lateinit var binding: ActivityAddTaskBinding
     private lateinit var taskName : TextView
@@ -275,7 +276,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val taskImg = imageUrl
 
         val newTask = Task(taskName, description, category, taskDate, startTime, endTime, taskImg)
-        taskList.add(newTask)
+        TaskList.taskList.add(newTask)
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
