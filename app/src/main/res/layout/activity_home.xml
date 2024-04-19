@@ -7,29 +7,7 @@
     android:background="@color/dark_background"
     tools:context=".HomeActivity">
 
-    <!-- Bottom Navigation View -->
-
-    <!-- Floating Action Button -->
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/light_background"
-        app:itemTextColor="@color/grey"
-        app:menu="@menu/bottom_navigation_menu" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPopupTray"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottomNavigationView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="176dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/plus_icon" />
-
+    <!-- Header -->
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -46,14 +24,196 @@
             android:src="@drawable/time_compass_icon" />
 
         <TextView
-            android:layout_width="218dp"
-            android:layout_height="wrap_content"
+            android:layout_width="242dp"
+            android:layout_height="70dp"
             android:layout_marginStart="40dp"
             android:fontFamily="sans-serif"
             android:text="@string/HomePage"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="50sp"
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <!-- FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPopupTray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="176dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/plus_icon" />
+
+    <!-- Bottom Navigation View -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/light_background"
+        app:itemTextColor="@color/grey"
+        app:menu="@menu/bottom_navigation_menu" />
+
+    <!-- ScrollView with Buttons -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigationView"
+        android:layout_below="@id/linearLayout2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/button3"
+                android:layout_width="380dp"
+                android:layout_height="104dp"
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="@color/light_background"
+                android:textColor="@color/grey"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="29dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:text="@string/welcome_back_user"
+                android:textSize="34sp" />
+
+            <Button
+                android:id="@+id/allCategoriesbtn"
+                android:layout_width="380dp"
+                android:layout_height="113dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/blue"
+                android:text="@string/view_all_categories"
+                android:textSize="24sp"
+                android:onClick="navigateToAllCategories"/>
+
+            <Button
+                android:id="@+id/allTasksbtn"
+                android:layout_width="380dp"
+                android:layout_height="108dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/dark_grey"
+                android:text="@string/view_all_tasks"
+                android:textColor="@color/dark_background"
+                android:textSize="24sp"
+                android:onClick="navigateToAllTasks"/>
+
+            <TextView
+                android:layout_width="380dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/set_daily_goal"
+                android:textColor="@color/grey"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dailyGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="@color/dark_grey"
+                android:background="@drawable/rounded_corners">
+
+
+                <TextView
+                    android:layout_width="331dp"
+                    android:layout_height="70dp"
+                    android:text="@string/set_minimum_number_of_hours_for_today"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_goneMarginStart="5dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="5dp" />
+
+                <EditText
+                    android:id="@+id/minNum"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="92dp"
+                    android:background="@drawable/inputbox"
+                    android:ems="10"
+                    android:hint="@string/enter_number"
+                    android:inputType="number"
+                    android:paddingStart="24dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry" />
+
+
+                <TextView
+                    android:layout_width="331dp"
+                    android:layout_height="70dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/set_maximum_number_of_hours_for_today"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_goneMarginStart="5dp"
+                    tools:ignore="MissingConstraints" />
+
+                <EditText
+                    android:id="@+id/maxNum"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="52dp"
+                    android:layout_marginTop="244dp"
+                    android:background="@drawable/inputbox"
+                    android:ems="10"
+                    android:hint="@string/enter_number"
+                    android:inputType="number"
+                    android:paddingStart="24dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry" />
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="179dp"
+                    android:layout_height="62dp"
+                    android:layout_marginStart="107dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="106dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="@color/blue"
+                    android:text="@string/save"
+                    android:textSize="30sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/maxNum"
+                    app:strokeColor="#000000"
+                    app:strokeWidth="2dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

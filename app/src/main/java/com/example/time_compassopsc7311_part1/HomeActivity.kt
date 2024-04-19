@@ -103,4 +103,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         val intent = Intent(this, Game::class.java)
         startActivity(intent)
     }
+
+    fun navigateToAllCategories(view: View) {
+        val intent = Intent(this, CategoryAvailable::class.java)
+        startActivity(intent)
+    }
+
+    fun navigateToAllTasks(view: View) {
+        val intent = Intent(this, TaskAvailable::class.java)
+        startActivity(intent)
+    }
 }

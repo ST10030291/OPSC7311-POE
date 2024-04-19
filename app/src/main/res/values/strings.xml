@@ -36,6 +36,16 @@
     <string name="save">Save</string>
     <string name="end_time">End Time</string>
     <string name="categories_available">Categories Available</string>
+    <string name="category">Category</string>
+    <string name="welcome_back_user">Welcome Back User</string>
+    <string name="view_all_categories">View All Categories</string>
+    <string name="view_all_tasks">View All Tasks</string>
+    <string name="set_daily_goal">Set Daily Goal</string>
+    <string name="category_name">Category Name</string>
+    <string name="set_minimum_number_of_hours_for_project">Set minimum number of hours for project</string>
+    <string name="set_minimum_number_of_hours_for_today">Set minimum number of hours for today</string>
+    <string name="set_maximum_number_of_hours_for_today">Set maximum number of hours for today</string>
+    <string name="enter_number">Enter Number</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>

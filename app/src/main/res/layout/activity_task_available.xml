@@ -7,6 +7,7 @@
     android:background="@color/dark_background"
     tools:context=".TaskAvailable">
 
+    <!-- Header -->
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -34,6 +35,7 @@
 
     </LinearLayout>
 
+    <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -43,6 +45,7 @@
         app:itemTextColor="@color/grey"
         app:menu="@menu/bottom_navigation_menu" />
 
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPopupTray"
         android:layout_width="wrap_content"
@@ -50,7 +53,84 @@
         android:layout_above="@id/bottomNavigationView"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="176dp"
+        android:layout_marginBottom="-17dp"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon" />
+
+    <!-- ScrollView with Buttons -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigationView"
+        android:layout_below="@id/linearLayout2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="380dp"
+                android:layout_height="104dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/blue"
+                android:text="@string/task_name"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="380dp"
+                android:layout_height="113dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/light_background"
+                android:text="@string/task_name"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="380dp"
+                android:layout_height="108dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/grey"
+                android:text="@string/task_name"
+                android:textColor="@color/dark_background"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="380dp"
+                android:layout_height="104dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/blue"
+                android:text="@string/task_name"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="380dp"
+                android:layout_height="113dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/light_background"
+                android:text="@string/task_name"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="380dp"
+                android:layout_height="108dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/grey"
+                android:text="@string/task_name"
+                android:textColor="@color/dark_background"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
