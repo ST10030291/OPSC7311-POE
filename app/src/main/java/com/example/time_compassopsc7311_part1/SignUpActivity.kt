@@ -2,9 +2,11 @@ package com.example.time_compassopsc7311_part1
 
 import UserData
 import UserDetails
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -14,10 +16,14 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
     private val userList = mutableListOf<UserDetails>()
 
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         binding.openLoginActivity.setOnClickListener(this)
         binding.buttonCreateAccount.setOnClickListener(this)
@@ -56,14 +62,23 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                 else {
                     val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername)
                     UserData.users.add(newUser)
+                    saveUsername(enteredUsername)
                     Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
 
                     //Proceed to Home Screen
                     val intent = Intent(this, HomeActivity::class.java)
+                    intent.putExtra("USERNAME", enteredUsername)
                     startActivity(intent)
                     finish()
                 }
             }
+        }
+    }
+
+    private fun saveUsername(username: String?) {
+        sharedPreferences.edit().apply {
+            putString("USERNAME", username)
+            apply()
         }
     }
 }

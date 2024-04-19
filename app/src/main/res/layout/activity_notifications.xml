@@ -30,7 +30,7 @@
             android:fontFamily="sans-serif"
             android:text="@string/notifications"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="37sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -43,6 +43,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="176dp"
+        android:layout_marginBottom="60dp"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon" />
 

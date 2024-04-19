@@ -1,6 +1,9 @@
 package com.example.time_compassopsc7311_part1
 
+import UserData
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -14,11 +17,22 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var popupMenu: PopupMenu
+    private lateinit var sharedPreferences: SharedPreferences
+    private var username: String = "Unknown user"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+        // Retrieve the saved username
+        username = sharedPreferences.getString("USERNAME", "Default Username") ?: "Unknown user"
+
+        // Set welcome message with username
+        binding.button3.text = getString(R.string.welcome_message, username)
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
@@ -31,7 +45,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         // Set Listeners
         fabPopupTray.setOnClickListener(this)
         popupMenu.setOnMenuItemClickListener(this)
-
 
         // Links to each page on the navigation bar
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -59,7 +72,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
             }
         }
     }
-    // show pop up menu onClick
+
+    // Other methods and overrides...
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.fabPopupTray -> {
@@ -68,7 +83,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         }
     }
 
-    // Menu items for Floating Action Button (plus sign)
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.addTask -> {
@@ -86,6 +100,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
             else -> return false
         }
     }
+
     // Methods to navigate to different pages
     private fun navigateToProfile() {
         val intent = Intent(this, Profile::class.java)

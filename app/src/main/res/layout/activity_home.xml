@@ -44,7 +44,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="176dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/plus_icon" />
+        android:src="@drawable/plus_icon"
+        android:layout_marginBottom="60dp"/>
 
     <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -72,15 +73,179 @@
                 android:id="@+id/button3"
                 android:layout_width="380dp"
                 android:layout_height="104dp"
-                android:background="@drawable/rounded_corners"
-                android:backgroundTint="@color/light_background"
+                android:background="@drawable/gradient_background"
                 android:textColor="@color/grey"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="29dp"
+                android:paddingVertical="25dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                android:text="@string/welcome_back_user"
+                android:text="@string/welcome_message"
                 android:textSize="34sp" />
+
+            <TextView
+                android:layout_width="380dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/recents"
+                android:textColor="@color/grey"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/gradient_recents">
+
+                <ImageView
+                    android:id="@+id/task_image1"
+                    android:layout_width="197dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher_foreground" />
+
+                <TextView
+                    android:id="@+id/task_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="123dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toRightOf="@+id/task_image1"
+                    android:text="@string/task_name"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:id="@+id/category_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/task_name1"
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@+id/task_image1"
+                    android:layout_alignLeft="@+id/task_name1"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/category_name"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/start_time1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/task_image1"
+                    android:layout_alignLeft="@+id/task_name1"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/start_time"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/end_time1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/start_time1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@+id/parent"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/end_time"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/gradient_recents">
+
+                <ImageView
+                    android:id="@+id/task_image2"
+                    android:layout_width="197dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher_foreground" />
+
+                <TextView
+                    android:id="@+id/task_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="123dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toRightOf="@+id/task_image2"
+                    android:text="@string/task_name"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:id="@+id/category_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/task_name2"
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@+id/task_image2"
+                    android:layout_alignLeft="@+id/task_name2"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/category_name"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/start_time2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/task_image2"
+                    android:layout_alignLeft="@+id/task_name2"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/start_time"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/end_time2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/start_time2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@+id/parent"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/end_time"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="380dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/all_categories_and_tasks"
+                android:textColor="@color/grey"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/allCategoriesbtn"
@@ -88,9 +253,10 @@
                 android:layout_height="113dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/dark_grey"
                 android:text="@string/view_all_categories"
                 android:textSize="24sp"
+                android:textColor="@color/dark_background"
                 android:onClick="navigateToAllCategories"/>
 
             <Button
@@ -99,9 +265,9 @@
                 android:layout_height="108dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/dark_grey"
+                android:backgroundTint="@color/blue"
                 android:text="@string/view_all_tasks"
-                android:textColor="@color/dark_background"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:onClick="navigateToAllTasks"/>
 
@@ -122,6 +288,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
+                android:paddingBottom="20dp"
                 android:backgroundTint="@color/dark_grey"
                 android:background="@drawable/rounded_corners">
 
@@ -176,7 +343,7 @@
                     android:id="@+id/maxNum"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
-                    android:layout_marginStart="52dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="244dp"
                     android:background="@drawable/inputbox"
                     android:ems="10"
@@ -197,20 +364,26 @@
                     android:layout_marginStart="107dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="106dp"
-                    android:layout_marginBottom="0dp"
                     android:backgroundTint="@color/blue"
                     android:text="@string/save"
-                    android:textSize="30sp"
                     android:textAlignment="center"
+                    android:textSize="30sp"
                     android:textStyle="bold"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/maxNum"
+                    app:layout_constraintVertical_bias="0.0"
                     app:strokeColor="#000000"
-                    app:strokeWidth="2dp" />
+                    app:strokeWidth="2dp"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp"/>
 
         </LinearLayout>
     </ScrollView>

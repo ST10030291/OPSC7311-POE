@@ -73,6 +73,7 @@
                 android:id="@+id/button3"
                 android:layout_width="380dp"
                 android:layout_height="104dp"
+                android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/blue"
@@ -106,6 +107,7 @@
                 android:layout_height="104dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/blue"
                 android:text="@string/task_name"
                 android:textSize="24sp" />
