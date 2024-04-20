@@ -48,6 +48,9 @@
     <string name="enter_number">Enter Number</string>
     <string name="recents">Recents</string>
     <string name="all_categories_and_tasks">All Categories and Tasks</string>
+    <string name="statistics">Statistics</string>
+    <string name="notification_text">Notification Text</string>
+    <string name="stats">Stats</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>

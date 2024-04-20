@@ -37,7 +37,7 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
                 }
                 R.id.bell_icon -> {
                     // Proceed to notification page
-                    navigateToNotifications()
+                    navigateToStats()
                     true
                 }
                 R.id.home_icon -> {
@@ -83,12 +83,6 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     }
 
     // Methods to navigate to different pages
-    private fun navigateToNotifications() {
-        // Proceed to notifications page
-        val intent = Intent(this, Notifications::class.java)
-        startActivity(intent)
-    }
-
     private fun navigateToHome() {
         // Proceed to home page
         val intent = Intent(this, HomeActivity::class.java)
@@ -98,6 +92,12 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private fun navigateToGame() {
         // Proceed to game page
         val intent = Intent(this, Game::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToStats() {
+        // Proceed to Stats page
+        val intent = Intent(this, Statistics::class.java)
         startActivity(intent)
     }
 

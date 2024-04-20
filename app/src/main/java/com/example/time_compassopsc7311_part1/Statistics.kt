@@ -6,14 +6,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import com.example.time_compassopsc7311_part1.databinding.ActivityNotificationsBinding
+import com.example.time_compassopsc7311_part1.databinding.ActivityProfileBinding
+import com.example.time_compassopsc7311_part1.databinding.ActivityStatisticsBinding
 
-class Notifications : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityNotificationsBinding.inflate(layoutInflater)
+        val binding = ActivityStatisticsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Get references to views using view binding
@@ -34,13 +35,12 @@ class Notifications : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.profile_icon -> {
-                    // Proceed to profile page
+                    // Proceed to Profile page
                     navigateToProfile()
-                    finish()
                     true
                 }
                 R.id.bell_icon -> {
-                    // Stay on page
+                    // Stay on Page
                     true
                 }
                 R.id.home_icon -> {
@@ -88,20 +88,27 @@ class Notifications : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
     }
 
     // Methods to navigate to different pages
-    private fun navigateToProfile() {
-        // Proceed to profile page
-        val intent = Intent(this, Profile::class.java)
-        startActivity(intent)
-    }
-
-    private fun navigateToGame() {
-        val intent = Intent(this, Game::class.java)
+    private fun navigateToStats() {
+        // Proceed to Stats page
+        val intent = Intent(this, Statistics::class.java)
         startActivity(intent)
     }
 
     private fun navigateToHome() {
         // Proceed to home page
         val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToGame() {
+        // Proceed to game page
+        val intent = Intent(this, Game::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToProfile() {
+        // Proceed to profile page
+        val intent = Intent(this, Profile::class.java)
         startActivity(intent)
     }
 }

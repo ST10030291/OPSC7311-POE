@@ -40,7 +40,7 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                     true
                 }
                 R.id.bell_icon -> {
-                    navigateToNotifications()
+                    navigateToStats()
                     finish()
                     true
                 }
@@ -94,8 +94,9 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         startActivity(intent)
     }
 
-    private fun navigateToNotifications() {
-        val intent = Intent(this, Notifications::class.java)
+    private fun navigateToStats() {
+        // Proceed to Stats page
+        val intent = Intent(this, Statistics::class.java)
         startActivity(intent)
     }
 

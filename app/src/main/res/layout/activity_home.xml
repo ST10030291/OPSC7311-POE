@@ -245,7 +245,7 @@
                 android:text="@string/all_categories_and_tasks"
                 android:textColor="@color/grey"
                 android:textSize="30sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/allCategoriesbtn"

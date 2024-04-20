@@ -18,8 +18,8 @@
 
     <item
         android:id="@+id/bell_icon"
-        android:title="@string/notifications"
-        android:icon="@drawable/bell_icon" />
+        android:title="@string/stats"
+        android:icon="@drawable/stats_icon" />
 
     <item
         android:id="@+id/profile_icon"

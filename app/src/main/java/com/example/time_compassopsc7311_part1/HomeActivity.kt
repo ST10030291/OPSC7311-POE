@@ -55,7 +55,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
                     true
                 }
                 R.id.bell_icon -> {
-                    navigateToNotifications()
+                    navigateToStats()
                     finish()
                     true
                 }
@@ -107,8 +107,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         startActivity(intent)
     }
 
-    private fun navigateToNotifications() {
-        val intent = Intent(this, Notifications::class.java)
+    private fun navigateToStats() {
+        // Proceed to Stats page
+        val intent = Intent(this, Statistics::class.java)
         startActivity(intent)
     }
 

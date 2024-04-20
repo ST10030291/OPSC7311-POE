@@ -41,7 +41,7 @@ class Game : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClic
                 }
                 R.id.bell_icon -> {
                     // Proceed to notifications page
-                    navigateToNotifications()
+                    navigateToStats()
                     finish()
                     true
                 }
@@ -94,9 +94,9 @@ class Game : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClic
         startActivity(intent)
     }
 
-    private fun navigateToNotifications() {
-        // Proceed to notifications page
-        val intent = Intent(this, Notifications::class.java)
+    private fun navigateToStats() {
+        // Proceed to Stats page
+        val intent = Intent(this, Statistics::class.java)
         startActivity(intent)
     }
 
