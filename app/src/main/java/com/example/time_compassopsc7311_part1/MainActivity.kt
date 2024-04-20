@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                     // Proceed to the Home Screen
                     val username = getUsernameByEmail(enteredEmail)
-                    saveUsername(username)
+                    saveUserData(enteredEmail, username)
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -93,11 +93,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-        private fun saveUsername(username: String?) {
-            sharedPreferences.edit().apply {
-                putString("USERNAME", username)
-                apply()
-            }
+    private fun saveUserData(email: String, username: String?) {
+        sharedPreferences.edit().apply {
+            putString("EMAIL", email)
+            putString("USERNAME", username)
+            apply()
         }
-
+    }
 }
