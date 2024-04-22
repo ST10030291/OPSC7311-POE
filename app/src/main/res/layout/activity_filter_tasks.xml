@@ -176,7 +176,8 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     tools:layout_editor_absoluteX="31dp"
-                    tools:layout_editor_absoluteY="341dp" />
+                    tools:layout_editor_absoluteY="341dp"
+                    tools:ignore="MissingConstraints" />
 
                 <EditText
                     android:id="@+id/endDate"
@@ -192,7 +193,8 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     tools:layout_editor_absoluteX="201dp"
-                    tools:layout_editor_absoluteY="341dp" />
+                    tools:layout_editor_absoluteY="341dp"
+                    tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
