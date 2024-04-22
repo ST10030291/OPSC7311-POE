@@ -1,6 +1,8 @@
 package com.example.time_compassopsc7311_part1
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,10 +13,26 @@ import com.example.time_compassopsc7311_part1.databinding.ActivityProfileBinding
 class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
+    private lateinit var sharedPreferences: SharedPreferences
+    private var username: String = "Unknown"
+    private var tasks: String = "Unknown"
+    private var categories: String = "Unknown"
+    private var email: String = "Unknown"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+        // Retrieve
+        username = sharedPreferences.getString("USERNAME", "Default Username") ?: "Unknown user"
+        email = sharedPreferences.getString("EMAIL", "Default Email") ?: "Unknown email"
+
+        binding.tvName.text = getString(R.string.user_name, username)
+        binding.userEmail.text = getString(R.string.user_email, email)
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView

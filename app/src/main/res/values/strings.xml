@@ -38,6 +38,11 @@
     <string name="categories_available">Categories Available</string>
     <string name="category">Category</string>
     <string name="welcome_message">Welcome %1$s</string>
+    <string name="profile_message">%1$s</string>
+    <string name="num_tasks_made">%1$s</string>
+    <string name="num_categories_made">%1$s</string>
+    <string name="user_email">%1$s</string>
+    <string name="user_name">%1$s</string>
     <string name="view_all_categories">View All Categories</string>
     <string name="view_all_tasks">View All Tasks</string>
     <string name="set_daily_goal">Set Daily Goal</string>
@@ -51,6 +56,13 @@
     <string name="statistics">Statistics</string>
     <string name="notification_text">Notification Text</string>
     <string name="stats">Stats</string>
+    <string name="gauteng_south_africa">Gauteng, South Africa</string>
+    <string name="tasks_made">Tasks Made</string>
+    <string name="categories_made">Categories made</string>
+    <string name="total_tasks_made">Total Tasks Made</string>
+    <string name="total_categories_made">Total Categories Made</string>
+    <string name="date_of_account_creation">Date of Account Creation</string>
+    <string name="_2024_04_20">2024/04/20</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>

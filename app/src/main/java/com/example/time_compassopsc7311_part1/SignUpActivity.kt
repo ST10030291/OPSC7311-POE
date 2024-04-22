@@ -62,12 +62,11 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                 else {
                     val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername)
                     UserData.users.add(newUser)
-                    saveUsername(enteredUsername)
+                    saveUserData(enteredEmail, enteredUsername)
                     Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
 
                     //Proceed to Home Screen
                     val intent = Intent(this, HomeActivity::class.java)
-                    intent.putExtra("USERNAME", enteredUsername)
                     startActivity(intent)
                     finish()
                 }
@@ -75,10 +74,12 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun saveUsername(username: String?) {
+    private fun saveUserData(email: String, username: String?) {
         sharedPreferences.edit().apply {
+            putString("EMAIL", email)
             putString("USERNAME", username)
             apply()
         }
     }
+
 }
