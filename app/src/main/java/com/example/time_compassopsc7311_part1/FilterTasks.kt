@@ -20,12 +20,11 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
 
     private lateinit var binding: ActivityFilterTasksBinding
     private lateinit var popupMenu: PopupMenu
-    private lateinit var searchBtn : Button
+    private lateinit var saveBtn : Button
     private lateinit var categoryChoice : Spinner
     private lateinit var taskChoice : Spinner
-    private lateinit var date : TextView
-    private lateinit var startText : TextView
-    private lateinit var endText : TextView
+    private lateinit var startDate : TextView
+    private lateinit var endDate : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +41,10 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         // Set Listeners
         fabPopupTray.setOnClickListener(this)
         popupMenu.setOnMenuItemClickListener(this)
+        startDate = binding.startDate
+        endDate = binding.endDate
+        startDate.setOnClickListener(this)
+        endDate.setOnClickListener(this)
 
         // Links to each page on the navigation bar
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -74,6 +77,12 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         when (v?.id) {
             R.id.fabPopupTray -> {
                 popupMenu.show()
+            }
+            R.id.startDate -> {
+                datePicker(startDate)
+            }
+            R.id.endDate -> {
+                datePicker(endDate)
             }
         }
     }
@@ -118,93 +127,35 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         startActivity(intent)
     }
 
-    private fun datePicker(){
+    private fun datePicker(textView: TextView) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
         val datePickerDialog = DatePickerDialog(
-            // on below line we are passing context.
             this,
-            { view, year, monthOfYear, dayOfMonth ->
-                // on below line we are setting
-                // date to our edit text.
-                val dat = (dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
-                date.setText(dat)
+            { _, year, monthOfYear, dayOfMonth ->
+                val date = "$dayOfMonth/${monthOfYear + 1}/$year"
+                textView.text = date
             },
-            // on below line we are passing year, month
-            // and day for the selected date in our date picker.
             year,
             month,
             day
         )
-        datePickerDialog.setOnShowListener{
+        datePickerDialog.setOnShowListener {
             val dateLayout = it as DatePickerDialog
-            val okButton = dateLayout.getButton(DatePickerDialog.BUTTON_POSITIVE)//had to set a colour the themes in android studio wont show my buttons
+            val okButton = dateLayout.getButton(DatePickerDialog.BUTTON_POSITIVE)
             okButton.setTextColor(Color.BLACK)
         }
 
         datePickerDialog.show()
     }
 
-    private fun startTime(){
-        val cal = Calendar.getInstance()
-        val hourOfDay = cal.get(Calendar.HOUR_OF_DAY)
-        val minute = cal.get(Calendar.MINUTE)
-        val timePickerDialog = TimePickerDialog(
-            // on below line we are passing context.
-            this,
-            { view, selectHour, selectMinute ->
-                // on below line we are setting
-                // date to our edit text.
-                var selected = String.format("%02d:%02d", selectHour, selectMinute)
-                startText.setText(selected)
-            },
-            // on below line we are passing year, month
-            // and day for the selected date in our date picker.
-            hourOfDay,
-            minute,
-            true
-        )
-        timePickerDialog.setOnShowListener {
-            val timeLayout = it as TimePickerDialog
-            val okButton = timeLayout.getButton(TimePickerDialog.BUTTON_POSITIVE)
-            okButton.setTextColor(Color.BLACK)
-        }
-        timePickerDialog.show()
-    }
-    private fun endTime(){
-        val cal = Calendar.getInstance()
-        val hourOfDay = cal.get(Calendar.HOUR_OF_DAY)
-        val minute = cal.get(Calendar.MINUTE)
-        val timePickerDialog = TimePickerDialog(
-            // on below line we are passing context.
-            this,
-            { view, selectHour, selectMinute ->
-                // on below line we are setting
-                // date to our edit text.
-                var selected = String.format("%02d:%02d", selectHour, selectMinute)
-                endText.setText(selected)
-            },
-            // on below line we are passing year, month
-            // and day for the selected date in our date picker.
-            hourOfDay,
-            minute,
-            true
-        )
-        timePickerDialog.setOnShowListener {
-            val timeLayout = it as TimePickerDialog
-            val okButton = timeLayout.getButton(TimePickerDialog.BUTTON_POSITIVE)
-            okButton.setTextColor(Color.BLACK)
-        }
-        timePickerDialog.show()
-    }
-
     private fun searchTask(){
         val category = categoryChoice.selectedItem.toString()
-        val taskDate = date.text.toString()
-        val startTime = startText.text.toString()
-        val endTime = endText.text.toString()
+        val task = taskChoice.selectedItem.toString()
+        val startTime = startDate.text.toString()
+        val endTime = endDate.text.toString()
 
         // Search 
     }

@@ -126,7 +126,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     }
 
     private fun navigateToStats() {
-        // Proceed to Stats page
         val intent = Intent(this, Statistics::class.java)
         startActivity(intent)
     }
@@ -146,20 +145,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         startActivity(intent)
     }
 
-    // Function to save the numbers entered by the user
+    // Function to save the min/max daily goals entered by the user
     private fun saveNumbers() {
-        // Retrieve the values entered in the EditText fields
         val minNumberText = binding.minNum.text.toString()
         val maxNumberText = binding.maxNum.text.toString()
 
         binding.minNumTV.text = minNumberText
         binding.maxNumTV.text = maxNumberText
 
-        // Convert the string values to integers
         minNumber = minNumberText.toIntOrNull() ?: 0
         maxNumber = maxNumberText.toIntOrNull() ?: 0
 
-        // Save the values to SharedPreferences
         with(sharedPreferences.edit()) {
             putInt("MIN_NUMBER", minNumber)
             putInt("MAX_NUMBER", maxNumber)
@@ -172,7 +168,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
 
     // Function to update app usage display with live count
     private fun updateAppUsage() {
-        // Schedule the update at regular intervals
         handler.postDelayed(object : Runnable {
             override fun run() {
                 val currentTime = System.currentTimeMillis()
@@ -187,9 +182,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
                 if (elapsedTime >= 24 * 3600000) {
                     minNumber = 0
                     maxNumber = 0
-                    // Update TextViews with reset values
                     binding.minNumTV.text = minNumber.toString()
                     binding.maxNumTV.text = maxNumber.toString()
+
                     // Reset start time
                     startTime = currentTime
                     // Update SharedPreferences
@@ -229,11 +224,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
 
         // Retrieve the total time spent in the app
         totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP", 0);
-
         // Update the start time based on the total time spent
         startTime = System.currentTimeMillis() - totalTimeInApp;
 
-        // Update the TextViews with the latest values (optional)
         binding.minNumTV.text = minNumber.toString()
         binding.maxNumTV.text = maxNumber.toString()
     }
