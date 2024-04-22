@@ -1,7 +1,7 @@
 import android.net.Uri
 import java.sql.Time
 import java.util.Date
-object TaskList{//this is how we can access data everywhere
+object TaskList{
     val taskList = mutableListOf<Task>()
 }
 data class Task(

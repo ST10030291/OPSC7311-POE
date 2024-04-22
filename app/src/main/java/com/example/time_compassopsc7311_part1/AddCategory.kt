@@ -21,7 +21,7 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private lateinit var binding: ActivityAddCategoryBinding
     private lateinit var popupMenu: PopupMenu
     private lateinit var colorOptn : Spinner
-    //private val categroyList = mutableListOf<Category>()
+   // private val categroyList = mutableListOf<Category>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -163,7 +163,7 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         val categoryName = binding.categoryNameText.text.toString()
         val categoryColor = colorOptn.selectedItem.toString()
         val newCategory = Category(categoryName, categoryColor)
-        CategoryList.categroyList.add(newCategory)
+        CategoryList.categoryList.add(newCategory)
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()

@@ -1,11 +1,15 @@
 package com.example.time_compassopsc7311_part1
 
+import Category
+import CategoryList
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityCategoryAvailableBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityCurrentTaskBinding
 
@@ -17,6 +21,12 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         super.onCreate(savedInstanceState)
         val binding = ActivityCategoryAvailableBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val categoryList = CategoryList.categoryList.toList()
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = CategoryAdapter(categoryList)
+        recyclerView.adapter = adapter
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView

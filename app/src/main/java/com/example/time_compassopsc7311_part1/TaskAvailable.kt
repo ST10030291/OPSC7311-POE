@@ -1,20 +1,36 @@
 package com.example.time_compassopsc7311_part1
 
+import Task
+import TaskList
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityTaskAvailableBinding
 
 class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
+    private lateinit var listView : ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityTaskAvailableBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+        //setting the display
+        val taskList = TaskList.taskList.toList()
+        val recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = TaskAdapter(taskList)
+        recyclerView.adapter = adapter
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
