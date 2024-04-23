@@ -1,6 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
 import Task
+import TaskList
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -275,7 +276,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val taskImg = imageUrl
 
         val newTask = Task(taskName, description, category, taskDate, startTime, endTime, taskImg)
-        taskList.add(newTask)
+        TaskList.taskList.add(newTask)
         val intent = Intent(this, TaskAvailable::class.java)
         startActivity(intent)
         finish()

@@ -23,7 +23,10 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         val binding = ActivityTaskAvailableBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        //filter
+        binding.searchBtn.setOnClickListener{
+            navigateToFilter()
+        }
 
         //setting the display
         val taskList = TaskList.taskList.toList()
@@ -102,6 +105,11 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
     private fun navigateToStats() {
         // Proceed to Stats page
         val intent = Intent(this, Statistics::class.java)
+        startActivity(intent)
+    }
+    private fun navigateToFilter() {
+        // Proceed to Stats page
+        val intent = Intent(this, FilterTasks::class.java)
         startActivity(intent)
     }
 

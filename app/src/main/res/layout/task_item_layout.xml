@@ -12,17 +12,17 @@
         android:layout_height="407dp"
         android:background="@color/white">
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/taskImage"
             android:layout_width="182dp"
             android:layout_height="160dp"
             android:layout_marginStart="66dp"
             android:layout_marginTop="9dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
+            app:layout_constraintTop_toBottomOf="@+id/descriptionText" /> -->
 
         <TextView
-            android:id="@+id/taskName"
+            android:id="@+id/displayTaskName"
             android:layout_width="288dp"
             android:layout_height="53dp"
             android:layout_marginStart="16dp"
@@ -36,7 +36,7 @@
             tools:text="Task Name" />
 
         <TextView
-            android:id="@+id/descriptionText"
+            android:id="@+id/displayDescription"
             android:layout_width="288dp"
             android:layout_height="53dp"
             android:layout_marginStart="16dp"
@@ -46,29 +46,29 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskName" />
+            app:layout_constraintTop_toBottomOf="@+id/displayTaskName" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/displayDate"
             android:layout_width="102dp"
             android:layout_height="37dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="9dp"
             android:text="Date:"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskImage" />
+            app:layout_constraintTop_toBottomOf="@+id/displayDescription" />
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="102dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="194dp"
-            android:layout_marginEnd="20dp"
-            android:text="Time"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
+        <!-- <TextView
+             android:id="@+id/time"
+             android:layout_width="102dp"
+             android:layout_height="37dp"
+             android:layout_marginTop="194dp"
+             android:layout_marginEnd="20dp"
+             android:text="Time"
+             android:textSize="24sp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/descriptionText" /> -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
