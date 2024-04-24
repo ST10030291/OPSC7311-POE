@@ -274,7 +274,6 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val startTime = startText.text.toString()
         val endTime = endText.text.toString()
         val taskImg = imageUrl
-
         val newTask = Task(taskName, description, category, taskDate, startTime, endTime, taskImg)
         TaskList.taskList.add(newTask)
         val intent = Intent(this, TaskAvailable::class.java)

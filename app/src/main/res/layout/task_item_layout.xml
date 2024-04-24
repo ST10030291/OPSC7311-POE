@@ -2,35 +2,59 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardBackgroundColor="@color/dark_background">
+    android:layout_width="370dp"
+    android:layout_height="407dp"
+    app:cardBackgroundColor="@color/dark_grey"
+    app:cardCornerRadius="20dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="370dp"
         android:layout_height="407dp"
-        android:background="@color/white">
+        android:background="@drawable/inputbox">
 
-       <!-- <ImageView
-            android:id="@+id/taskImage"
+        <TextView
+            android:id="@+id/displayDate"
+            android:layout_width="173dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="103dp"
+            android:layout_marginTop="6dp"
+            android:text="12/01/2002"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/displaytaskImage" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="-"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            app:layout_constraintStart_toEndOf="@+id/displayStartTime"
+            app:layout_constraintTop_toBottomOf="@+id/displayDate" />
+
+        <ImageView
+            android:id="@+id/displaytaskImage"
             android:layout_width="182dp"
             android:layout_height="160dp"
-            android:layout_marginStart="66dp"
+            android:layout_marginStart="94dp"
             android:layout_marginTop="9dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionText" /> -->
+            app:layout_constraintTop_toBottomOf="@+id/displayDescription" />
 
         <TextView
             android:id="@+id/displayTaskName"
             android:layout_width="288dp"
             android:layout_height="53dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="34sp"
+            android:textSize="42sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Task Name" />
@@ -39,25 +63,38 @@
             android:id="@+id/displayDescription"
             android:layout_width="288dp"
             android:layout_height="53dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="52dp"
             android:layout_marginTop="4dp"
             android:text="Description"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/displayTaskName" />
 
         <TextView
-            android:id="@+id/displayDate"
-            android:layout_width="102dp"
-            android:layout_height="37dp"
-            android:layout_marginStart="116dp"
-            android:layout_marginTop="9dp"
-            android:text="Date:"
-            android:textSize="24sp"
+            android:id="@+id/displayStartTime"
+            android:layout_width="76dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="103dp"
+            android:layout_marginTop="16dp"
+            android:text="18:00"
+            android:textColor="@color/black"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/displayDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/displayDate" />
+
+        <TextView
+            android:id="@+id/displayEndTime"
+            android:layout_width="83dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="95dp"
+            android:text="21:00"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/displayDate" />
 
         <!-- <TextView
              android:id="@+id/time"
