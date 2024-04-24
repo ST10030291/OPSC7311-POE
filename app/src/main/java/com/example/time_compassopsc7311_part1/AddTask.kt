@@ -26,7 +26,11 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.toColorInt
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddTaskBinding
 import java.io.File
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
+import java.util.Date
 
 class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -295,14 +299,27 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val description = description.text.toString()
         val category = categoryChoice.selectedItem.toString()
         val taskDate = date.text.toString()
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
         val startTime = startText.text.toString()
         val endTime = endText.text.toString()
         val taskImg = imageUrl
-        val newTask = Task(taskName, description, category, taskDate, startTime, endTime, taskImg)
-        TaskList.taskList.add(newTask)
-        val intent = Intent(this, TaskAvailable::class.java)
-        startActivity(intent)
-        finish()
+        if(taskName.isEmpty() || description.isEmpty() || category.isEmpty() || taskDate.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || taskImg.equals(null)){
+            Toast.makeText(this, "Enter Required Details", Toast.LENGTH_SHORT).show()
+        }
+        else if(taskDate < currentDate){
+            Toast.makeText(this, "Invalid, Date has passed already", Toast.LENGTH_SHORT).show()
+        }
+        else if(endTime < startTime){
+            Toast.makeText(this, "Invalid, Time cannot be before Start Time", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            val newTask = Task(taskName, description, category, taskDate, startTime, endTime, taskImg)
+            TaskList.taskList.add(newTask)
+            val intent = Intent(this, TaskAvailable::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
 

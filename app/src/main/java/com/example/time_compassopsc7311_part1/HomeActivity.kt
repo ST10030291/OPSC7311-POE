@@ -1,5 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
+import CategoryList
+import TaskList
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -142,13 +144,21 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     }
 
     fun navigateToAllCategories(view: View) {
-        val intent = Intent(this, CategoryAvailable::class.java)
-        startActivity(intent)
+        if(CategoryList.categoryList.isNullOrEmpty()){
+            Toast.makeText(this, "Please enter a category first", Toast.LENGTH_SHORT).show()
+        }else{
+            val intent = Intent(this, CategoryAvailable::class.java)
+            startActivity(intent)
+        }
     }
 
     fun navigateToAllTasks(view: View) {
-        val intent = Intent(this, TaskAvailable::class.java)
-        startActivity(intent)
+        if(TaskList.taskList.isNullOrEmpty()){
+            Toast.makeText(this, "Please enter a Task first", Toast.LENGTH_SHORT).show()
+        }else{
+            val intent = Intent(this, TaskAvailable::class.java)
+            startActivity(intent)
+        }
     }
 
     // Function to save the min/max daily goals entered by the user

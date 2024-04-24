@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddCategoryBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
 
@@ -162,10 +163,15 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private fun saveCategory(){
         val categoryName = binding.categoryNameText.text.toString()
         val categoryColor = colorOptn.selectedItem.toString()
-        val newCategory = Category(categoryName, categoryColor)
-        CategoryList.categoryList.add(newCategory)
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
-        finish()
+        if(categoryName.isEmpty() || categoryColor.isEmpty() || categoryColor.equals("Select Color")){
+            Toast.makeText(this, "Enter Required Details", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            val newCategory = Category(categoryName, categoryColor)
+            CategoryList.categoryList.add(newCategory)
+            val intent = Intent(this, CategoryAvailable::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

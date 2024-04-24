@@ -25,13 +25,7 @@ class CategoryAdapter(private val categoryList: List<Category>) : RecyclerView.A
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categoryList[position]
         holder.categoryName.setText(category.categoryName)
-
         holder.categoryName.setBackgroundColor(colorChange(category.color).toColorInt())
-        //val categoryColor = colorOptn.selectedItem.toString()
-       // val categoryColor = itemView.findViewById(R.id.colorOption)
-       // val categoryColorSelected = categoryColor.
-        //holder.categoryName.setBackgroundColor(category.color.toColorInt())
-        //holder.categoryColor.text = category.color
     }
 
     override fun getItemCount(): Int {
