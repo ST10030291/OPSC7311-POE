@@ -1,5 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
+import CategoryList
+import TaskList
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -8,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Spinner
@@ -30,6 +34,52 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         super.onCreate(savedInstanceState)
         binding = ActivityFilterTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //for spinner task
+        taskChoice = findViewById(R.id.taskOption)
+        val taskName = TaskList.taskList.map { it.taskName }.toTypedArray()
+        //val categoryColor = CategoryList.categoryList.map { it.color }.toTypedArray()
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskName)
+        taskChoice.adapter = arrayAdapter
+        taskChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        //for category spinner
+        categoryChoice = findViewById(R.id.categoryOption)
+        val categoryName = CategoryList.categoryList.map { it.categoryName }.toTypedArray()
+        //val categoryColor = CategoryList.categoryList.map { it.color }.toTypedArray()
+        val arrayAdapterCat = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
+        categoryChoice.adapter = arrayAdapterCat
+        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray

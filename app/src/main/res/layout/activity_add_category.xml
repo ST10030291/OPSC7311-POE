@@ -44,7 +44,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="44dp"
                 android:layout_marginTop="27dp"
-                android:background="@drawable/inputbox"
+                android:background="@drawable/inputbox3"
                 android:entries="@array/colorOptions"
                 android:paddingStart="24dp"
                 app:layout_constraintStart_toStartOf="parent"
