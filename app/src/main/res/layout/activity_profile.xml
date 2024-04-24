@@ -151,6 +151,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/totalTasksMade"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-light"
@@ -189,6 +190,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/totalCategoriesMade"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-light"
