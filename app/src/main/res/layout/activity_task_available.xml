@@ -8,7 +8,7 @@
     tools:context=".TaskAvailable">
 
     <!-- Header -->
-    <ImageButton
+    <ImageView
         android:id="@+id/searchBtn"
         android:layout_width="56dp"
         android:layout_height="60dp"

@@ -1,5 +1,6 @@
 package com.example.time_compassopsc7311_part1
 
+import CategoryList
 import Task
 import TaskList
 import android.app.DatePickerDialog
@@ -10,6 +11,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -20,6 +23,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.graphics.toColorInt
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddTaskBinding
 import java.io.File
 import java.util.Calendar
@@ -57,7 +61,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         description = binding.descrptionText
         categoryChoice = binding.categoryOption
         //description = findViewById(R.id.descriptionText)
-        //categoryChoice = findViewById(R.id.categoryOption)
+        categoryChoice = findViewById(R.id.categoryOption)
         date = findViewById(R.id.dateText)
         startText = findViewById(R.id.startText)
         endText = findViewById(R.id.endText)
@@ -65,6 +69,26 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         pickImageFromGalleryBtn = findViewById(R.id.galleryButton)
         pickImageFromCameraBtn = findViewById(R.id.cameraButton)
         saveBtn = findViewById(R.id.savebutton)
+
+        val categoryName = CategoryList.categoryList.map { it.categoryName }.toTypedArray()
+        val categoryColor = CategoryList.categoryList.map { it.color }.toTypedArray()
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
+        categoryChoice.adapter = arrayAdapter
+        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
 
         date.setOnClickListener{
             datePicker()//datepicker function

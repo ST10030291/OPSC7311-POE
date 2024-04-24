@@ -1,5 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
+import CategoryList
+import TaskList
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -8,31 +10,63 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.time_compassopsc7311_part1.databinding.ActivityFilterTasksBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var binding: ActivityFilterTasksBinding
     private lateinit var popupMenu: PopupMenu
-    private lateinit var saveBtn : Button
+    private lateinit var searchBtn : Button
     private lateinit var categoryChoice : Spinner
-    private lateinit var taskChoice : Spinner
     private lateinit var startDate : TextView
     private lateinit var endDate : TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFilterTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //for category spinner
+        categoryChoice = findViewById(R.id.categoryOption)
+        val categoryName = CategoryList.categoryList.map { it.categoryName }.toTypedArray()
+        //val categoryColor = CategoryList.categoryList.map { it.color }.toTypedArray()
+        val arrayAdapterCat = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
+        categoryChoice.adapter = arrayAdapterCat
+        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray
+        searchBtn = binding.savebutton
 
         // Initialize PopupMenu
         popupMenu = PopupMenu(this, fabPopupTray)
@@ -45,6 +79,9 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         endDate = binding.endDate
         startDate.setOnClickListener(this)
         endDate.setOnClickListener(this)
+        searchBtn.setOnClickListener {
+            searchTask()
+        }
 
         // Links to each page on the navigation bar
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -151,12 +188,48 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         datePickerDialog.show()
     }
 
-    private fun searchTask(){
+    private fun searchTask() {
         val category = categoryChoice.selectedItem.toString()
-        val task = taskChoice.selectedItem.toString()
         val startTime = startDate.text.toString()
         val endTime = endDate.text.toString()
 
-        // Search 
+        // Check if start date and end date are not empty
+        if (startTime.isNotEmpty() && endTime.isNotEmpty()) {
+            val startDateMillis = getDateInMillis(startTime)
+            val endDateMillis = getDateInMillis(endTime)
+
+            // Check if start date is before end date
+            if (startDateMillis <= endDateMillis) {
+                val filteredTasks = TaskList.taskList.filter { task ->
+                    val taskDateMillis = getDateInMillis(task.taskDate)
+                    taskDateMillis in startDateMillis..endDateMillis
+                }
+
+                // Display the filtered tasks
+            } else {
+                showToast("Start date cannot be after end date")
+            }
+        } else {
+
+            showToast("Please select start and end dates")
+        }
     }
+
+    private fun getDateInMillis(dateString: String): Long {
+        val pattern = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+        return try {
+            val date = sdf.parse(dateString)
+            date?.time ?: 0
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            0
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+
 }

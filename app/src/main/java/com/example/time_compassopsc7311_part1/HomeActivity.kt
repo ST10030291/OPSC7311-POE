@@ -29,6 +29,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
 
     private val handler = android.os.Handler()
     private val updateInterval = 1000L
+    private var isAppRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         startTime = sharedPreferences.getLong("START_TIME", System.currentTimeMillis())
         minNumber = sharedPreferences.getInt("MIN_NUMBER", 0)
         maxNumber = sharedPreferences.getInt("MAX_NUMBER", 0)
+
+        // Retrieve the time when the app was last destroyed
+        val appDestroyedTime = sharedPreferences.getLong("APP_DESTROYED_TIME", 0)
+        // Calculate the total time spent in the app since the last destruction
+        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP", 0) + max(0, System.currentTimeMillis() - appDestroyedTime)
 
         // Set welcome message with username
         binding.button3.text = getString(R.string.welcome_message, username)
@@ -170,65 +176,84 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     private fun updateAppUsage() {
         handler.postDelayed(object : Runnable {
             override fun run() {
-                val currentTime = System.currentTimeMillis()
-                val elapsedTime = currentTime - startTime
-                val hours = elapsedTime / 3600000
-                val minutes = (elapsedTime % 3600000) / 60000
-                val seconds = ((elapsedTime % 3600000) % 60000) / 1000
-                val formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
-                binding.appUsageTV.text = formattedTime
+                if (isAppRunning) {
+                    val currentTime = System.currentTimeMillis()
+                    val elapsedTime = currentTime - startTime
+                    val hours = elapsedTime / 3600000
+                    val minutes = (elapsedTime % 3600000) / 60000
+                    val seconds = ((elapsedTime % 3600000) % 60000) / 1000
+                    val formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
+                    binding.appUsageTV.text = formattedTime
 
-                // Reset min and max values if 24 hours have passed
-                if (elapsedTime >= 24 * 3600000) {
-                    minNumber = 0
-                    maxNumber = 0
-                    binding.minNumTV.text = minNumber.toString()
-                    binding.maxNumTV.text = maxNumber.toString()
+                    // Reset min and max values if 24 hours have passed
+                    if (elapsedTime >= 24 * 3600000) {
+                        minNumber = 0
+                        maxNumber = 0
+                        binding.minNumTV.text = minNumber.toString()
+                        binding.maxNumTV.text = maxNumber.toString()
 
-                    // Reset start time
-                    startTime = currentTime
-                    // Update SharedPreferences
-                    with(sharedPreferences.edit()) {
-                        putLong("START_TIME", startTime)
-                        putInt("MIN_NUMBER", minNumber)
-                        putInt("MAX_NUMBER", maxNumber)
-                        apply()
+                        // Reset app usage timer
+                        binding.appUsageTV.text = "00:00:00"
+
+                        // Reset start time
+                        startTime = currentTime
+                        // Update SharedPreferences
+                        with(sharedPreferences.edit()) {
+                            putLong("START_TIME", startTime)
+                            putInt("MIN_NUMBER", minNumber)
+                            putInt("MAX_NUMBER", maxNumber)
+                            apply()
+                        }
                     }
-                }
 
-                // Schedule the next update
-                handler.postDelayed(this, updateInterval)
+                    // Schedule the next update
+                    handler.postDelayed(this, updateInterval)
+                }
             }
         }, updateInterval)
     }
 
     override fun onPause() {
-        super.onPause();
-
+        super.onPause()
+        isAppRunning = false
         // Calculate the total time spent in the app before pausing
-        val currentTime = System.currentTimeMillis();
-        totalTimeInApp += currentTime - startTime;
+        val currentTime = System.currentTimeMillis()
+        totalTimeInApp += currentTime - startTime
 
-        // Save the total time spent in the app
+        // Save the total time spent in the app and the start time
         with(sharedPreferences.edit()) {
-            putLong("TOTAL_TIME_IN_APP", totalTimeInApp);
-            apply();
+            putLong("TOTAL_TIME_IN_APP", totalTimeInApp)
+            putLong("START_TIME", startTime)
+            apply()
         }
 
-        // Reset the start time for the next resume cycle
-        startTime = currentTime;
+        // Remove any pending handler callbacks to pause the timer
+        handler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {
-        super.onResume();
+        super.onResume()
+        isAppRunning = true
+        // Retrieve the total time spent in the app and the start time
+        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP", 0)
+        startTime = sharedPreferences.getLong("START_TIME", System.currentTimeMillis())
 
-        // Retrieve the total time spent in the app
-        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP", 0);
-        // Update the start time based on the total time spent
-        startTime = System.currentTimeMillis() - totalTimeInApp;
 
-        binding.minNumTV.text = minNumber.toString()
-        binding.maxNumTV.text = maxNumber.toString()
+        // Restart the timer
+        updateAppUsage()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Save the current time when the app is destroyed
+        val currentTime = System.currentTimeMillis()
+
+        // Save the total time spent in the app and the current time
+        with(sharedPreferences.edit()) {
+            putLong("TOTAL_TIME_IN_APP", totalTimeInApp + currentTime - startTime)
+            putLong("APP_DESTROYED_TIME", currentTime)
+            apply()
+        }
+    }
 }

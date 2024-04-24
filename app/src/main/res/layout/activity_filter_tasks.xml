@@ -69,10 +69,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tasksRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayout2"
+                android:layout_above="@id/bottomNavigationView"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/infolayout"
                 android:layout_width="match_parent"
-                android:layout_height="504dp"
+                android:layout_height="375dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -98,9 +105,10 @@
                     android:id="@+id/savebutton"
                     android:layout_width="179dp"
                     android:layout_height="62dp"
-                    android:layout_marginStart="96dp"
-                    android:layout_marginEnd="117dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="118dp"
+                    android:layout_marginBottom="22dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/dark_grey"
                     android:text="@string/search"
@@ -109,46 +117,17 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/startDate"
                     app:strokeColor="@color/black"
                     app:strokeWidth="4dp" />
-
-                <Spinner
-                    android:id="@+id/taskOption"
-                    android:layout_width="256dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="40dp"
-                    android:background="@drawable/inputbox2"
-                    android:entries="@array/categories"
-                    android:paddingLeft="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.288" />
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="308dp"
-                    android:layout_height="58dp"
-                    android:layout_marginTop="21dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/task_name"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/taskOption"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="308dp"
                     android:layout_height="58dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginEnd="61dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/categories"
                     android:textAlignment="center"
                     android:textColor="@color/white"
@@ -156,32 +135,31 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/categoryOption"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/taskOption"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
                     tools:ignore="MissingConstraints" />
 
                 <Spinner
                     android:id="@+id/categoryOption"
                     android:layout_width="256dp"
                     android:layout_height="50dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="80dp"
                     android:background="@drawable/inputbox2"
                     android:entries="@array/categories"
                     android:paddingLeft="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.539" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
                 <EditText
                     android:id="@+id/startDate"
                     android:layout_width="156dp"
                     android:layout_height="53dp"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="47dp"
+                    android:layout_marginTop="28dp"
                     android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="32dp"
                     android:background="@drawable/inputbox"
                     android:clickable="false"
                     android:cursorVisible="false"
@@ -191,7 +169,6 @@
                     android:paddingLeft="24dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/savebutton"
                     app:layout_constraintEnd_toStartOf="@+id/endDate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/categoryOption"
@@ -202,9 +179,9 @@
                     android:layout_width="156dp"
                     android:layout_height="53dp"
                     android:layout_marginStart="14dp"
-                    android:layout_marginTop="47dp"
+                    android:layout_marginTop="28dp"
                     android:layout_marginEnd="35dp"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="22dp"
                     android:background="@drawable/inputbox"
                     android:clickable="false"
                     android:cursorVisible="false"
@@ -218,6 +195,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/startDate"
                     app:layout_constraintTop_toBottomOf="@+id/categoryOption"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

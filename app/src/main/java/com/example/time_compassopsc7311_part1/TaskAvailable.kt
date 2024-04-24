@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,15 +19,11 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
 
     private lateinit var popupMenu: PopupMenu
     private lateinit var listView : ListView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityTaskAvailableBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //filter
-        binding.searchBtn.setOnClickListener{
-            navigateToFilter()
-        }
 
         //setting the display
         val taskList = TaskList.taskList.toList()
@@ -38,6 +35,7 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray
+        val searchbtn = binding.searchBtn
 
         // Initialize PopupMenu
         popupMenu = PopupMenu(this, fabPopupTray)
@@ -46,6 +44,9 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         // Set Listeners
         fabPopupTray.setOnClickListener(this)
         popupMenu.setOnMenuItemClickListener(this)
+        searchbtn.setOnClickListener {
+            navigateToFilter()
+        }
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
