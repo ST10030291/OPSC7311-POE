@@ -72,9 +72,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tasksRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/linearLayout2"
-                android:layout_above="@id/bottomNavigationView"/>
+                android:layout_height="wrap_content" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/infolayout"

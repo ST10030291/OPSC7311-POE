@@ -18,6 +18,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityFilterTasksBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
 import java.text.ParseException
@@ -33,12 +34,19 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private lateinit var categoryChoice : Spinner
     private lateinit var startDate : TextView
     private lateinit var endDate : TextView
-
+    private lateinit var tasksRecyclerView: RecyclerView
+    private lateinit var taskAdapter: FilterTasksAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFilterTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize RecyclerView
+        tasksRecyclerView = findViewById(R.id.tasksRecyclerView)
+        tasksRecyclerView.layoutManager = LinearLayoutManager(this)
+        taskAdapter = FilterTasksAdapter(emptyList()) // Initialize with empty list
+        tasksRecyclerView.adapter = taskAdapter
 
         //for category spinner
         categoryChoice = findViewById(R.id.categoryOption)
@@ -80,7 +88,7 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         startDate.setOnClickListener(this)
         endDate.setOnClickListener(this)
         searchBtn.setOnClickListener {
-            searchTask()
+            filterTask()
         }
 
         // Links to each page on the navigation bar
@@ -188,7 +196,7 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         datePickerDialog.show()
     }
 
-    private fun searchTask() {
+    private fun filterTask() {
         val category = categoryChoice.selectedItem.toString()
         val startTime = startDate.text.toString()
         val endTime = endDate.text.toString()
@@ -205,12 +213,12 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
                     taskDateMillis in startDateMillis..endDateMillis
                 }
 
-                // Display the filtered tasks
+                // Update RecyclerView with filtered tasks
+                taskAdapter.updateFilteredTasks(filteredTasks)
             } else {
                 showToast("Start date cannot be after end date")
             }
         } else {
-
             showToast("Please select start and end dates")
         }
     }
