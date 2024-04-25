@@ -4,6 +4,7 @@ import Task
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,6 +16,7 @@ class FilterTasksAdapter(private var filteredTaskList: List<Task>) : RecyclerVie
         val date : TextView = itemView.findViewById(R.id.displayDate)
         val startTime : TextView = itemView.findViewById(R.id.displayStartTime)
         val endTime : TextView = itemView.findViewById(R.id.displayEndTime)
+        val taskIcon : ImageView = itemView.findViewById(R.id.displaytaskImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -29,6 +31,7 @@ class FilterTasksAdapter(private var filteredTaskList: List<Task>) : RecyclerVie
         holder.date.text = task.taskDate
         holder.startTime.text = task.startTime
         holder.endTime.text = task.endTime
+        holder.taskIcon.setImageURI(task.picture)
         // Set your task icon here if needed
     }
 

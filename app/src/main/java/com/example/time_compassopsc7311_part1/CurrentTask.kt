@@ -5,16 +5,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.TextView
 import com.example.time_compassopsc7311_part1.databinding.ActivityCurrentTaskBinding
 
 class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityCurrentTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        //view details
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
