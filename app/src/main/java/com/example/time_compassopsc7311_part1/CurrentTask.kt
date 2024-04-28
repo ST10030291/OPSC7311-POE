@@ -1,6 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,6 +10,13 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import com.example.time_compassopsc7311_part1.databinding.ActivityCurrentTaskBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -21,6 +29,23 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
 
 
         //view details
+        val taskName = intent.getStringExtra("taskName")
+        val taskDescription = intent.getStringExtra("taskDescription")
+        val taskCategory = intent.getStringExtra("taskCategory")
+        val taskStart = intent.getStringExtra("taskStart")
+        val taskEnd = intent.getStringExtra("taskEnd")
+        val taskDate =intent.getStringExtra("taskDate")
+        val taskImgPath = intent.getStringExtra("taskImg")
+        val taskImg = Uri.parse(taskImgPath)
+
+
+        binding.taskName.setText(taskName)
+        binding.description.setText(taskDescription)
+        binding.categorydisplay.setText(taskCategory)
+        binding.dateDisplay.setText(taskDate)
+        binding.timeDisplay.setText(taskStart + " - " + taskEnd)
+        binding.imageView2.setImageURI(taskImg)
+
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView

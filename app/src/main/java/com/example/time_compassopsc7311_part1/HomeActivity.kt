@@ -169,17 +169,21 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         binding.minNumTV.text = minNumberText
         binding.maxNumTV.text = maxNumberText
 
-        minNumber = minNumberText.toIntOrNull() ?: 0
-        maxNumber = maxNumberText.toIntOrNull() ?: 0
+        if(minNumberText>=maxNumberText){
+            Toast.makeText(this, "Invalid, minimum hours cannot be higher then maximum!", Toast.LENGTH_SHORT).show()
+        }else{
+            minNumber = minNumberText.toIntOrNull() ?: 0
+            maxNumber = maxNumberText.toIntOrNull() ?: 0
 
-        with(sharedPreferences.edit()) {
-            putInt("MIN_NUMBER", minNumber)
-            putInt("MAX_NUMBER", maxNumber)
-            apply()
+            with(sharedPreferences.edit()) {
+                putInt("MIN_NUMBER", minNumber)
+                putInt("MAX_NUMBER", maxNumber)
+                apply()
+            }
+
+            updateAppUsage() // Update app usage after saving numbers
+            Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
         }
-
-        updateAppUsage() // Update app usage after saving numbers
-        Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
     }
 
     // Function to update app usage display with live count

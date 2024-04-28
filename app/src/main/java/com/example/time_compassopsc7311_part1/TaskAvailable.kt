@@ -32,6 +32,30 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         val adapter = TaskAdapter(taskList)
         recyclerView.adapter = adapter
 
+        //making an intent to display specific task
+       adapter.onItemClick = {taskList ->
+           val intent = Intent(this, CurrentTask::class.java)
+           intent.putExtra("taskName", taskList.taskName)
+           intent.putExtra("taskDescription", taskList.description)
+           intent.putExtra("taskCategory", taskList.category)
+           intent.putExtra("taskStart", taskList.startTime)
+           intent.putExtra("taskEnd", taskList.endTime)
+           intent.putExtra("taskDate", taskList.taskDate)
+           intent.putExtra("taskImg", taskList.picture.toString())
+           startActivity(intent)
+       }
+       /*adapter.setOnItemClick { position ->
+            val taskChosen = TaskList.taskList[position]
+            val intent = Intent(this, CurrentTask::class.java)
+            intent.putExtra("taskName", taskChosen.taskName)
+            intent.putExtra("taskDescription", taskChosen.description)
+            //intent.putExtra("taskStart", taskChosen.startTime)
+            //intent.putExtra("taskEnd", taskChosen.endTime)
+            //intent.putExtra("taskDate", taskChosen.taskDate)
+            //intent.putExtra("taskImg", taskChosen.picture)
+            startActivity(intent)
+        }*/
+
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray

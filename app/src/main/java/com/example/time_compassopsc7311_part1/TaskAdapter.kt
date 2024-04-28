@@ -1,6 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
 import Task
+import TaskList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
+
+    var onItemClick : ((Task) -> Unit)? = null
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val taskName: TextView = itemView.findViewById(R.id.displayTaskName)
         val description : TextView = itemView.findViewById(R.id.displayDescription)
@@ -33,6 +36,10 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
         holder.startTime.setText(task.startTime)
         holder.endTime.setText(task.endTime)
         holder.taskIcon.setImageURI(task.picture)
+
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(task)
+        }
         //holder.categoryName.setText(category.categoryName)
 
         //holder.categoryName.setBackgroundColor(colorChange(category.color).toColorInt())
@@ -46,4 +53,5 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
     override fun getItemCount(): Int {
         return taskList.size
     }
+
 }
