@@ -20,6 +20,7 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
 
     private lateinit var binding: ActivityAddCategoryBinding
     private lateinit var popupMenu: PopupMenu
+    private lateinit var categoryName : TextView
     private lateinit var colorOptn : Spinner
    // private val categroyList = mutableListOf<Category>()
 
@@ -31,6 +32,7 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
 
         //select color functionality
         colorOptn = findViewById(R.id.colorOption)
+        categoryName = findViewById(R.id.categoryNameText)
         colorOptn.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -142,21 +144,21 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     }
     private fun colorChange(x:String){
         if (x.equals("Dark Blue")){
-            colorOptn.setBackgroundColor(Color.parseColor("#393E46"))
+            categoryName.setTextColor(Color.parseColor("#393E46"))
         }else if (x.equals("Light Blue")){
-            colorOptn.setBackgroundColor(Color.parseColor("#00ADB5"))
+            categoryName.setTextColor(Color.parseColor("#00ADB5"))
         }else if (x.equals("Grey")){
-            colorOptn.setBackgroundColor(Color.parseColor("#EEEEEE"))
+            categoryName.setTextColor(Color.parseColor("#FF000000"))
         }else if (x.equals("Orange")){
-            colorOptn.setBackgroundColor(Color.parseColor("#F8B400"))
+            categoryName.setTextColor(Color.parseColor("#F8B400"))
         }else if (x.equals("Purple")){
-            colorOptn.setBackgroundColor(Color.parseColor("#7209B7"))
+            categoryName.setTextColor(Color.parseColor("#7209B7"))
         }else if (x.equals("Black")){
-            colorOptn.setBackgroundColor(Color.parseColor("#FF000000"))
+            categoryName.setTextColor(Color.parseColor("#FF000000"))
         }else if (x.equals("White")){
-            colorOptn.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+            categoryName.setTextColor(Color.parseColor("#FF000000"))
         }else if(x.equals("Select Color")){
-            colorOptn.setBackgroundColor(Color.parseColor("#D9D9D9"))
+            categoryName.setTextColor(Color.parseColor("#FF000000"))
         }
     }
     private fun saveCategory(){

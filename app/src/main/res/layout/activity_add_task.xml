@@ -26,10 +26,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="144dp"
-                android:layout_height="166dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="100dp"
+                android:layout_height="85dp"
+                android:layout_marginStart="146dp"
+                android:layout_marginTop="9dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/galleryButton" />
 
@@ -63,16 +63,16 @@
 
             <EditText
                 android:id="@+id/descrptionText"
-                android:layout_width="256dp"
+                android:layout_width="318dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/inputbox"
                 android:ems="10"
-                android:textColor="@color/black"
                 android:hint="@string/description"
                 android:inputType="text"
                 android:paddingLeft="24dp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -80,9 +80,9 @@
 
             <EditText
                 android:id="@+id/startText"
-                android:layout_width="112dp"
+                android:layout_width="140dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/inputbox"
                 android:clickable="false"
@@ -101,30 +101,32 @@
                 android:id="@+id/savebutton"
                 android:layout_width="179dp"
                 android:layout_height="62dp"
-                android:layout_marginStart="180dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="56dp"
+                android:layout_marginEnd="113dp"
+                android:layout_marginBottom="21dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/blue"
                 android:text="@string/save"
                 android:textColor="@color/grey"
                 android:textSize="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:strokeColor="@color/black"
                 app:strokeWidth="4dp" />
 
             <EditText
                 android:id="@+id/taskNameText"
-                android:layout_width="256dp"
-                android:layout_height="50dp"
+                android:layout_width="318dp"
+                android:layout_height="44dp"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/inputbox"
-                android:textColor="@color/black"
                 android:ems="10"
                 android:hint="@string/task_name"
                 android:inputType="text"
                 android:paddingLeft="24dp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +134,7 @@
 
             <Spinner
                 android:id="@+id/categoryOption"
-                android:layout_width="256dp"
+                android:layout_width="318dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="9dp"
@@ -143,7 +145,7 @@
 
             <EditText
                 android:id="@+id/dateText"
-                android:layout_width="256dp"
+                android:layout_width="318dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="10dp"
@@ -153,18 +155,19 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/date"
-                android:textColor="@color/black"
                 android:paddingLeft="24dp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/categoryOption" />
 
             <EditText
                 android:id="@+id/endText"
-                android:layout_width="112dp"
+                android:layout_width="140dp"
                 android:layout_height="50dp"
+                android:layout_marginStart="39dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginEnd="41dp"
                 android:background="@drawable/inputbox"
                 android:clickable="false"
                 android:cursorVisible="false"
@@ -174,6 +177,7 @@
                 android:text="@string/end_time"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/startText"
                 app:layout_constraintTop_toBottomOf="@+id/dateText"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp" />

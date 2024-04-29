@@ -26,6 +26,7 @@ class CategoryAdapter(private val categoryList: List<Category>) : RecyclerView.A
         val category = categoryList[position]
         holder.categoryName.setText(category.categoryName)
         holder.categoryName.setBackgroundColor(colorChange(category.color).toColorInt())
+        holder.categoryName.setTextColor(colorChangeText(category.color).toColorInt())
     }
 
     override fun getItemCount(): Int {
@@ -49,6 +50,27 @@ class CategoryAdapter(private val categoryList: List<Category>) : RecyclerView.A
             colourName ="#FFFFFFFF"
         }else if(x.equals("Select Color")){
             colourName ="#D9D9D9"
+        }
+        return colourName
+    }
+    private fun colorChangeText(x:String): String {
+        var colourName = ""
+        if (x.equals("Dark Blue")){
+            colourName = "#FFFFFFFF"
+        }else if (x.equals("Light Blue")){
+            colourName ="#FF000000"
+        }else if (x.equals("Grey")){
+            colourName ="#FF000000"
+        }else if (x.equals("Orange")){
+            colourName ="#FF000000"
+        }else if (x.equals("Purple")){
+            colourName ="#FFFFFFFF"
+        }else if (x.equals("Black")){
+            colourName ="#FFFFFFFF"
+        }else if (x.equals("White")){
+            colourName ="#FF000000"
+        }else if(x.equals("Select Color")){
+            colourName ="#FF000000"
         }
         return colourName
     }
