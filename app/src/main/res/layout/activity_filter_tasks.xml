@@ -204,11 +204,20 @@
                     tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tasksRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
         </LinearLayout>
     </ScrollView>
 

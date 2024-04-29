@@ -19,6 +19,15 @@ import kotlin.math.max
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
+//    Portions of this code may have been inspired by examples from:
+//    1. Android Developers Documentation (https://developer.android.com)
+//    2. Stack Overflow Community (https://stackoverflow.com)
+//    3. GitHub Repositories (https://github.com)
+//    4. Medium Articles (https://medium.com)
+//    5. Official Android Developer Blog (https://android-developers.googleblog.com)
+//    6. Android Weekly Newsletter (https://androidweekly.net)
+//    7. W3Schools (https://www.w3schools.com)
+
     private lateinit var binding: ActivityHomeBinding
     private lateinit var popupMenu: PopupMenu
     private lateinit var sharedPreferences: SharedPreferences
