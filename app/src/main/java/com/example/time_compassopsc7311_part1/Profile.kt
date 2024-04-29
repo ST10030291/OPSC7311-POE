@@ -38,8 +38,8 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray
 
-        val totalTasks = TaskList.taskList.size.toString()
-        val totalCategories = CategoryList.categoryList.size.toString()
+        tasks = TaskList.taskList.size.toString()
+        categories = CategoryList.categoryList.size.toString()
 
 
         // This makes the nav bar show what page we are on.
@@ -82,8 +82,8 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         }
 
         // Display Total Tasks and Categories
-        binding.totalTasksMade.text = totalTasks
-        binding.totalCategoriesMade.text = totalCategories
+        binding.totalTasksMade.text = tasks
+        binding.totalCategoriesMade.text = categories
     }
 
     override fun onClick(v: View?) {
