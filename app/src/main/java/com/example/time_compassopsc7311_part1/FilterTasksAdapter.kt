@@ -32,7 +32,6 @@ class FilterTasksAdapter(private var filteredTaskList: List<Task>) : RecyclerVie
         holder.startTime.text = task.startTime
         holder.endTime.text = task.endTime
         holder.taskIcon.setImageURI(task.picture)
-        // Set your task icon here if needed
     }
 
     override fun getItemCount(): Int {

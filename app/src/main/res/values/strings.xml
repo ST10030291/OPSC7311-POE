@@ -73,6 +73,10 @@
     <string name="maximum_hours_to_spend">Maximum hours to spend:</string>
     <string name="time_spent_on_app_for_today">Time spent on app for today:</string>
     <string name="_0">0</string>
+    <string name="filter_categories">Filter Categories</string>
+    <string name="search_hours_spent_on_a_category_between_two_dates">Search hours spent on a Category between two dates</string>
+    <string name="total_hours">Total Hours</string>
+    <string name="total_hours_18">Total Hours: 18</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>

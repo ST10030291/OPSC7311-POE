@@ -1,7 +1,6 @@
 package com.example.time_compassopsc7311_part1
 
 import Category
-import CategoryList
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity

@@ -31,6 +31,7 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray
+        val searchButton = binding.searchBtn
 
         // Initialize PopupMenu
         popupMenu = PopupMenu(this, fabPopupTray)
@@ -39,6 +40,9 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         // Set Listeners
         fabPopupTray.setOnClickListener(this)
         popupMenu.setOnMenuItemClickListener(this)
+        searchButton.setOnClickListener {
+            navigateToFilterCategories()
+        }
 
 
         // Links to each page on the navigation bar
@@ -118,6 +122,12 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
     private fun navigateToHome() {
         // Proceed to home page
         val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToFilterCategories() {
+        // Proceed to home page
+        val intent = Intent(this, FilterCategories::class.java)
         startActivity(intent)
     }
 }
