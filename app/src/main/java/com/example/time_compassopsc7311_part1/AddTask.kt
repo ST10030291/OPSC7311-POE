@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -303,18 +304,19 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val currentDate = sdf.format(Date())
         val startTime = startText.text.toString()
         val endTime = endText.text.toString()
+        val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val startTimeValue = tf.parse(startTime)
+        val endTimeValue = tf.parse(endTime)
+        val timeDifference = (endTimeValue.time - startTimeValue.time)
         val taskImg = imageUrl
         if(taskName.isEmpty() || description.isEmpty() || category.isEmpty() || taskDate.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || taskImg.equals(null)){
             Toast.makeText(this, "Enter Required Details", Toast.LENGTH_SHORT).show()
-        }
-        else if(taskDate < currentDate){
-            Toast.makeText(this, "Invalid, Date has passed already", Toast.LENGTH_SHORT).show()
         }
         else if(endTime < startTime){
             Toast.makeText(this, "Invalid, Time cannot be before Start Time", Toast.LENGTH_SHORT).show()
         }
         else {
-            val newTask = Task(taskName, description, category, taskDate, startTime, endTime, taskImg)
+            val newTask = Task(taskName, description, category, taskDate, startTime, endTime,timeDifference , taskImg)
             TaskList.taskList.add(newTask)
             val intent = Intent(this, TaskAvailable::class.java)
             startActivity(intent)
