@@ -14,6 +14,7 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
 
     var onItemClick : ((Task) -> Unit)? = null
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        //declare all variables here
         val taskName: TextView = itemView.findViewById(R.id.displayTaskName)
         val description : TextView = itemView.findViewById(R.id.displayDescription)
         val date : TextView = itemView.findViewById(R.id.displayDate)
@@ -29,6 +30,7 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        //this is where you can set your values
         val task = taskList[position]
         holder.taskName.setText(task.taskName)
         holder.description.setText(task.description)

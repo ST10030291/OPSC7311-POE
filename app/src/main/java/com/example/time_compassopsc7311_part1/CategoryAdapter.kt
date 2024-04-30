@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class CategoryAdapter(private val categoryList: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Define the views inside the layout
+        //declare all variables here
         val categoryName: Button = itemView.findViewById(R.id.categoryBtn)
     }
 
@@ -23,6 +23,7 @@ class CategoryAdapter(private val categoryList: List<Category>) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        //this is where you can set your values
         val category = categoryList[position]
         holder.categoryName.setText(category.categoryName)
         holder.categoryName.setBackgroundColor(colorChange(category.color).toColorInt())
