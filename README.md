@@ -6,10 +6,10 @@ Build and run the app on your Android device or emulator.
 ## How to use our App
 When you open the app you will be required to either Sign Up for a new account or Log In. 
 These are details(Email, Password) of already registered users to login:
-  avish@gmail.com, avish
-  kaushil@gmail.com, kaushil
-  tivolan@gmail.com, tivolan
-  eben@gmail.com, eben
+  (avish@gmail.com, avish)
+  (kaushil@gmail.com, kaushil)
+  (tivolan@gmail.com, tivolan)
+  (eben@gmail.com, eben)
 
 On the Home page you will be greeted by a message with your desired username,
 A tracker will start to monitor the time spent using the app on this page.
