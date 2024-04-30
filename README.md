@@ -1,4 +1,11 @@
 # Time Compass Application 
+
+## Team Members
+- Avish Judnarain, ST10030291
+- Kaushil Dajee, ST10079389
+- Tivolan Velayadum, ST10183038
+- Eben Nkulu Mwema, ST10091324
+
 ## Installation
 Clone this repository to your local machine using git clone <repository_url>.
 Open the project in Android Studio.
