@@ -218,7 +218,7 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
             if (startDateMillis <= endDateMillis) {
                 val filteredTasks = TaskList.taskList.filter { task ->
                     val taskDateMillis = getDateInMillis(task.taskDate)
-                    taskDateMillis in startDateMillis..endDateMillis
+                    taskDateMillis in startDateMillis..endDateMillis && task.category ==categoryChoice.selectedItem.toString()
                 }
 
                 // Update RecyclerView with filtered tasks
