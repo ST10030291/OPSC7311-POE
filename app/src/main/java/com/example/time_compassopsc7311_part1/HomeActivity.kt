@@ -44,10 +44,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         // Retrieve the saved username
         username = sharedPreferences.getString("USERNAME", "Default Username") ?: "Unknown user"
 
-        // Retrieve start time and values from SharedPreferences
+        // Retrieve start time and MIN/MAX values from SharedPreferences
         startTime = sharedPreferences.getLong("START_TIME", System.currentTimeMillis())
         minNumber = sharedPreferences.getInt("MIN_NUMBER", 0)
         maxNumber = sharedPreferences.getInt("MAX_NUMBER", 0)
+
+        binding.minNumTV.text = minNumber.toString();
+        binding.maxNumTV.text = maxNumber.toString()
 
         // Retrieve the time when the app was last destroyed
         val appDestroyedTime = sharedPreferences.getLong("APP_DESTROYED_TIME", 0)
@@ -251,7 +254,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         // Retrieve the total time spent in the app and the start time
         totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP", 0)
         startTime = sharedPreferences.getLong("START_TIME", System.currentTimeMillis())
-
 
         // Restart the timer
         updateAppUsage()
