@@ -144,17 +144,17 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     }
     private fun colorChange(x:String){
         if (x.equals("Dark Blue")){
-            categoryName.setTextColor(Color.parseColor("#393E46"))
+            categoryName.setTextColor(Color.parseColor("#00003f"))
         }else if (x.equals("Light Blue")){
             categoryName.setTextColor(Color.parseColor("#00ADB5"))
         }else if (x.equals("Grey")){
-            categoryName.setTextColor(Color.parseColor("#FF000000"))
+            categoryName.setTextColor(Color.parseColor("#808080"))
         }else if (x.equals("Orange")){
             categoryName.setTextColor(Color.parseColor("#F8B400"))
         }else if (x.equals("Purple")){
             categoryName.setTextColor(Color.parseColor("#7209B7"))
         }else if (x.equals("Black")){
-            categoryName.setTextColor(Color.parseColor("#FF000000"))
+            categoryName.setTextColor(Color.parseColor("#000000"))
         }else if (x.equals("White")){
             categoryName.setTextColor(Color.parseColor("#FF000000"))
         }else if(x.equals("Select Color")){

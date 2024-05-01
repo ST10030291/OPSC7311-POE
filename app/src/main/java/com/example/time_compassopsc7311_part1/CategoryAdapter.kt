@@ -36,17 +36,17 @@ class CategoryAdapter(private val categoryList: List<Category>) : RecyclerView.A
     private fun colorChange(x:String): String {
          var colourName = ""
         if (x.equals("Dark Blue")){
-            colourName = "#393E46"
+            colourName = "#00003f"
         }else if (x.equals("Light Blue")){
             colourName ="#00ADB5"
         }else if (x.equals("Grey")){
-            colourName ="#EEEEEE"
+            colourName ="#808080"
         }else if (x.equals("Orange")){
             colourName ="#F8B400"
         }else if (x.equals("Purple")){
             colourName ="#7209B7"
         }else if (x.equals("Black")){
-            colourName ="#FF000000"
+            colourName ="#000000"
         }else if (x.equals("White")){
             colourName ="#FFFFFFFF"
         }else if(x.equals("Select Color")){
@@ -61,7 +61,7 @@ class CategoryAdapter(private val categoryList: List<Category>) : RecyclerView.A
         }else if (x.equals("Light Blue")){
             colourName ="#FF000000"
         }else if (x.equals("Grey")){
-            colourName ="#FF000000"
+            colourName ="#FFFFFFFF"
         }else if (x.equals("Orange")){
             colourName ="#FF000000"
         }else if (x.equals("Purple")){
