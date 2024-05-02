@@ -44,7 +44,6 @@
     <string name="num_categories_made">%1$s</string>
     <string name="user_email">%1$s</string>
     <string name="user_name">%1$s</string>
-    <string name="user_date_of_creation">%1$s</string>
     <string name="view_all_categories">View All Categories</string>
     <string name="view_all_tasks">View All Tasks</string>
     <string name="set_daily_goal">Set Daily Goal</string>

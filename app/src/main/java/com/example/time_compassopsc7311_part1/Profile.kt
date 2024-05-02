@@ -1,6 +1,5 @@
 package com.example.time_compassopsc7311_part1
 
-import UserData
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -20,7 +19,6 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
     private var tasks: String = "Unknown"
     private var categories: String = "Unknown"
     private var email: String = "Unknown"
-    private var dateofcreation: String = "Unknown"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +33,9 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         // Retrieve
         username = sharedPreferences.getString("USERNAME", "Default Username") ?: "Unknown user"
         email = sharedPreferences.getString("EMAIL", "Default Email") ?: "Unknown email"
-        dateofcreation = sharedPreferences.getString("DATEOFCREATION", "Default DateOfCreation") ?: "Unknown date"
 
         binding.tvName.text = getString(R.string.user_name, username)
         binding.userEmail.text = getString(R.string.user_email, email)
-        binding.userDate.text = getString(R.string.user_date_of_creation, dateofcreation)
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
@@ -47,6 +43,7 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
 
         tasks = TaskList.taskList.size.toString()
         categories = CategoryList.categoryList.size.toString()
+
 
         // This makes the nav bar show what page we are on.
         bottomNavigationView.menu.findItem(R.id.profile_icon)?.isChecked = true

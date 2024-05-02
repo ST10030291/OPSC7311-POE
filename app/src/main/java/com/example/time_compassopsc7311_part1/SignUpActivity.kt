@@ -11,9 +11,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivitySignUpBinding
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -55,23 +52,17 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
                 val user = UserData.users.find { it.email == enteredEmail }
 
-                if(enteredEmail.isEmpty() || enteredPassword.isEmpty() || enteredUsername.isEmpty()) {
+                if(enteredEmail.isEmpty() || enteredPassword.isEmpty() || enteredUsername.isEmpty()){
                     Toast.makeText(this, "Enter required details", Toast.LENGTH_SHORT).show()
-                }
-                else if(enteredPassword.length < 4) {
-                    Toast.makeText(this, "Password cannot be less than 3 characters", Toast.LENGTH_SHORT).show()
-                }
-                else if (!enteredEmail.matches(emailPattern.toRegex())) {
+                } else if (!enteredEmail.matches(emailPattern.toRegex())) {
                     Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show()
-                }
-                else if (user != null) {
+                } else if (user != null){
                     Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
                 }
                 else {
-                    val currentDate = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(Date())
-                    val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername, currentDate)
+                    val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername)
                     UserData.users.add(newUser)
-                    saveUserData(enteredEmail, enteredUsername, currentDate)
+                    saveUserData(enteredEmail, enteredUsername)
                     Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
 
                     //Proceed to Home Screen
@@ -83,12 +74,12 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun saveUserData(email: String, username: String?, dateofcreation: String) {
+    private fun saveUserData(email: String, username: String?) {
         sharedPreferences.edit().apply {
             putString("EMAIL", email)
             putString("USERNAME", username)
-            putString("DATEOFCREATION", dateofcreation)
             apply()
         }
     }
+
 }
