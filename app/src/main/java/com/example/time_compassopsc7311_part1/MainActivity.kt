@@ -15,6 +15,7 @@ import com.example.time_compassopsc7311_part1.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var dateOfCreation: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     // Function to search for a user by email and return their username
     private fun getUsernameByEmail(email: String): String? {
         val user = UserData.users.find { it.email == email }
+        dateOfCreation = user?.dateOfCreation.toString()
         return user?.username ?: "Unknown user"
     }
 
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                     // Proceed to the Home Screen
                     val username = getUsernameByEmail(enteredEmail)
-                    saveUserData(enteredEmail, username)
+                    saveUserData(enteredEmail, username, dateOfCreation)
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -93,10 +95,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-    private fun saveUserData(email: String, username: String?) {
+    private fun saveUserData(email: String, username: String?, dateofcreation: String) {
         sharedPreferences.edit().apply {
             putString("EMAIL", email)
             putString("USERNAME", username)
+            putString("DATEOFCREATION", dateofcreation)
             apply()
         }
     }
