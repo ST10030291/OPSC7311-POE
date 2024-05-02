@@ -45,6 +45,26 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         searchBtn = binding.savebutton
         categoryChoice = binding.categoryOption
 
+        //displayTotalHours = findViewById(R.id.displayHours)
+        val categoryName = CategoryList.categoryList.map { it.categoryName }.toTypedArray()
+        val arrayAdapterCat = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
+        categoryChoice.adapter = arrayAdapterCat
+        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
         // Initialize PopupMenu
         popupMenu = PopupMenu(this, fabPopupTray)
         popupMenu.inflate(R.menu.popup_menu)
@@ -190,6 +210,17 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
 
         // Update the TextView with total duration
         binding.displayTotalCategoryHours.text = String.format(Locale.getDefault(), "Total: %.2f hours", totalDuration)
+    }
+    private fun totalHours(categoryName: String, startDateString: String, endDateString: String): Int{
+        /*val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val startDate = formatter.parse(startDateString)
+        val endDate = formatter.parse(endDateString)*/
+        val filterByCategory = TaskList.taskList.filter { it.category == categoryName && it.taskDate >= startDateString && it.taskDate <= endDateString}
+        var total = 0
+        for(taskEntry in filterByCategory){
+            total += taskEntry.timeDifferenceSeconds.toInt()
+        }
+        return total
     }
 
 
