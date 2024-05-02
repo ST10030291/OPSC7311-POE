@@ -284,31 +284,6 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/gradient_recents"
-                            android:orientation="vertical"
-                            android:paddingTop="10sp"
-                            android:paddingBottom="10sp">
-
-                            <TextView
-                                android:id="@+id/logouttext"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="148sp"
-                                android:paddingEnd="75sp"
-                                android:text="@string/logout"
-                                android:textColor="#FFFFFF"
-                                android:textSize="18sp"
-                                android:textStyle="normal" />
-
-                        </LinearLayout>
-
                     </LinearLayout>
 
                 </RelativeLayout>

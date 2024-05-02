@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivityProfileBinding
 
 class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
@@ -24,8 +23,6 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         super.onCreate(savedInstanceState)
         val binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.logouttext.setOnClickListener(this)
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -93,11 +90,6 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         when (v?.id) {
             R.id.fabPopupTray -> {
                 popupMenu.show()
-            }
-            R.id.logouttext -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                Toast.makeText(this, "Logout successful!", Toast.LENGTH_SHORT).show()
             }
         }
     }
