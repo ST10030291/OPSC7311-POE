@@ -33,30 +33,17 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
     private lateinit var categoryChoice: Spinner
     private lateinit var startDate: TextView
     private lateinit var endDate: TextView
-    private lateinit var categoriesRecyclerView: RecyclerView
-    private lateinit var categoriesAdapter: FilterCategoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFilterCategoriesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize RecyclerView
-        categoriesRecyclerView = findViewById(R.id.categoriesRecyclerView)
-        categoriesAdapter = FilterCategoriesAdapter(emptyList(), TaskList.taskList, this)
-        categoriesRecyclerView.layoutManager = LinearLayoutManager(this)
-        categoriesRecyclerView.adapter = categoriesAdapter
-
-        //for category spinner
-        categoryChoice = findViewById(R.id.categoryOption)
-        val categoryName = TaskList.taskList.map { it.category }.distinct().toTypedArray()
-        val arrayAdapterCat = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
-        categoryChoice.adapter = arrayAdapterCat
-
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray
         searchBtn = binding.savebutton
+        categoryChoice = binding.categoryOption
 
         // Initialize PopupMenu
         popupMenu = PopupMenu(this, fabPopupTray)
@@ -70,7 +57,12 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         startDate.setOnClickListener(this)
         endDate.setOnClickListener(this)
         searchBtn.setOnClickListener {
+            if (startDate.text.isEmpty() || endDate.text.isEmpty()){
+                Toast.makeText(this, "Please enter all required details.", Toast.LENGTH_SHORT).show()
+            }
+            else{
             filterCategories()
+            }
         }
 
         // Links to each page on the navigation bar
@@ -182,24 +174,25 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         val startTime = startDate.text.toString()
         val endTime = endDate.text.toString()
 
+        // Filter tasks based on category and date range
         val filteredTasks = taskList.filter { task ->
             task.category == category &&
-                    getDateInMillis(task.startTime) >= getDateInMillis(startTime) &&
-                    getDateInMillis(task.endTime) <= getDateInMillis(endTime)
+                    getDateInMillis(task.endTime) >= getDateInMillis(startTime) &&
+                    getDateInMillis(task.startTime) <= getDateInMillis(endTime)
         }
 
-        // Update the totalHoursByCategory list with the filtered tasks
-        val totalHoursByCategory = filteredTasks.map { task ->
-            val startTaskTimeMillis = getDateInMillis(task.startTime)
-            val endTaskTimeMillis = getDateInMillis(task.endTime)
-            val totalTaskTime =
-                (endTaskTimeMillis - startTaskTimeMillis) / 3600000.0 // convert milliseconds to hours
-            totalTaskTime
+        // Calculate total duration for filtered tasks using sumByDouble
+        val totalDuration = filteredTasks.sumByDouble { task ->
+            val startMillis = getDateInMillis(task.startTime)
+            val endMillis = getDateInMillis(task.endTime)
+            (endMillis - startMillis) / (1000 * 60 * 60).toDouble() // Convert milliseconds to hours
         }
 
-        // Update the adapter with the filtered tasks
-        categoriesAdapter.updateCategoriesTasks(totalHoursByCategory)
+        // Update the TextView with total duration
+        binding.displayTotalCategoryHours.text = String.format(Locale.getDefault(), "Total: %.2f hours", totalDuration)
     }
+
+
 
     private fun getDateInMillis(dateString: String): Long {
         val pattern = "dd/MM/yyyy"
@@ -212,5 +205,4 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
             0
         }
     }
-
 }

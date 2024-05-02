@@ -33,10 +33,8 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private lateinit var binding: ActivityFilterTasksBinding
     private lateinit var popupMenu: PopupMenu
     private lateinit var searchBtn : Button
-    private lateinit var categoryChoice : Spinner
     private lateinit var startDate : TextView
     private lateinit var endDate : TextView
-    private lateinit var displayTotalHours : TextView
     private lateinit var tasksRecyclerView: RecyclerView
     private lateinit var taskAdapter: FilterTasksAdapter
 
@@ -52,31 +50,7 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         tasksRecyclerView.adapter = taskAdapter
 
         //for category spinner
-        categoryChoice = findViewById(R.id.categoryOption)
-        displayTotalHours = findViewById(R.id.displayHours)
         val categoryName = CategoryList.categoryList.map { it.categoryName }.toTypedArray()
-
-        //for total Hours
-
-        //val categoryColor = CategoryList.categoryList.map { it.color }.toTypedArray()
-        val arrayAdapterCat = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
-        categoryChoice.adapter = arrayAdapterCat
-        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-        }
-
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
@@ -204,7 +178,6 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     }
 
     private fun filterTask() {
-        val category = categoryChoice.selectedItem.toString()
         val startTime = startDate.text.toString()
         val endTime = endDate.text.toString()
 
@@ -212,13 +185,12 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         if (startTime.isNotEmpty() && endTime.isNotEmpty()) {
             val startDateMillis = getDateInMillis(startTime)
             val endDateMillis = getDateInMillis(endTime)
-            var timeDifferenceHours = totalHours(categoryChoice.selectedItem.toString(), startTime, endTime)
-            displayTotalHours.setText("Total Hours: " + (timeDifferenceHours/3600000).toString())
+
             // Check if start date is before end date
             if (startDateMillis <= endDateMillis) {
                 val filteredTasks = TaskList.taskList.filter { task ->
                     val taskDateMillis = getDateInMillis(task.taskDate)
-                    taskDateMillis in startDateMillis..endDateMillis && task.category ==categoryChoice.selectedItem.toString()
+                    taskDateMillis in startDateMillis..endDateMillis
                 }
 
                 // Update RecyclerView with filtered tasks
@@ -242,20 +214,8 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
             0
         }
     }
-    private fun totalHours(categoryName: String, startDateString: String, endDateString: String): Int{
-        /*val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val startDate = formatter.parse(startDateString)
-        val endDate = formatter.parse(endDateString)*/
-        val filterByCategory = TaskList.taskList.filter { it.category == categoryName && it.taskDate >= startDateString && it.taskDate <= endDateString}
-        var total = 0
-        for(taskEntry in filterByCategory){
-            total += taskEntry.timeDifferenceSeconds.toInt()
-        }
-        return total
-    }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
-
 }

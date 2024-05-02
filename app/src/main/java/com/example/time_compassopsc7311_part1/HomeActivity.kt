@@ -45,17 +45,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         username = sharedPreferences.getString("USERNAME", "Default Username") ?: "Unknown user"
 
         // Retrieve start time and MIN/MAX values from SharedPreferences
-        startTime = sharedPreferences.getLong("START_TIME", System.currentTimeMillis())
-        minNumber = sharedPreferences.getInt("MIN_NUMBER", 0)
-        maxNumber = sharedPreferences.getInt("MAX_NUMBER", 0)
+        startTime = sharedPreferences.getLong("START_TIME_$username", System.currentTimeMillis())
+        minNumber = sharedPreferences.getInt("MIN_NUMBER_$username", 0)
+        maxNumber = sharedPreferences.getInt("MAX_NUMBER_$username", 0)
 
         binding.minNumTV.text = minNumber.toString();
         binding.maxNumTV.text = maxNumber.toString()
 
         // Retrieve the time when the app was last destroyed
-        val appDestroyedTime = sharedPreferences.getLong("APP_DESTROYED_TIME", 0)
+        val appDestroyedTime = sharedPreferences.getLong("APP_DESTROYED_TIME_$username", 0)
         // Calculate the total time spent in the app since the last destruction
-        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP", 0) + max(0, System.currentTimeMillis() - appDestroyedTime)
+        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP_$username", 0) + max(0, System.currentTimeMillis() - appDestroyedTime)
 
         // Set welcome message with username
         binding.button3.text = getString(R.string.welcome_message, username)
@@ -72,7 +72,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         fabPopupTray.setOnClickListener(this)
         popupMenu.setOnMenuItemClickListener(this)
         binding.saveButton.setOnClickListener {
-            saveNumbers()
+            saveNumbers(username)
         }
 
         updateAppUsage()
@@ -165,27 +165,33 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     }
 
     // Function to save the min/max daily goals entered by the user
-    private fun saveNumbers() {
+    private fun saveNumbers(username : String) {
         val minNumberText = binding.minNum.text.toString()
         val maxNumberText = binding.maxNum.text.toString()
 
-        binding.minNumTV.text = minNumberText
-        binding.maxNumTV.text = maxNumberText
+        if(minNumberText.isNotEmpty() || maxNumberText.isNotEmpty()) {
+            binding.minNumTV.text = minNumberText
+            binding.maxNumTV.text = maxNumberText
 
-        if(minNumberText>=maxNumberText){
-            Toast.makeText(this, "Invalid, minimum hours cannot be higher then maximum!", Toast.LENGTH_SHORT).show()
-        }else{
-            minNumber = minNumberText.toIntOrNull() ?: 0
-            maxNumber = maxNumberText.toIntOrNull() ?: 0
-
-            with(sharedPreferences.edit()) {
-                putInt("MIN_NUMBER", minNumber)
-                putInt("MAX_NUMBER", maxNumber)
-                apply()
+            if(minNumberText>=maxNumberText) {
+                Toast.makeText(this, "Invalid, minimum hours cannot be higher then maximum!", Toast.LENGTH_SHORT).show()
             }
+            else {
+                minNumber = minNumberText.toIntOrNull() ?: 0
+                maxNumber = maxNumberText.toIntOrNull() ?: 0
 
-            updateAppUsage() // Update app usage after saving numbers
-            Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
+                with(sharedPreferences.edit()) {
+                    putInt("MIN_NUMBER_$username", minNumber)
+                    putInt("MAX_NUMBER_$username", maxNumber)
+                    apply()
+                }
+
+                updateAppUsage() // Update app usage after saving numbers
+                Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else {
+            Toast.makeText(this, "Invalid, minimum/maximum hours cannot be empty", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -216,9 +222,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
                         startTime = currentTime
                         // Update SharedPreferences
                         with(sharedPreferences.edit()) {
-                            putLong("START_TIME", startTime)
-                            putInt("MIN_NUMBER", minNumber)
-                            putInt("MAX_NUMBER", maxNumber)
+                            putLong("START_TIME_$username", startTime)
+                            putInt("MIN_NUMBER_$username", minNumber)
+                            putInt("MAX_NUMBER_$username", maxNumber)
                             apply()
                         }
                     }
@@ -239,8 +245,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
 
         // Save the total time spent in the app and the start time
         with(sharedPreferences.edit()) {
-            putLong("TOTAL_TIME_IN_APP", totalTimeInApp)
-            putLong("START_TIME", startTime)
+            putLong("TOTAL_TIME_IN_APP_$username", totalTimeInApp)
+            putLong("START_TIME_$username", startTime)
             apply()
         }
 
@@ -252,8 +258,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         super.onResume()
         isAppRunning = true
         // Retrieve the total time spent in the app and the start time
-        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP", 0)
-        startTime = sharedPreferences.getLong("START_TIME", System.currentTimeMillis())
+        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP_$username", 0)
+        startTime = sharedPreferences.getLong("START_TIME_$username", System.currentTimeMillis())
 
         // Restart the timer
         updateAppUsage()
@@ -267,8 +273,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
 
         // Save the total time spent in the app and the current time
         with(sharedPreferences.edit()) {
-            putLong("TOTAL_TIME_IN_APP", totalTimeInApp + currentTime - startTime)
-            putLong("APP_DESTROYED_TIME", currentTime)
+            putLong("TOTAL_TIME_IN_APP_$username", totalTimeInApp + currentTime - startTime)
+            putLong("APP_DESTROYED_TIME_$username", currentTime)
             apply()
         }
     }

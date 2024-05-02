@@ -69,15 +69,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/categoriesRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/infolayout"
                 android:layout_width="match_parent"
-                android:layout_height="375dp"
+                android:layout_height="435dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -104,9 +99,9 @@
                     android:layout_width="179dp"
                     android:layout_height="62dp"
                     android:layout_marginStart="94dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="118dp"
-                    android:layout_marginBottom="22dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="119dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/dark_grey"
                     android:text="@string/search"
@@ -144,12 +139,13 @@
                     android:layout_width="256dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="56dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="80dp"
                     android:background="@drawable/inputbox"
                     android:entries="@array/categories"
                     android:paddingLeft="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -157,9 +153,9 @@
                     android:id="@+id/startDate"
                     android:layout_width="156dp"
                     android:layout_height="53dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="14dp"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="32dp"
                     android:background="@drawable/inputbox"
                     android:clickable="false"
                     android:cursorVisible="false"
@@ -171,17 +167,15 @@
                     android:textColorHint="@color/black"
                     app:layout_constraintEnd_toStartOf="@+id/endDate"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryOption"
+                    app:layout_constraintTop_toBottomOf="@+id/displayTotalCategoryHours"
                     tools:ignore="MissingConstraints" />
 
                 <EditText
                     android:id="@+id/endDate"
                     android:layout_width="156dp"
                     android:layout_height="53dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="35dp"
-                    android:layout_marginBottom="22dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="13dp"
                     android:background="@drawable/inputbox"
                     android:clickable="false"
                     android:cursorVisible="false"
@@ -191,12 +185,27 @@
                     android:paddingLeft="24dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/savebutton"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/startDate"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryOption"
-                    app:layout_constraintVertical_bias="0.0"
+                    app:layout_constraintTop_toBottomOf="@+id/displayTotalCategoryHours"
                     tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/displayTotalCategoryHours"
+                    android:layout_width="252dp"
+                    android:layout_height="58dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="84dp"
+                    android:layout_marginBottom="13dp"
+                    android:text=""
+                    android:textSize="30sp"
+                    app:flow_verticalAlign="center"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toTopOf="@+id/startDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/categoryOption" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>

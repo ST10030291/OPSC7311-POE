@@ -72,7 +72,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/infolayout"
                 android:layout_width="match_parent"
-                android:layout_height="425dp"
+                android:layout_height="273dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -94,77 +94,31 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
-                <TextView
-                    android:id="@+id/displayHours"
-                    android:layout_width="256dp"
-                    android:layout_height="47dp"
-                    android:layout_marginStart="68dp"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="34sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/startDate" />
-
                 <Button
                     android:id="@+id/savebutton"
                     android:layout_width="179dp"
                     android:layout_height="62dp"
-                    android:layout_marginStart="117dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="96dp"
+                    android:layout_marginBottom="18dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/dark_grey"
                     android:text="@string/search"
                     android:textColor="@color/black"
                     android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/displayHours"
                     app:strokeColor="@color/black"
                     app:strokeWidth="4dp" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="308dp"
-                    android:layout_height="58dp"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginEnd="61dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/categories"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/categoryOption"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    tools:ignore="MissingConstraints" />
-
-                <Spinner
-                    android:id="@+id/categoryOption"
-                    android:layout_width="256dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="56dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="80dp"
-                    android:background="@drawable/inputbox"
-                    android:entries="@array/categories"
-                    android:paddingLeft="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
                 <EditText
                     android:id="@+id/startDate"
                     android:layout_width="156dp"
                     android:layout_height="53dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="14dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="42dp"
+                    android:layout_marginEnd="38dp"
+                    android:layout_marginBottom="52dp"
                     android:background="@drawable/inputbox"
                     android:clickable="false"
                     android:cursorVisible="false"
@@ -174,19 +128,20 @@
                     android:paddingLeft="24dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    app:layout_constraintBottom_toTopOf="@+id/displayHours"
                     app:layout_constraintEnd_toStartOf="@+id/endDate"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryOption"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
                     tools:ignore="MissingConstraints" />
 
                 <EditText
                     android:id="@+id/endDate"
                     android:layout_width="156dp"
                     android:layout_height="53dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="35dp"
-                    android:layout_marginBottom="22dp"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginTop="42dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="52dp"
                     android:background="@drawable/inputbox"
                     android:clickable="false"
                     android:cursorVisible="false"
@@ -196,11 +151,10 @@
                     android:paddingLeft="24dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/savebutton"
+                    app:layout_constraintBottom_toTopOf="@+id/displayHours"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/startDate"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryOption"
-                    app:layout_constraintVertical_bias="0.0"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
                     tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
