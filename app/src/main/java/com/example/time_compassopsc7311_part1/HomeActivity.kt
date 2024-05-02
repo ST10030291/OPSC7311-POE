@@ -169,29 +169,23 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         val minNumberText = binding.minNum.text.toString()
         val maxNumberText = binding.maxNum.text.toString()
 
-        if(minNumberText.isNotEmpty() || maxNumberText.isNotEmpty()) {
-            binding.minNumTV.text = minNumberText
-            binding.maxNumTV.text = maxNumberText
+        binding.minNumTV.text = minNumberText
+        binding.maxNumTV.text = maxNumberText
 
-            if(minNumberText>=maxNumberText) {
-                Toast.makeText(this, "Invalid, minimum hours cannot be higher then maximum!", Toast.LENGTH_SHORT).show()
+        if(minNumberText>=maxNumberText){
+            Toast.makeText(this, "Invalid, minimum hours cannot be higher then maximum!", Toast.LENGTH_SHORT).show()
+        }else{
+            minNumber = minNumberText.toIntOrNull() ?: 0
+            maxNumber = maxNumberText.toIntOrNull() ?: 0
+
+            with(sharedPreferences.edit()) {
+                putInt("MIN_NUMBER", minNumber)
+                putInt("MAX_NUMBER", maxNumber)
+                apply()
             }
-            else {
-                minNumber = minNumberText.toIntOrNull() ?: 0
-                maxNumber = maxNumberText.toIntOrNull() ?: 0
 
-                with(sharedPreferences.edit()) {
-                    putInt("MIN_NUMBER", minNumber)
-                    putInt("MAX_NUMBER", maxNumber)
-                    apply()
-                }
-
-                updateAppUsage() // Update app usage after saving numbers
-                Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
-            }
-        }
-        else {
-            Toast.makeText(this, "Invalid, minimum/maximum hours cannot be empty", Toast.LENGTH_SHORT).show()
+            updateAppUsage() // Update app usage after saving numbers
+            Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
         }
     }
 

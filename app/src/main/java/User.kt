@@ -13,7 +13,7 @@ object UserData {
         UserDetails("avish@gmail.com", "avish", "avish1", "2024/04/20"),
         UserDetails("kaushil@gmail.com", "kaushil", "kaushil1", "2024/04/20"),
         UserDetails("tivolan@gmail.com", "tivolan", "tivolan1", "2024/04/20"),
-        UserDetails("eben@gmail.com", "eben", "eben1", "2024/04/21")
+        UserDetails("eben@gmail.com", "eben", "eben1", "2024/04/20")
     )
 }
 
