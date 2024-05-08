@@ -43,24 +43,20 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
             // This will be saved to the firebase database
             R.id.buttonCreateAccount -> {
-                val editTextEmail = findViewById<EditText>(R.id.editTextEmailSignUp)
-                val editTextPassword = findViewById<EditText>(R.id.editTextPasswordSignUp)
-                val editTextUsername = findViewById<EditText>(R.id.editTextUsernameSignUp)
-
                 // RE for Email Auth
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
-                val enteredEmail = editTextEmail.text.toString()
-                val enteredPassword = editTextPassword.text.toString()
-                val enteredUsername = editTextUsername.text.toString()
+                val Email = binding.editTextEmailSignUp.text.toString()
+                val Password = binding.editTextPasswordSignUp.text.toString()
+                val Username = binding.editTextUsernameSignUp.text.toString()
 
-                if(enteredEmail.isEmpty() || enteredPassword.isEmpty() || enteredUsername.isEmpty()){
+                if(Email.isEmpty() || Password.isEmpty() || Username.isEmpty()){
                     Toast.makeText(this, "Enter required details", Toast.LENGTH_SHORT).show()
                 }
-                else if(enteredPassword.length < 6) {
+                else if(Password.length < 6) {
                     Toast.makeText(this, "Password cannot be less than 6 characters", Toast.LENGTH_SHORT).show()
                 }
-                else if (!enteredEmail.matches(emailPattern.toRegex())) {
+                else if (!Email.matches(emailPattern.toRegex())) {
                     Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show()
                 }
                 else {
@@ -70,7 +66,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     )
                     Log.d("TAG", "Inside Saving User to FIREBASE")
 
-                    firebaseAuth.createUserWithEmailAndPassword(enteredEmail,enteredPassword).addOnCompleteListener(this) {task ->
+                    firebaseAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(this) {task ->
                         if(task.isSuccessful){
                             Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
                             Log.d("TAG", "Inside Success msg")
