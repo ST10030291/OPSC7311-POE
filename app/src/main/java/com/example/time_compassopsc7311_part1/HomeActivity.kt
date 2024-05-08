@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.time_compassopsc7311_part1.R
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import java.util.*
 import kotlin.math.max
 
@@ -23,6 +25,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     private lateinit var popupMenu: PopupMenu
     private lateinit var sharedPreferences: SharedPreferences
     private var username: String = "Unknown user"
+
 
     private var startTime: Long = 0
     private var totalTimeInApp: Long = 0
@@ -51,6 +54,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
 
         binding.minNumTV.text = minNumber.toString();
         binding.maxNumTV.text = maxNumber.toString()
+
 
         // Retrieve the time when the app was last destroyed
         val appDestroyedTime = sharedPreferences.getLong("APP_DESTROYED_TIME_$username", 0)

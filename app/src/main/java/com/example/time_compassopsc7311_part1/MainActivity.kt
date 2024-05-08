@@ -10,12 +10,15 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.time_compassopsc7311_part1.databinding.ActivityMainBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var dateOfCreation: String
+    private lateinit var fireBaseRef : DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -64,6 +67,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     // Proceed to the Home Screen
                     val username = getUsernameByEmail(enteredEmail)
                     saveUserData(enteredEmail, username, dateOfCreation)
+                    //added real time databas ereference test check it
+                    fireBaseRef = FirebaseDatabase.getInstance().getReference("User")
+                    fireBaseRef.setValue("Kaushil")
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()

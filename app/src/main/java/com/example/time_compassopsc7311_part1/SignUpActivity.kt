@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivitySignUpBinding
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -18,6 +19,7 @@ import java.util.Locale
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
     private val userList = mutableListOf<UserDetails>()
+    private lateinit var fireBaseAuth : FirebaseAuth
 
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +73,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
                         Date()
                     )
+                    //added bare minimum firebase authentication it
+                    fireBaseAuth = FirebaseAuth.getInstance()
+                    fireBaseAuth.createUserWithEmailAndPassword(enteredEmail, enteredPassword)
                     val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername, currentDate)
                     UserData.users.add(newUser)
                     saveUserData(enteredEmail, enteredUsername, currentDate)
