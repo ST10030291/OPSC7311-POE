@@ -1,7 +1,5 @@
 package com.example.time_compassopsc7311_part1
 
-import UserData
-import UserDetails
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,12 +16,12 @@ import java.util.Locale
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var binding: ActivitySignUpBinding
     private lateinit var fireBaseAuth : FirebaseAuth
-
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivitySignUpBinding.inflate(layoutInflater)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Initialize SharedPreferences
@@ -40,44 +38,39 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
-            // Creates and saves a new user to a list
-            // This will be saved to the firebase database in the next part
+            // Save new user in firebase via Auth
             R.id.buttonCreateAccount -> {
-                val editTextEmail = findViewById<EditText>(R.id.editTextEmailSignUp)
-                val editTextPassword = findViewById<EditText>(R.id.editTextPasswordSignUp)
-                val editTextUsername = findViewById<EditText>(R.id.editTextUsernameSignUp)
-
                 // RE for Email Auth
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
-                val enteredEmail = editTextEmail.text.toString()
-                val enteredPassword = editTextPassword.text.toString()
-                val enteredUsername = editTextUsername.text.toString()
+                val enteredEmail = binding.editTextEmailSignUp.text.toString()
+                val enteredPassword = binding.editTextPasswordSignUp.text.toString()
 
-                val user = UserData.users.find { it.email == enteredEmail }
-
-                if(enteredEmail.isEmpty() || enteredPassword.isEmpty() || enteredUsername.isEmpty()){
+                // Check if any of the fields are empty
+                if(enteredEmail.isEmpty() || enteredPassword.isEmpty()){
                     Toast.makeText(this, "Enter required details", Toast.LENGTH_SHORT).show()
                 }
-                else if(enteredPassword.length < 4) {
-                    Toast.makeText(this, "Password cannot be less than 3 characters", Toast.LENGTH_SHORT).show()
+                // Check if password is less than 6 characters
+                else if(enteredPassword.length < 6) {
+                    Toast.makeText(this, "Password cannot be less than 6 characters", Toast.LENGTH_SHORT).show()
                 }
+                // Check if email is valid
                 else if (!enteredEmail.matches(emailPattern.toRegex())) {
                     Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show()
                 }
-                else if (user != null){
-                    Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
-                }
+                    // Check if user already exists
+//                else if (user != null){
+//                    Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
+//                }
+                // Create new user
                 else {
                     val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
                         Date()
                     )
-                    //added bare minimum firebase authentication it
                     fireBaseAuth = FirebaseAuth.getInstance()
                     fireBaseAuth.createUserWithEmailAndPassword(enteredEmail, enteredPassword)
-                    val newUser = UserDetails(enteredEmail, enteredPassword, enteredUsername, currentDate)
-                    UserData.users.add(newUser)
-                    saveUserData(enteredEmail, enteredUsername, currentDate)
+
+                    saveUserData(enteredEmail, currentDate)
                     Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
 
                     //Proceed to Home Screen
@@ -88,8 +81,11 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+    // Function to save user data to SharedPreferences
+    private fun saveUserData(email: String, dateofcreation: String) {
+        // Extract username
+        val username = email.substringBefore('@')
 
-    private fun saveUserData(email: String, username: String?, dateofcreation: String) {
         sharedPreferences.edit().apply {
             putString("EMAIL", email)
             putString("USERNAME", username)
@@ -97,5 +93,4 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             apply()
         }
     }
-
 }

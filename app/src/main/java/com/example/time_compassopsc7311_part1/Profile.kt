@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivityProfileBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -18,7 +20,7 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
     private var tasks: String = "Unknown"
     private var categories: String = "Unknown"
     private var email: String = "Unknown"
-    private var dateofcreation: String = "Unknown"
+    private lateinit var fireBaseAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +30,15 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
+        // Initialize Firebase Authentication
+        fireBaseAuth = FirebaseAuth.getInstance()
+
         // Retrieve
         username = sharedPreferences.getString("USERNAME", "Default Username") ?: "Unknown user"
         email = sharedPreferences.getString("EMAIL", "Default Email") ?: "Unknown email"
-        dateofcreation = sharedPreferences.getString("DATEOFCREATION", "Default DateOfCreation") ?: "Unknown date"
 
         binding.tvName.text = getString(R.string.user_name, username)
         binding.userEmail.text = getString(R.string.user_email, email)
-        binding.userDate.text = getString(R.string.user_date_of_creation, dateofcreation)
 
 
         // Get references to views using view binding
@@ -88,6 +91,17 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         // Display Total Tasks and Categories
         binding.totalTasksMade.text = tasks
         binding.totalCategoriesMade.text = categories
+
+        // Logout button
+        binding.logoutbtn.setOnClickListener {
+            // Log out the current user
+            fireBaseAuth.signOut()
+            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+            // Redirect the user to the login screen
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onClick(v: View?) {

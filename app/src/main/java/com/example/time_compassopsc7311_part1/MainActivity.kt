@@ -5,38 +5,45 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.time_compassopsc7311_part1.databinding.ActivityMainBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var dateOfCreation: String
-    private lateinit var fireBaseRef : DatabaseReference
+    private lateinit var fireBaseAuth : FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
+        // Initialize Firebase Authentication
+        fireBaseAuth = FirebaseAuth.getInstance()
+
+        // Check if the user is already logged in
+        val currentUser = fireBaseAuth.currentUser
+        if (currentUser != null) {
+            // User is already logged in
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         // Bindings for each Click
         binding.openSignUpActivity.setOnClickListener(this)
         binding.loginUser.setOnClickListener(this)
         binding.textViewForgotPassword.setOnClickListener(this)
-    }
 
-    // Function to search for a user by email and return their username
-    private fun getUsernameByEmail(email: String): String? {
-        val user = UserData.users.find { it.email == email }
-        dateOfCreation = user?.dateOfCreation.toString()
-        return user?.username ?: "Unknown user"
     }
 
     override fun onClick(v: View?) {
@@ -49,58 +56,63 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             // Logs user in if credentials are Valid
             R.id.loginUser -> {
+                val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
+                    Date()
+                )
                 // Get email and password
-                val editTextEmail = findViewById<EditText>(R.id.editTextEmailLogin)
-                val editTextPassword = findViewById<EditText>(R.id.editTextPasswordLogin)
+                val email = binding.editTextEmailLogin.text.toString()
+                val password = binding.editTextPasswordLogin.text.toString()
 
-                val enteredEmail = editTextEmail.text.toString()
-                val enteredPassword = editTextPassword.text.toString()
-
-                // Check if email / password are valid
-                val isCredentialsValid = UserData.users.any() { person ->
-                    person.email == enteredEmail && person.password == enteredPassword
-                }
-
-                if (isCredentialsValid) {
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    // Proceed to the Home Screen
-                    val username = getUsernameByEmail(enteredEmail)
-                    saveUserData(enteredEmail, username, dateOfCreation)
-                    //added real time databas ereference test check it
-                    fireBaseRef = FirebaseDatabase.getInstance().getReference("User")
-                    fireBaseRef.setValue("Kaushil")
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show()
-                }
+                fireBaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                            // Proceed to the Home Screen
+                            saveUserData(email, currentDate)
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
             }
-
+            // Checks if user exists in Firebase
             R.id.textViewForgotPassword -> {
-                val editTextEmail = findViewById<EditText>(R.id.editTextEmailLogin)
-                val enteredEmail = editTextEmail.text.toString()
+                val email = binding.editTextEmailLogin.text.toString()
 
-                if (enteredEmail.isEmpty()) {
+                if (email.isEmpty()) {
                     Toast.makeText(this, "Please enter your email address", Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                    val user = UserData.users.find { it.email == enteredEmail }
-                    if (user != null) {
-                        // Display the users password
-                        Toast.makeText(
-                            this,
-                            "Your password is: ${user.password}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
-                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                    fireBaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val signInMethods = task.result?.signInMethods ?: emptyList()
+                            if (signInMethods.isNotEmpty()) {
+                                // User exists
+                                Toast.makeText(this, "User exists", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+                                // User does not exist
+                                Toast.makeText(this, "User does not exist", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                        else {
+                            // Error occurred while checking user existence
+                            Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
         }
     }
-    private fun saveUserData(email: String, username: String?, dateofcreation: String) {
+    // Function to save user data to SharedPreferences
+    private fun saveUserData(email: String, dateofcreation: String) {
+        // Extract username
+        val username = email.substringBefore('@')
+
         sharedPreferences.edit().apply {
             putString("EMAIL", email)
             putString("USERNAME", username)

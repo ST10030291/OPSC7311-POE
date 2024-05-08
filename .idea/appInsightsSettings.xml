@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.time_compassopsc7311_part1" />
-                  <option name="mobileSdkAppId" value="1:400209446052:android:e0d93362535d014c555231" />
-                  <option name="projectId" value="timecompassdb-b14bb" />
-                  <option name="projectNumber" value="400209446052" />
+                  <option name="mobileSdkAppId" value="1:660337427355:android:b5b2eab7f1f3afbefe573e" />
+                  <option name="projectId" value="time-compass-opsc7311-poe" />
+                  <option name="projectNumber" value="660337427355" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
