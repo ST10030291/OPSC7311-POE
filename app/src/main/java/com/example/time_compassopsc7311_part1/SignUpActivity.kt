@@ -6,13 +6,9 @@ import android.os.Bundle
 import android.content.Intent
 import android.content.SharedPreferences
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -58,19 +54,16 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                 else if (!enteredEmail.matches(emailPattern.toRegex())) {
                     Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show()
                 }
-                    // Check if user already exists
+                // Check if user already exists
 //                else if (user != null){
 //                    Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
 //                }
                 // Create new user
                 else {
-                    val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
-                        Date()
-                    )
                     fireBaseAuth = FirebaseAuth.getInstance()
                     fireBaseAuth.createUserWithEmailAndPassword(enteredEmail, enteredPassword)
 
-                    saveUserData(enteredEmail, currentDate)
+                    saveUserData(enteredEmail)
                     Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
 
                     //Proceed to Home Screen
@@ -82,14 +75,13 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
     // Function to save user data to SharedPreferences
-    private fun saveUserData(email: String, dateofcreation: String) {
+    private fun saveUserData(email: String) {
         // Extract username
         val username = email.substringBefore('@')
 
         sharedPreferences.edit().apply {
             putString("EMAIL", email)
             putString("USERNAME", username)
-            putString("DATEOFCREATION", dateofcreation)
             apply()
         }
     }

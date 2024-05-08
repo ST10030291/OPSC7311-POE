@@ -56,9 +56,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             // Logs user in if credentials are Valid
             R.id.loginUser -> {
-                val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
-                    Date()
-                )
                 // Get email and password
                 val email = binding.editTextEmailLogin.text.toString()
                 val password = binding.editTextPasswordLogin.text.toString()
@@ -68,7 +65,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         if (task.isSuccessful) {
                             Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                             // Proceed to the Home Screen
-                            saveUserData(email, currentDate)
+                            saveUserData(email)
                             val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -85,7 +82,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (email.isEmpty()) {
                     Toast.makeText(this, "Please enter your email address", Toast.LENGTH_SHORT)
                         .show()
-                } else {
+                }
+                else {
                     fireBaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val signInMethods = task.result?.signInMethods ?: emptyList()
@@ -109,14 +107,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
     // Function to save user data to SharedPreferences
-    private fun saveUserData(email: String, dateofcreation: String) {
+    private fun saveUserData(email: String) {
         // Extract username
         val username = email.substringBefore('@')
 
         sharedPreferences.edit().apply {
             putString("EMAIL", email)
             putString("USERNAME", username)
-            putString("DATEOFCREATION", dateofcreation)
             apply()
         }
     }
