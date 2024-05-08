@@ -1,6 +1,5 @@
 package com.example.time_compassopsc7311_part1
 
-import UserData
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences

@@ -18,7 +18,6 @@ import java.util.Locale
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val userList = mutableListOf<UserDetails>()
     private lateinit var fireBaseAuth : FirebaseAuth
 
     private lateinit var sharedPreferences: SharedPreferences
