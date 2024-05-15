@@ -1,5 +1,6 @@
 package com.example.time_compassopsc7311_part1
 
+import Category
 import CategoryList
 import Task
 import TaskList
@@ -24,7 +25,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.toColorInt
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddTaskBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.io.File
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -36,6 +45,7 @@ import java.util.Locale
 class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private val taskList = mutableListOf<Task>()
+    private lateinit var databaseReference: DatabaseReference
     private lateinit var popupMenu: PopupMenu
     private lateinit var binding: ActivityAddTaskBinding
     private lateinit var taskName : TextView
@@ -75,9 +85,30 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         pickImageFromCameraBtn = findViewById(R.id.cameraButton)
         saveBtn = findViewById(R.id.savebutton)
 
-        val categoryName = CategoryList.categoryList.map { it.categoryName }.toTypedArray()
-        val categoryColor = CategoryList.categoryList.map { it.color }.toTypedArray()
-        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
+        //this part is for the populating spinner
+        val categoryList = mutableListOf<String>()
+        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+        val userID = firebaseAuth?.uid.toString()
+        val firebaseReference = FirebaseDatabase.getInstance()
+        val categoryRef = firebaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
+        categoryRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(categoryShot in snapshot.children){
+                    val category = categoryShot.child("categoryName").value.toString()
+                    if(category != null){
+                        categoryList.add(category)
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        )
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryList)
         categoryChoice.adapter = arrayAdapter
         categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
@@ -86,6 +117,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
                 position: Int,
                 id: Long
             ) {
+                val categoryItem = parent?.getItemAtPosition(position) as String
                 //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
             }
 
@@ -316,8 +348,13 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
             Toast.makeText(this, "Invalid, Time cannot be before Start Time", Toast.LENGTH_SHORT).show()
         }
         else {
-            val newTask = Task(taskName, description, category, taskDate, startTime, endTime,timeDifference , taskImg)
-            TaskList.taskList.add(newTask)
+            val firebaseAuth = FirebaseAuth.getInstance().currentUser
+            val userID = firebaseAuth?.uid.toString()
+            databaseReference = FirebaseDatabase.getInstance().getReference("Tasks")
+            val taskID = databaseReference.push().key.toString()
+
+            val newTask = Task(taskID, userID, taskName, description, category, taskDate, startTime, endTime,timeDifference , taskImg)
+            databaseReference.child(taskID).setValue(newTask)
             val intent = Intent(this, TaskAvailable::class.java)
             startActivity(intent)
             finish()

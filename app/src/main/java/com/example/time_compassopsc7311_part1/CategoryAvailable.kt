@@ -12,21 +12,56 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityCategoryAvailableBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityCurrentTaskBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener  {
 
     private lateinit var popupMenu: PopupMenu
+    private lateinit var databaseReference: FirebaseDatabase
+    //private lateinit var recyclerView: RecyclerView
+    //private lateinit var categoryList: MutableList<Category>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityCategoryAvailableBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val categoryList = CategoryList.categoryList.toList()
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = CategoryAdapter(categoryList)
-        recyclerView.adapter = adapter
+        //val categoryList = CategoryList.categoryList.toList()
+        val categoryList = mutableListOf<Category>()
+        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+        val userID = firebaseAuth?.uid.toString()
+        databaseReference = FirebaseDatabase.getInstance()
+        val categoryRef = databaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
+
+        categoryRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(categoryShot in snapshot.children){
+                    val category = categoryShot.getValue(Category::class.java)
+                    if(category != null){
+                        categoryList.add(category)
+                    }
+                }
+                var recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                recyclerView.layoutManager = LinearLayoutManager(this@CategoryAvailable)
+                val adapter = CategoryAdapter(categoryList)
+                recyclerView.adapter = adapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        )
+
+
+       // getCategoryData()
+
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
@@ -72,6 +107,32 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
             }
         }
     }
+    /*private fun getCategoryData() {
+        val categoryList = mutableListOf<Category>()
+        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+        val userID = firebaseAuth?.uid.toString()
+        databaseReference = FirebaseDatabase.getInstance()
+        val categoryRef = databaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
+
+        categoryRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(categoryShot in snapshot.children){
+                    val category = categoryShot.getValue(Category::class.java)
+                    if(category != null){
+                        categoryList.add(category)
+                    }
+                }
+                val adapter = CategoryAdapter(categoryList)
+                recyclerView.adapter = adapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        )
+    }*/
 
     // show pop up menu onClick
     override fun onClick(v: View?) {

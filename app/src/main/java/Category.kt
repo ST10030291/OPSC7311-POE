@@ -3,6 +3,8 @@ object CategoryList{
 
 }
 data class Category(
-    val categoryName: String,
-    val color: String,
+    val categoryID: String ="",
+    val userID: String ="",
+    val categoryName: String ="",
+    val color: String ="",
 )

@@ -3,18 +3,20 @@ package com.example.time_compassopsc7311_part1
 import Category
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddCategoryBinding
-import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
 
 class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
 
@@ -22,7 +24,7 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private lateinit var popupMenu: PopupMenu
     private lateinit var categoryName : TextView
     private lateinit var colorOptn : Spinner
-   // private val categroyList = mutableListOf<Category>()
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,8 +170,15 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
             Toast.makeText(this, "Enter Required Details", Toast.LENGTH_SHORT).show()
         }
         else {
-            val newCategory = Category(categoryName, categoryColor)
-            CategoryList.categoryList.add(newCategory)
+            val firebaseAuth = FirebaseAuth.getInstance().currentUser
+            val userID = firebaseAuth?.uid.toString()
+            databaseReference = FirebaseDatabase.getInstance().getReference("Categories")
+            val categoryID = databaseReference.push().key.toString()
+
+
+            val newCategory = Category(categoryID, userID, categoryName, categoryColor)
+            databaseReference.child(categoryID).setValue(newCategory)
+            //CategoryList.categoryList.add(newCategory)
             val intent = Intent(this, CategoryAvailable::class.java)
             startActivity(intent)
             finish()

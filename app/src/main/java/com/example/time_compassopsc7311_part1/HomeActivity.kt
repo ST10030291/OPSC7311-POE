@@ -151,21 +151,25 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     }
 
     fun navigateToAllCategories(view: View) {
-        if(CategoryList.categoryList.isNullOrEmpty()){
+        val intent = Intent(this, CategoryAvailable::class.java)
+        startActivity(intent)
+        /*if(CategoryList.categoryList.isNullOrEmpty()){
             Toast.makeText(this, "Please enter a category first", Toast.LENGTH_SHORT).show()
         }else{
             val intent = Intent(this, CategoryAvailable::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 
     fun navigateToAllTasks(view: View) {
-        if(TaskList.taskList.isNullOrEmpty()){
+        val intent = Intent(this, TaskAvailable::class.java)
+        startActivity(intent)
+        /*if(TaskList.taskList.isNullOrEmpty()){
             Toast.makeText(this, "Please enter a Task first", Toast.LENGTH_SHORT).show()
         }else{
             val intent = Intent(this, TaskAvailable::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 
     // Function to save the min/max daily goals entered by the user

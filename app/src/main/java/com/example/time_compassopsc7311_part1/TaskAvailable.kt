@@ -14,11 +14,17 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityTaskAvailableBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
     private lateinit var listView : ListView
+    private lateinit var databaseReference: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +32,34 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         setContentView(binding.root)
 
         //setting the display
-        val taskList = TaskList.taskList.toList()
-        val recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
+        val taskList = mutableListOf<Task>()
+        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+        val userID = firebaseAuth?.uid.toString()
+        databaseReference = FirebaseDatabase.getInstance()
+        val taskRef = databaseReference.getReference("Tasks").orderByChild("userID").equalTo(userID)
+
+        taskRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(taskShot in snapshot.children){
+                    val task = taskShot.getValue(Task::class.java)
+                    if(task != null){
+                        taskList.add(task)
+                    }
+                }
+                var recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                recyclerView.layoutManager = LinearLayoutManager(this@TaskAvailable)
+                val adapter = TaskAdapter(taskList)
+                recyclerView.adapter = adapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        )
+        //val taskList = TaskList.taskList.toList()
+        /*val recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = TaskAdapter(taskList)
         recyclerView.adapter = adapter
@@ -43,7 +75,7 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
            intent.putExtra("taskDate", taskList.taskDate)
            intent.putExtra("taskImg", taskList.picture.toString())
            startActivity(intent)
-       }
+       }*/
        /*adapter.setOnItemClick { position ->
             val taskChosen = TaskList.taskList[position]
             val intent = Intent(this, CurrentTask::class.java)
