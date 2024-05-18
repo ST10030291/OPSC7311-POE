@@ -194,24 +194,24 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         val startDateInput = getDateInMillis(startDate.text.toString())
         val endDateInput = getDateInMillis(endDate.text.toString())
 
-        val filterByCategory = TaskList.taskList.filter {
-            it.category == category &&
-                    getDateInMillis(it.taskDate) in startDateInput..endDateInput
-        }
+       // val filterByCategory = TaskList.taskList.filter {
+           // it.category == category &&
+               //     getDateInMillis(it.taskDate) in startDateInput..endDateInput
+        //}
 
         var totalHours = 0.0 // Use double for accurate total hours
 
-        for (taskEntry in filterByCategory) {
+        /*for (taskEntry in filterByCategory) {
             // Parse start and end times to milliseconds
-            val startTimeMillis = getTimeInMillis(taskEntry.startTime)
-            val endTimeMillis = getTimeInMillis(taskEntry.endTime)
+           // val startTimeMillis = getTimeInMillis(taskEntry.startTime)
+            //val endTimeMillis = getTimeInMillis(taskEntry.endTime)
 
             // Calculate time difference in milliseconds and convert to hours
             val timeDifferenceHours = (endTimeMillis - startTimeMillis) / (1000 * 60 * 60).toDouble()
 
             // Add time difference to total hours
             totalHours += timeDifferenceHours
-        }
+        }*/
 
         // Update the TextView with total duration
         binding.displayTotalCategoryHours.text = String.format(Locale.getDefault(), "Total: %.2f hours", totalHours)

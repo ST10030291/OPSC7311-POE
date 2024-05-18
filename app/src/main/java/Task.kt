@@ -15,5 +15,5 @@ data class Task(
     val startTime : String= "",
     val endTime : String= "",
     val timeDifferenceSeconds : Long= 0,
-    val picture : Uri? = null
+    val taskImg : String = ""
 )

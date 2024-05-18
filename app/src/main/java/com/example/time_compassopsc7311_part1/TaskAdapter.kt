@@ -2,12 +2,19 @@ package com.example.time_compassopsc7311_part1
 
 import Task
 import TaskList
+import android.content.ContentResolver
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+
 
 class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
@@ -37,8 +44,11 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
         holder.date.setText(task.taskDate)
         holder.startTime.setText(task.startTime)
         holder.endTime.setText(task.endTime)
-        holder.taskIcon.setImageURI(task.picture)
-
+        //holder.taskIcon.setImageURI(Uri.parse(task.taskImg))
+       // val imageUri = task.taskImg
+        //val image = Uri.parse(imageUri)
+        //holder.taskIcon.setImageURI(image)
+        Picasso.get().load(task.taskImg).into(holder.taskIcon)
         holder.itemView.setOnClickListener{
             onItemClick?.invoke(task)
         }
@@ -51,6 +61,8 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
         //holder.categoryName.setBackgroundColor(category.color.toColorInt())
         //holder.categoryColor.text = category.color
     }
+
+
 
     override fun getItemCount(): Int {
         return taskList.size

@@ -1,6 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
 import Task
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,7 @@ class FilterTasksAdapter(private var filteredTaskList: List<Task>) : RecyclerVie
         holder.date.text = task.taskDate
         holder.startTime.text = task.startTime
         holder.endTime.text = task.endTime
-        holder.taskIcon.setImageURI(task.picture)
+        //holder.taskIcon.setImageURI(Uri.parse(task.taskImg))
     }
 
     override fun getItemCount(): Int {

@@ -31,11 +31,18 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         val binding = ActivityTaskAvailableBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+       /* val taskList = TaskList.taskList.toList()
+        val recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = TaskAdapter(taskList)
+        recyclerView.adapter = adapter*/
+
         //setting the display
         val taskList = mutableListOf<Task>()
         val firebaseAuth = FirebaseAuth.getInstance().currentUser
         val userID = firebaseAuth?.uid.toString()
         databaseReference = FirebaseDatabase.getInstance()
+        taskList.clear()
         val taskRef = databaseReference.getReference("Tasks").orderByChild("userID").equalTo(userID)
 
         taskRef.addValueEventListener(object: ValueEventListener {
@@ -46,7 +53,7 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
                         taskList.add(task)
                     }
                 }
-                var recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                var recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
                 recyclerView.layoutManager = LinearLayoutManager(this@TaskAvailable)
                 val adapter = TaskAdapter(taskList)
                 recyclerView.adapter = adapter

@@ -36,6 +36,7 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         val firebaseAuth = FirebaseAuth.getInstance().currentUser
         val userID = firebaseAuth?.uid.toString()
         databaseReference = FirebaseDatabase.getInstance()
+        categoryList.clear()
         val categoryRef = databaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
 
         categoryRef.addValueEventListener(object: ValueEventListener{

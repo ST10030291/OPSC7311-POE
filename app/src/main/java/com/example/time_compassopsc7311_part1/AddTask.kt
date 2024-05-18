@@ -4,6 +4,7 @@ import Category
 import CategoryList
 import Task
 import TaskList
+import Tasks
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -21,12 +22,9 @@ import android.widget.PopupMenu
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import androidx.core.graphics.toColorInt
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddTaskBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -34,6 +32,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -57,15 +56,11 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
     private lateinit var galleryImage : ImageView
     private lateinit var pickImageFromGalleryBtn : Button
     private lateinit var pickImageFromCameraBtn : Button
-    private lateinit var imageUrl : Uri
+    private var imageUrl : String? = null
+    private var uri: Uri? = null
     private lateinit var saveBtn : Button
-    private val contract = registerForActivityResult(ActivityResultContracts.TakePicture()){
-        galleryImage.setImageURI(null)
-        galleryImage.setImageURI(imageUrl)
-    }
-    private val imageContract = registerForActivityResult(ActivityResultContracts.GetContent()){
-        galleryImage.setImageURI(it)
-    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -90,16 +85,22 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val firebaseAuth = FirebaseAuth.getInstance().currentUser
         val userID = firebaseAuth?.uid.toString()
         val firebaseReference = FirebaseDatabase.getInstance()
-        val categoryRef = firebaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
-        categoryRef.addValueEventListener(object: ValueEventListener {
+        val categoryRef =
+            firebaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
+        categoryRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(categoryShot in snapshot.children){
+                for (categoryShot in snapshot.children) {
                     val category = categoryShot.child("categoryName").value.toString()
-                    if(category != null){
+                    if (category != null) {
                         categoryList.add(category)
                     }
                 }
-
+                val arrayAdapter = ArrayAdapter<String>(
+                    this@AddTask,
+                    android.R.layout.simple_list_item_1,
+                    categoryList
+                )
+                categoryChoice.adapter = arrayAdapter
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -108,9 +109,9 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
 
         }
         )
-        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryList)
-        categoryChoice.adapter = arrayAdapter
-        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+
+        //categoryChoice.adapter = arrayAdapter
+        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -127,7 +128,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
 
         }
 
-        date.setOnClickListener{
+        date.setOnClickListener {
             datePicker()//datepicker function
         }
         startText.setOnClickListener {
@@ -136,14 +137,26 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         endText.setOnClickListener {
             endTime()//time picker function
         }
-//images from gallery
-        pickImageFromGalleryBtn.setOnClickListener{
-        imageContract.launch("image/*")
+        //images from gallery
+       /* val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data
+                uri = data!!.data
+                binding.imageView.setImageURI(uri)
+            }
+        }*/
+
+        val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){
+            binding.imageView.setImageURI(it)
+            if(it != null){
+              uri = it
+            }
         }
-        imageUrl = createImageUri()
-//images from camera
-        pickImageFromCameraBtn.setOnClickListener{
-        contract.launch(imageUrl)
+
+        pickImageFromGalleryBtn.setOnClickListener{
+        pickImage.launch("image/*")
         }
 
 
@@ -321,26 +334,33 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         }
         timePickerDialog.show()
     }
-    private fun createImageUri():Uri{
-        val image = File(filesDir, "camera_photos.png")
-        return FileProvider.getUriForFile(this,
-            "com.coding.captureimage.FileProvider",
-            image)
-    }
+
+   /* private fun saveImage() {
+        val storageReference = FirebaseStorage.getInstance().reference.child("Task Images")
+            .child(uri!!.lastPathSegment!!)
+        storageReference.putFile(uri!!).addOnSuccessListener { taskSnapshot ->
+            val uriTask = taskSnapshot.storage.downloadUrl
+            while (!uriTask.isComplete);
+            val urlImage = uriTask.result
+            imageUrl = urlImage.toString()
+        }
+        saveTask()
+    }*/
+
     private fun saveTask(){
         val taskName = taskName.text.toString()
-        val description = description.text.toString()
         val category = categoryChoice.selectedItem.toString()
+        val description = description.text.toString()
         val taskDate = date.text.toString()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = sdf.format(Date())
         val startTime = startText.text.toString()
         val endTime = endText.text.toString()
         val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
         val startTimeValue = tf.parse(startTime)
         val endTimeValue = tf.parse(endTime)
         val timeDifference = (endTimeValue.time - startTimeValue.time)
-        val taskImg = imageUrl
+        //saveImage()
+        val taskImg = imageUrl.toString()
         if(taskName.isEmpty() || description.isEmpty() || category.isEmpty() || taskDate.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || taskImg.equals(null)){
             Toast.makeText(this, "Enter Required Details", Toast.LENGTH_SHORT).show()
         }
@@ -353,9 +373,21 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
             databaseReference = FirebaseDatabase.getInstance().getReference("Tasks")
             val taskID = databaseReference.push().key.toString()
 
-            val newTask = Task(taskID, userID, taskName, description, category, taskDate, startTime, endTime,timeDifference , taskImg)
-            databaseReference.child(taskID).setValue(newTask)
-            val intent = Intent(this, TaskAvailable::class.java)
+            uri?.let{
+                val storageReference = FirebaseStorage.getInstance().reference.child("Task Images")
+                    .child(taskID).putFile(it).addOnSuccessListener { image->
+                        image.metadata!!.reference!!.downloadUrl.addOnSuccessListener { url ->
+                            val imgUrl = url.toString()
+
+                            val newTask = Tasks(taskID, userID, taskName, description, category, taskDate, startTime, endTime,timeDifference , imgUrl)
+                            databaseReference.child(taskID).setValue(newTask)
+                        }
+                    }
+            }
+            //val newTask = Tasks(taskID,userID, taskName, description, category, taskDate, startTime, endTime, timeDifference, taskImg)
+            //val newTask = Tasks(taskID, userID, taskName, description, category, taskDate, startTime, endTime,timeDifference , taskImg)
+           // databaseReference.child(taskID).setValue(newTask)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
         }
