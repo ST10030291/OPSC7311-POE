@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import com.example.time_compassopsc7311_part1.databinding.ActivityCurrentTaskBinding
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -36,7 +37,7 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         val taskEnd = intent.getStringExtra("taskEnd")
         val taskDate =intent.getStringExtra("taskDate")
         val taskImgPath = intent.getStringExtra("taskImg")
-        val taskImg = Uri.parse(taskImgPath)
+        //val taskImg = Uri.parse(taskImgPath)
 
 
         binding.taskName.setText(taskName)
@@ -44,7 +45,8 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         binding.categorydisplay.setText(taskCategory)
         binding.dateDisplay.setText(taskDate)
         binding.timeDisplay.setText(taskStart + " - " + taskEnd)
-        binding.imageView2.setImageURI(taskImg)
+        Picasso.get().load(taskImgPath).into(binding.imageView2)
+        //binding.imageView2.setImageURI(taskImg)
 
 
         // Get references to views using view binding
