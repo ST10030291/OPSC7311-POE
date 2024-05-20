@@ -20,6 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityFilterCategoriesBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityFilterTasksBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -33,6 +39,7 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
     private lateinit var categoryChoice: Spinner
     private lateinit var startDate: TextView
     private lateinit var endDate: TextView
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,16 +53,45 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         categoryChoice = binding.categoryOption
 
         //displayTotalHours = findViewById(R.id.displayHours)
-        val categoryName = CategoryList.categoryList.map { it.categoryName }.toTypedArray()
-        val arrayAdapterCat = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categoryName)
-        categoryChoice.adapter = arrayAdapterCat
-        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        //setting drop down menu
+        val categoryList = mutableListOf<String>()
+        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+        val userID = firebaseAuth?.uid.toString()
+        val firebaseReference = FirebaseDatabase.getInstance()
+        val categoryRef =
+            firebaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
+        categoryRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (categoryShot in snapshot.children) {
+                    val category = categoryShot.child("categoryName").value.toString()
+                    if (category != null) {
+                        categoryList.add(category)
+                    }
+                }
+                val arrayAdapter = ArrayAdapter<String>(
+                    this@FilterCategories,
+                    android.R.layout.simple_list_item_1,
+                    categoryList
+                )
+                categoryChoice.adapter = arrayAdapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        )
+
+        //categoryChoice.adapter = arrayAdapter
+        categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
+                val categoryItem = parent?.getItemAtPosition(position) as String
                 //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
             }
 

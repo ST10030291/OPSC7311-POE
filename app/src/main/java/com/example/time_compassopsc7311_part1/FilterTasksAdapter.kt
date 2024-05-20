@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class FilterTasksAdapter(private var filteredTaskList: List<Task>) : RecyclerView.Adapter<FilterTasksAdapter.TaskViewHolder>() {
 
@@ -32,6 +33,7 @@ class FilterTasksAdapter(private var filteredTaskList: List<Task>) : RecyclerVie
         holder.date.text = task.taskDate
         holder.startTime.text = task.startTime
         holder.endTime.text = task.endTime
+        Picasso.get().load(task.taskImg).into(holder.taskIcon)
         //holder.taskIcon.setImageURI(Uri.parse(task.taskImg))
     }
 

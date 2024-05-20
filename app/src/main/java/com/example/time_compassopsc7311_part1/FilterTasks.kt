@@ -1,6 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
 import CategoryList
+import Task
 import TaskList
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -21,6 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityFilterTasksBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -37,6 +43,7 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private lateinit var endDate : TextView
     private lateinit var tasksRecyclerView: RecyclerView
     private lateinit var taskAdapter: FilterTasksAdapter
+    private lateinit var databaseReference: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -188,13 +195,41 @@ class FilterTasks : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
 
             // Check if start date is before end date
             if (startDateMillis <= endDateMillis) {
-                val filteredTasks = TaskList.taskList.filter { task ->
-                    val taskDateMillis = getDateInMillis(task.taskDate)
-                    taskDateMillis in startDateMillis..endDateMillis
-                }
+                //setting the display
+                val taskList = mutableListOf<Task>()
+                val firebaseAuth = FirebaseAuth.getInstance().currentUser
+                val userID = firebaseAuth?.uid.toString()
+                databaseReference = FirebaseDatabase.getInstance()
+                taskList.clear()
+                val taskRef = databaseReference.getReference("Tasks").orderByChild("userID").equalTo(userID)
 
-                // Update RecyclerView with filtered tasks
-                taskAdapter.updateFilteredTasks(filteredTasks)
+                taskRef.addValueEventListener(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for(taskShot in snapshot.children){
+                            val task = taskShot.getValue(Task::class.java)
+                            if(task != null){
+                                taskList.add(task)
+                            }
+                        }
+                        //var recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
+                        //recyclerView.layoutManager = LinearLayoutManager(this@FilterTasks)
+                        //val adapter = TaskAdapter(taskList)
+                       // recyclerView.adapter = adapter
+                        val filteredTasks = taskList.filter { task ->
+                            val taskDateMillis = getDateInMillis(task.taskDate)
+                            taskDateMillis in startDateMillis..endDateMillis
+                        }
+
+                        // Update RecyclerView with filtered tasks
+                        taskAdapter.updateFilteredTasks(filteredTasks)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                }
+                )
             } else {
                 showToast("Start date cannot be after end date")
             }
