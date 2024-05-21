@@ -77,7 +77,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         endText = findViewById(R.id.endText)
         galleryImage = findViewById(R.id.imageView)
         pickImageFromGalleryBtn = findViewById(R.id.galleryButton)
-        pickImageFromCameraBtn = findViewById(R.id.cameraButton)
+        //pickImageFromCameraBtn = findViewById(R.id.cameraButton)
         saveBtn = findViewById(R.id.savebutton)
 
         //this part is for the populating spinner
@@ -85,6 +85,11 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val firebaseAuth = FirebaseAuth.getInstance().currentUser
         val userID = firebaseAuth?.uid.toString()
         val firebaseReference = FirebaseDatabase.getInstance()
+        val arrayAdapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_list_item_1,
+            categoryList
+        )
         val categoryRef =
             firebaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
         categoryRef.addValueEventListener(object : ValueEventListener {
@@ -95,11 +100,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
                         categoryList.add(category)
                     }
                 }
-                val arrayAdapter = ArrayAdapter<String>(
-                    this@AddTask,
-                    android.R.layout.simple_list_item_1,
-                    categoryList
-                )
+
                 categoryChoice.adapter = arrayAdapter
             }
 

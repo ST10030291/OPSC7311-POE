@@ -44,6 +44,9 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         databaseReference = FirebaseDatabase.getInstance()
         taskList.clear()
         val taskRef = databaseReference.getReference("Tasks").orderByChild("userID").equalTo(userID)
+        var recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
 
         taskRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -53,8 +56,6 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
                         taskList.add(task)
                     }
                 }
-                var recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
-                recyclerView.layoutManager = LinearLayoutManager(this@TaskAvailable)
                 val adapter = TaskAdapter(taskList)
                 recyclerView.adapter = adapter
                 adapter.onItemClick = {taskList ->

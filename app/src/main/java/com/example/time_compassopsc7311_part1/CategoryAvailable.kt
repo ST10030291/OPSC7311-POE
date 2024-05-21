@@ -38,7 +38,8 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         databaseReference = FirebaseDatabase.getInstance()
         categoryList.clear()
         val categoryRef = databaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
-
+        var recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         categoryRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(categoryShot in snapshot.children){
@@ -47,8 +48,7 @@ class CategoryAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                         categoryList.add(category)
                     }
                 }
-                var recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-                recyclerView.layoutManager = LinearLayoutManager(this@CategoryAvailable)
+
                 val adapter = CategoryAdapter(categoryList)
                 recyclerView.adapter = adapter
             }
