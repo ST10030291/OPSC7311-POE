@@ -8,10 +8,20 @@
     tools:context=".Game">
 
     <!-- Header -->
+
+    <!-- FAB -->
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_above="@+id/fabPopupTray"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="645dp"
         android:background="@color/dark_background"
         android:orientation="horizontal"
         android:padding="5dp">
@@ -35,7 +45,6 @@
 
     </LinearLayout>
 
-    <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPopupTray"
         android:layout_width="wrap_content"
@@ -48,15 +57,6 @@
         android:src="@drawable/plus_icon" />
 
     <!-- Bottom Navigation View -->
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="456dp"
-        android:layout_height="600dp"
-        android:background="@color/dark_background"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/linearLayout2"
-        android:layout_weight="1"
-        android:src="@drawable/wingsoon" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -66,6 +66,8 @@
         android:background="@color/light_background"
         app:itemTextColor="@color/grey"
         app:menu="@menu/bottom_navigation_menu" />
+
+
 
     <!-- ScrollView with Buttons -->
     <ScrollView
@@ -77,13 +79,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"/>
 
 
-            <!-- Put your design inside here  -->
 
-        </LinearLayout>
     </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="407dp"
+        android:layout_height="570dp"
+        android:layout_above="@+id/fabPopupTray"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="0dp" />
 
 
 </RelativeLayout>
