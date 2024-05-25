@@ -1,6 +1,7 @@
 package com.example.time_compassopsc7311_part1
 
 import CategoryList
+import DailyGoal
 import TaskList
 import android.content.Context
 import android.content.Intent
@@ -15,7 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.time_compassopsc7311_part1.R
 import com.example.time_compassopsc7311_part1.databinding.ActivityHomeBinding
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
 
@@ -25,7 +29,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     private lateinit var popupMenu: PopupMenu
     private lateinit var sharedPreferences: SharedPreferences
     private var username: String = "Unknown user"
-
+    private lateinit var databaseReference: FirebaseDatabase
 
     private var startTime: Long = 0
     private var totalTimeInApp: Long = 0
@@ -173,35 +177,47 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
     }
 
     // Function to save the min/max daily goals entered by the user
-    private fun saveNumbers(username : String) {
+    private fun saveNumbers(username: String) {
         val minNumberText = binding.minNum.text.toString()
         val maxNumberText = binding.maxNum.text.toString()
 
-        if(minNumberText.isNotEmpty() || maxNumberText.isNotEmpty()) {
+        if (minNumberText.isNotEmpty() && maxNumberText.isNotEmpty()) {
             binding.minNumTV.text = minNumberText
             binding.maxNumTV.text = maxNumberText
 
-            if(minNumberText>=maxNumberText) {
-                Toast.makeText(this, "Invalid, minimum hours cannot be higher then maximum!", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                minNumber = minNumberText.toIntOrNull() ?: 0
-                maxNumber = maxNumberText.toIntOrNull() ?: 0
+            val minNumber = minNumberText.toIntOrNull() ?: 0
+            val maxNumber = maxNumberText.toIntOrNull() ?: 0
 
-                with(sharedPreferences.edit()) {
-                    putInt("MIN_NUMBER_$username", minNumber)
-                    putInt("MAX_NUMBER_$username", maxNumber)
-                    apply()
+            if (minNumber >= maxNumber) {
+                Toast.makeText(this, "Invalid, minimum hours cannot be higher than maximum!", Toast.LENGTH_SHORT).show()
+            } else {
+                val firebaseAuth = FirebaseAuth.getInstance().currentUser
+                val userID = firebaseAuth?.uid.toString()
+                val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+                val databaseReference = FirebaseDatabase.getInstance().getReference("DailyGoals")
+                val goalID = databaseReference.push().key.toString()
+
+                val newDailyGoal = DailyGoal(userID, currentDate, minNumber.toDouble(), maxNumber.toDouble())
+                databaseReference.child(goalID).setValue(newDailyGoal).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        with(sharedPreferences.edit()) {
+                            putInt("MIN_NUMBER_$username", minNumber)
+                            putInt("MAX_NUMBER_$username", maxNumber)
+                            apply()
+                        }
+                        updateAppUsage() // Update app usage after saving numbers
+                        Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Failed to set daily goal!", Toast.LENGTH_SHORT).show()
+                    }
                 }
-
-                updateAppUsage() // Update app usage after saving numbers
-                Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, "Invalid, minimum/maximum hours cannot be empty", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     // Function to update app usage display with live count
     private fun updateAppUsage() {
