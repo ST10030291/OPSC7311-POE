@@ -2,6 +2,7 @@ package com.example.time_compassopsc7311_part1
 
 import Task
 import TaskList.taskList
+import Tasks
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
@@ -19,7 +20,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityFilterCategoriesBinding
-import com.example.time_compassopsc7311_part1.databinding.ActivityFilterTasksBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -52,14 +52,12 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         searchBtn = binding.savebutton
         categoryChoice = binding.categoryOption
 
-        //displayTotalHours = findViewById(R.id.displayHours)
-        //setting drop down menu
+        // Setting up the dropdown menu
         val categoryList = mutableListOf<String>()
         val firebaseAuth = FirebaseAuth.getInstance().currentUser
         val userID = firebaseAuth?.uid.toString()
         val firebaseReference = FirebaseDatabase.getInstance()
-        val categoryRef =
-            firebaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
+        val categoryRef = firebaseReference.getReference("Categories").orderByChild("userID").equalTo(userID)
         categoryRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (categoryShot in snapshot.children) {
@@ -77,13 +75,9 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
+        })
 
-        }
-        )
-
-        //categoryChoice.adapter = arrayAdapter
         categoryChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -92,13 +86,10 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
                 id: Long
             ) {
                 val categoryItem = parent?.getItemAtPosition(position) as String
-                //categoryChoice.setBackgroundColor(categoryColor[position].toColorInt())
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
             }
-
         }
 
         // Initialize PopupMenu
@@ -113,10 +104,9 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         startDate.setOnClickListener(this)
         endDate.setOnClickListener(this)
         searchBtn.setOnClickListener {
-            if (startDate.text.isEmpty() || endDate.text.isEmpty()){
+            if (startDate.text.isEmpty() || endDate.text.isEmpty()) {
                 Toast.makeText(this, "Please enter all required details.", Toast.LENGTH_SHORT).show()
-            }
-            else{
+            } else {
                 totalHoursForCategory()
             }
         }
@@ -165,13 +155,11 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.addTask -> {
-                // Proceed to add a task
                 val intent = Intent(this, AddTask::class.java)
                 startActivity(intent)
                 return true
             }
             R.id.addCategory -> {
-                // Proceed to add a category
                 val intent = Intent(this, AddCategory::class.java)
                 startActivity(intent)
                 return true
@@ -186,7 +174,6 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
     }
 
     private fun navigateToStats() {
-        // Proceed to Stats page
         val intent = Intent(this, Statistics::class.java)
         startActivity(intent)
     }
@@ -230,30 +217,36 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         val startDateInput = getDateInMillis(startDate.text.toString())
         val endDateInput = getDateInMillis(endDate.text.toString())
 
-       // val filterByCategory = TaskList.taskList.filter {
-           // it.category == category &&
-               //     getDateInMillis(it.taskDate) in startDateInput..endDateInput
-        //}
+        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+        val userID = firebaseAuth?.uid.toString()
+        val tasksReference = FirebaseDatabase.getInstance().getReference("Tasks").orderByChild("userID").equalTo(userID)
 
-        var totalHours = 0.0 // Use double for accurate total hours
+        tasksReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var totalHours = 0.0 // Use double for accurate total hours
 
-        /*for (taskEntry in filterByCategory) {
-            // Parse start and end times to milliseconds
-           // val startTimeMillis = getTimeInMillis(taskEntry.startTime)
-            //val endTimeMillis = getTimeInMillis(taskEntry.endTime)
+                for (taskSnapshot in snapshot.children) {
+                    val task = taskSnapshot.getValue(Tasks::class.java)
+                    if (task != null && task.category == category) {
+                        val taskDateMillis = getDateInMillis(task.taskDate ?: "")
+                        if (taskDateMillis in startDateInput..endDateInput) {
+                            val startTimeMillis = getTimeInMillis(task.startTime ?: "")
+                            val endTimeMillis = getTimeInMillis(task.endTime ?: "")
+                            val timeDifferenceHours = (endTimeMillis - startTimeMillis) / (1000 * 60 * 60).toDouble()
+                            totalHours += timeDifferenceHours
+                        }
+                    }
+                }
 
-            // Calculate time difference in milliseconds and convert to hours
-            val timeDifferenceHours = (endTimeMillis - startTimeMillis) / (1000 * 60 * 60).toDouble()
+                binding.displayTotalCategoryHours.text = String.format(Locale.getDefault(), "Total: %.2f hours", totalHours)
+            }
 
-            // Add time difference to total hours
-            totalHours += timeDifferenceHours
-        }*/
-
-        // Update the TextView with total duration
-        binding.displayTotalCategoryHours.text = String.format(Locale.getDefault(), "Total: %.2f hours", totalHours)
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@FilterCategories, "Failed to retrieve tasks.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
-    // Function to parse time strings to milliseconds
     private fun getTimeInMillis(timeString: String): Long {
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val date = timeFormat.parse(timeString)
