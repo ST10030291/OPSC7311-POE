@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
@@ -213,6 +214,7 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
     }
 
     fun totalHoursForCategory() {
+
         val category = categoryChoice.selectedItem.toString()
         val startDateInput = getDateInMillis(startDate.text.toString())
         val endDateInput = getDateInMillis(endDate.text.toString())
@@ -223,7 +225,7 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
 
         tasksReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var totalHours = 0.0 // Use double for accurate total hours
+                var totalHours = 0.0
 
                 for (taskSnapshot in snapshot.children) {
                     val task = taskSnapshot.getValue(Tasks::class.java)
@@ -238,30 +240,34 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
                     }
                 }
 
-                binding.displayTotalCategoryHours.text = String.format(Locale.getDefault(), "Total: %.2f hours", totalHours)
+                val formattedStartDate = startDate.text.toString()
+
+                val formattedEndDate = endDate.text.toString()
+
+                binding.displayTotalCategoryHours.text = String.format(
+                    Locale.getDefault(),
+                    "The total hours spent on category %s between %s and %s was %.2f hour/s.",
+                    category,
+                    formattedStartDate,
+                    formattedEndDate,
+                    totalHours
+                )
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@FilterCategories, "Failed to retrieve tasks.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@FilterCategories, "Failed to retrieve the requested information.", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun getTimeInMillis(timeString: String): Long {
-        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val date = timeFormat.parse(timeString)
-        return date?.time ?: 0
+    // Helper functions
+    fun getDateInMillis(dateString: String): Long {
+        val format = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        return format.parse(dateString)?.time ?: 0L
     }
 
-    private fun getDateInMillis(dateString: String): Long {
-        val pattern = "dd/MM/yyyy"
-        val sdf = SimpleDateFormat(pattern, Locale.getDefault())
-        return try {
-            val date = sdf.parse(dateString)
-            date?.time ?: 0
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            0
-        }
+    fun getTimeInMillis(timeString: String): Long {
+        val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return format.parse(timeString)?.time ?: 0L
     }
 }

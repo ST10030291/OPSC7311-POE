@@ -258,19 +258,241 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"/>
 
-                            <Button
-                                android:id="@+id/logoutbtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/log_out"
-                                android:textColor="@color/white"
-                                android:textSize="25sp"
-                                android:textStyle="bold"
-                                android:backgroundTint="@color/red" />
-
                     </LinearLayout>
 
                 </RelativeLayout>
+            <TextView
+                android:layout_width="380dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:text="@string/daily_goal_for_today"
+                android:textColor="@color/grey"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="174dp"
+                android:background="@drawable/gradient_recents"
+                android:orientation="horizontal">
+
+                <!-- First three TextViews -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- TextView to display minimum value -->
+                    <TextView
+                        android:id="@+id/minValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/minimum_hours_to_spend"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextView to display maximum value -->
+                    <TextView
+                        android:id="@+id/maxValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/maximum_hours_to_spend"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextView to display time spent using the app -->
+                    <TextView
+                        android:id="@+id/appUsageTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/time_spent_on_app_for_today"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Last three TextViews -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/minNumTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/_0"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        />
+
+                    <!-- TextView to display maximum value -->
+                    <TextView
+                        android:id="@+id/maxNumTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/_0"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextView to display time spent using the app -->
+                    <TextView
+                        android:id="@+id/appUsageTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="380dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/set_daily_goal"
+                android:textColor="@color/grey"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dailyGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:paddingBottom="20dp"
+                android:backgroundTint="@color/dark_grey"
+                android:background="@drawable/rounded_corners">
+
+
+                <TextView
+                    android:layout_width="331dp"
+                    android:layout_height="70dp"
+                    android:text="@string/set_minimum_number_of_hours_for_today"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_goneMarginStart="5dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="5dp" />
+
+                <EditText
+                    android:id="@+id/minNum"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="92dp"
+                    android:background="@drawable/inputbox"
+                    android:ems="10"
+                    android:hint="Enter Minimum Hours"
+                    android:inputType="number"
+                    android:paddingStart="24dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry" />
+
+
+                <TextView
+                    android:layout_width="331dp"
+                    android:layout_height="70dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/set_maximum_number_of_hours_for_today"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_goneMarginStart="5dp"
+                    tools:ignore="MissingConstraints" />
+
+                <EditText
+                    android:id="@+id/maxNum"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="244dp"
+                    android:background="@drawable/inputbox"
+                    android:ems="10"
+                    android:hint="Enter Maximum Hours"
+                    android:inputType="number"
+                    android:paddingStart="24dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry" />
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="179dp"
+                    android:layout_height="62dp"
+                    android:layout_marginStart="107dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="106dp"
+                    android:backgroundTint="@color/blue"
+                    android:text="@string/save"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/maxNum"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:strokeColor="#000000"
+                    app:strokeWidth="2dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <Button
+                android:id="@+id/logoutbtn"
+                android:layout_width="370dp"
+                android:layout_marginStart="20dp"
+                android:layout_height="70dp"
+                android:text="@string/log_out"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/red" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
         </LinearLayout>
     </ScrollView>
 

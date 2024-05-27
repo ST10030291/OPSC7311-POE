@@ -1,10 +1,14 @@
 import java.text.SimpleDateFormat
 import java.util.Date
 
-data class DailyGoal(
-    val userID: String? = null,
-    val currentDate: String = SimpleDateFormat("yyyy-MM-dd").format(Date()),
-    val minValue: Double? = null,
-    val maxValue: Double? = null,
-    val appUsageTime: String
-)
+class DailyGoal(
+    var userID: String = "", // Assuming these are the properties of DailyGoal
+    var currentDate: String = "",
+    var minValue: Double = 0.0,
+    var maxValue: Double = 0.0,
+    var formattedTime: String = ""
+) {
+    // No-argument constructor
+    constructor() : this("", "", 0.0, 0.0, "")
+}
+

@@ -72,7 +72,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/infolayout"
                 android:layout_width="match_parent"
-                android:layout_height="435dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -82,7 +82,7 @@
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="338dp"
-                    android:layout_height="64dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="49dp"
                     android:layout_marginEnd="4dp"
                     android:text="@string/search_hours_spent_on_a_category_between_two_dates"
@@ -117,7 +117,7 @@
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="308dp"
-                    android:layout_height="58dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="22dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="61dp"
@@ -190,17 +190,16 @@
 
                 <TextView
                     android:id="@+id/displayTotalCategoryHours"
-                    android:layout_width="252dp"
-                    android:layout_height="58dp"
+                    android:layout_width="356dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="56dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="84dp"
                     android:layout_marginBottom="13dp"
                     android:text=""
-                    android:textSize="30sp"
-                    app:flow_verticalAlign="center"
                     android:textColor="@color/white"
+                    android:textSize="30sp"
                     app:layout_constraintBottom_toTopOf="@+id/startDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -208,6 +207,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
-
 
 </RelativeLayout>

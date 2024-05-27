@@ -79,6 +79,7 @@
     <string name="total_hours">Total Hours</string>
     <string name="total_hours_18">Total Hours: 18</string>
     <string name="log_out">Log Out</string>
+    <string name="daily_goal_for_today">Daily goal for Today</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>
