@@ -361,6 +361,10 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
                         binding.maxNumTV.text = dailyGoal.maxValue.toString()
                         break
                     }
+                    else{
+                        binding.minNumTV.text = "0"
+                        binding.maxNumTV.text = "0"
+                    }
                 }
             }
 
