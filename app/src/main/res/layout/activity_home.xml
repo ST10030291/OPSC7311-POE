@@ -87,6 +87,110 @@
                 android:layout_width="380dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:text="@string/daily_goal_for_today"
+                android:textColor="@color/grey"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="174dp"
+                android:background="@drawable/gradient_recents"
+                android:orientation="horizontal">
+
+                <!-- First three TextViews -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- TextView to display minimum value -->
+                    <TextView
+                        android:id="@+id/minValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/minimum_hours_to_spend"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextView to display maximum value -->
+                    <TextView
+                        android:id="@+id/maxValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/maximum_hours_to_spend"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextView to display time spent using the app -->
+                    <TextView
+                        android:id="@+id/appUsageTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/time_spent_on_app_for_today"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Last three TextViews -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/minNumTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/_0"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextView to display maximum value -->
+                    <TextView
+                        android:id="@+id/maxNumTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/_0"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextView to display time spent using the app -->
+                    <TextView
+                        android:id="@+id/appUsageTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="380dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/all_categories_and_tasks"
                 android:textColor="@color/grey"
@@ -117,12 +221,142 @@
                 android:textSize="24sp"
                 android:onClick="navigateToAllTasks"/>
 
+            <TextView
+                android:layout_width="380dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/daily_goal_progress"
+                android:textColor="@color/grey"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+    <!-- Nested Circular Progress Bars in RelativeLayout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:background="@drawable/progress_bar">
+
+        <!-- Minimum Progress Bar -->
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circularProgressBarMin"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            app:cpb_progressbar_color="@color/red"
+            app:cpb_progressbar_width="10dp"
+            app:cpb_background_progressbar_color="#b6bbd8"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_round_border="true"
+            app:cpb_start_angle="0"
+            app:cpb_progress_direction="to_right" />
+
+        <!-- Maximum Progress Bar -->
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circularProgressBarMax"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            app:cpb_progressbar_color="@color/purple"
+            app:cpb_progressbar_width="10dp"
+            app:cpb_background_progressbar_color="#b6bbd8"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_round_border="true"
+            app:cpb_start_angle="0"
+            app:cpb_progress_direction="to_right" />
+
+        <!-- App Usage Progress Bar -->
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circularProgressBarUsage"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            app:cpb_progressbar_color="@color/blue"
+            app:cpb_progressbar_width="10dp"
+            app:cpb_background_progressbar_color="#b6bbd8"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_round_border="true"
+            app:cpb_start_angle="0"
+            app:cpb_progress_direction="to_right" />
+
+    </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/lightgreyround">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/minimum_hours"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/red"
+                    android:background="@color/dark_background"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/maximum_hours"
+                    android:background="@color/dark_background"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/purple"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/time_spent_in_app"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/dark_background"
+                    android:textColor="@color/blue"
+                    android:textSize="20sp"
+                    android:layout_marginEnd="5dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginStart="5dp"
+                    android:textStyle="italic"
+                    android:text="@string/you_can_set_a_daily_goal_on_the_profile_page"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="80dp"/>
+                android:layout_height="40dp"/>
 
         </LinearLayout>
     </ScrollView>
-
-
 </RelativeLayout>

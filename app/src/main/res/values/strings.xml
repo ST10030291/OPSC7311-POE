@@ -80,6 +80,12 @@
     <string name="total_hours_18">Total Hours: 18</string>
     <string name="log_out">Log Out</string>
     <string name="daily_goal_for_today">Daily goal for Today</string>
+    <string name="daily_goal_progress">Daily Goal Progress</string>
+    <string name="you_can_set_a_daily_goal_on_the_profile_page">You can set a daily goal on the profile page</string>
+    <string name="minimum_hours">Minimum Hours</string>
+    <string name="maximum_hours">Maximum Hours</string>
+    <string name="app_usage_hours">App Usage Hours</string>
+    <string name="time_spent_in_app">Time spent in app</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>

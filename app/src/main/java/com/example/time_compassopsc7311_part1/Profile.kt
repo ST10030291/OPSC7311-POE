@@ -32,14 +32,6 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
     private var categories: String = "Unknown"
     private var email: String = "Unknown"
     private lateinit var fireBaseAuth : FirebaseAuth
-    private var startTime: Long = 0
-    private var totalTimeInApp: Long = 0
-    private var minNumber: Int = 0
-    private var maxNumber: Int = 0
-
-    private val handler = android.os.Handler()
-    private val updateInterval = 1000L
-    private var isAppRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +43,6 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
 
         // Initialize Firebase Authentication
         fireBaseAuth = FirebaseAuth.getInstance()
-
-        // Retrieve start time and MIN/MAX values from SharedPreferences
-        startTime = sharedPreferences.getLong("START_TIME_$username", System.currentTimeMillis())
-
-        binding.minNumTV.text = minNumber.toString()
-        binding.maxNumTV.text = maxNumber.toString()
-
-        // Retrieve the time when the app was last destroyed
-        val appDestroyedTime = sharedPreferences.getLong("APP_DESTROYED_TIME_$username", 0)
-        // Calculate the total time spent in the app since the last destruction
-        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP_$username", 0) + max(0, System.currentTimeMillis() - appDestroyedTime)
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
@@ -137,7 +118,6 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
             startActivity(intent)
             finish()
         }
-        updateAppUsage()
     }
 
     override fun onClick(v: View?) {
@@ -192,9 +172,6 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val maxNumberText = binding.maxNum.text.toString()
 
         if (minNumberText.isNotEmpty() && maxNumberText.isNotEmpty()) {
-            binding.minNumTV.text = minNumberText
-            binding.maxNumTV.text = maxNumberText
-
             val minNumber = minNumberText.toIntOrNull() ?: 0
             val maxNumber = maxNumberText.toIntOrNull() ?: 0
 
@@ -208,25 +185,15 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
                 val databaseReference = FirebaseDatabase.getInstance().getReference("DailyGoals")
                 val goalID = databaseReference.push().key.toString()
 
-                // Calculate the current app usage time consistently
-                val currentTime = System.currentTimeMillis()
-                val elapsedTime = totalTimeInApp + (currentTime - startTime)
+                val appUsageMillis = sharedPreferences.getLong("TOTAL_TIME_IN_APP_$username", 0)
+                val appUsageTime = formatTimeFromMillis(appUsageMillis)
 
-                // Format the elapsed time to "HH:mm:ss"
-                val hours = elapsedTime / 3600000
-                val minutes = (elapsedTime % 3600000) / 60000
-                val seconds = ((elapsedTime % 3600000) % 60000) / 1000
-                val formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
-
-                val newDailyGoal = DailyGoal(userID, currentDate, minNumber.toDouble(), maxNumber.toDouble(), formattedTime)
+                val newDailyGoal = DailyGoal(userID, currentDate, minNumber.toDouble(), maxNumber.toDouble(), appUsageTime)
                 databaseReference.child(goalID).setValue(newDailyGoal).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        with(sharedPreferences.edit()) {
-                            putInt("MIN_NUMBER_$username", minNumber)
-                            putInt("MAX_NUMBER_$username", maxNumber)
-                            apply()
-                        }
                         Toast.makeText(this, "Daily goal set successfully!", Toast.LENGTH_SHORT).show()
+                        binding.minNum.text.clear()
+                        binding.maxNum.text.clear()
                     } else {
                         Toast.makeText(this, "Failed to set daily goal!", Toast.LENGTH_SHORT).show()
                     }
@@ -237,87 +204,13 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         }
     }
 
-    // Function to update app usage display with live count
-    private fun updateAppUsage() {
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                if (isAppRunning) {
-                    val currentTime = System.currentTimeMillis()
-                    val elapsedTime = currentTime - startTime
-                    val hours = elapsedTime / 3600000
-                    val minutes = (elapsedTime % 3600000) / 60000
-                    val seconds = ((elapsedTime % 3600000) % 60000) / 1000
-                    val formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
-                    binding.appUsageTV.text = formattedTime
-
-                    // Reset min and max values if 24 hours have passed
-                    if (elapsedTime >= 24 * 3600000) {
-                        minNumber = 0
-                        maxNumber = 0
-                        binding.minNumTV.text = minNumber.toString()
-                        binding.maxNumTV.text = maxNumber.toString()
-
-                        // Reset app usage timer
-                        binding.appUsageTV.text = "00:00:00"
-
-                        // Reset start time
-                        startTime = currentTime
-                        // Update SharedPreferences
-                        with(sharedPreferences.edit()) {
-                            putLong("START_TIME_$username", startTime)
-                            apply()
-                        }
-                    }
-
-                    // Schedule the next update
-                    handler.postDelayed(this, updateInterval)
-                }
-            }
-        }, updateInterval)
+    private fun formatTimeFromMillis(millis: Long): String {
+        val hours = (millis / (1000 * 60 * 60)) % 24
+        val minutes = (millis / (1000 * 60)) % 60
+        val seconds = (millis / 1000) % 60
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 
-    override fun onPause() {
-        super.onPause()
-        isAppRunning = false
-        // Calculate the total time spent in the app before pausing
-        val currentTime = System.currentTimeMillis()
-        totalTimeInApp += currentTime - startTime
-
-        // Save the total time spent in the app and the start time
-        with(sharedPreferences.edit()) {
-            putLong("TOTAL_TIME_IN_APP_$username", totalTimeInApp)
-            putLong("START_TIME_$username", startTime)
-            apply()
-        }
-
-        // Remove any pending handler callbacks to pause the timer
-        handler.removeCallbacksAndMessages(null)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        isAppRunning = true
-        // Retrieve the total time spent in the app and the start time
-        totalTimeInApp = sharedPreferences.getLong("TOTAL_TIME_IN_APP_$username", 0)
-        startTime = sharedPreferences.getLong("START_TIME_$username", System.currentTimeMillis())
-
-        // Restart the timer
-        updateAppUsage()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        // Save the current time when the app is destroyed
-        val currentTime = System.currentTimeMillis()
-
-        // Save the total time spent in the app and the current time
-        with(sharedPreferences.edit()) {
-            putLong("TOTAL_TIME_IN_APP_$username", totalTimeInApp + currentTime - startTime)
-            putLong("APP_DESTROYED_TIME_$username", currentTime)
-            apply()
-        }
-    }
 
     private fun getTotalCounts() {
         val databaseReference = FirebaseDatabase.getInstance().reference
@@ -348,26 +241,5 @@ class Profile : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
                 Toast.makeText(this@Profile, "Failed to retrieve categories count.", Toast.LENGTH_SHORT).show()
             }
         })
-
-        // Retrieve min and max numbers if they exist for today
-        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val dailyGoalsRef = databaseReference.child("DailyGoals").orderByChild("userID").equalTo(userId)
-        dailyGoalsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (snapshot in dataSnapshot.children) {
-                    val dailyGoal = snapshot.getValue(DailyGoal::class.java)
-                    if (dailyGoal != null && dailyGoal.currentDate == currentDate) {
-                        binding.minNumTV.text = dailyGoal.minValue.toString()
-                        binding.maxNumTV.text = dailyGoal.maxValue.toString()
-                        break
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(this@Profile, "Failed to retrieve daily goals.", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
-
 }
