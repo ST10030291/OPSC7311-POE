@@ -14,7 +14,7 @@
         android:background="@drawable/inputbox">
 
         <TextView
-            android:id="@+id/displayDate"
+            android:id="@+id/displayPosition"
             android:layout_width="173dp"
             android:layout_height="36dp"
             android:layout_marginStart="103dp"
@@ -34,7 +34,7 @@
             android:textColor="@color/black"
             android:textSize="48sp"
             app:layout_constraintStart_toEndOf="@+id/displayStartTime"
-            app:layout_constraintTop_toBottomOf="@+id/displayDate" />
+            app:layout_constraintTop_toBottomOf="@+id/displayPosition" />
 
         <ImageView
             android:id="@+id/displaytaskImage"
@@ -43,10 +43,10 @@
             android:layout_marginStart="94dp"
             android:layout_marginTop="9dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/displayDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/displayUser" />
 
         <TextView
-            android:id="@+id/displayTaskName"
+            android:id="@+id/displayPoints"
             android:layout_width="288dp"
             android:layout_height="53dp"
             android:layout_marginStart="48dp"
@@ -60,7 +60,7 @@
             tools:text="Task Name" />
 
         <TextView
-            android:id="@+id/displayDescription"
+            android:id="@+id/displayUser"
             android:layout_width="288dp"
             android:layout_height="53dp"
             android:layout_marginStart="52dp"
@@ -70,7 +70,7 @@
             android:textColor="@color/black"
             android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/displayTaskName" />
+            app:layout_constraintTop_toBottomOf="@+id/displayPoints" />
 
         <TextView
             android:id="@+id/displayStartTime"
@@ -82,7 +82,7 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/displayDate" />
+            app:layout_constraintTop_toBottomOf="@+id/displayPosition" />
 
         <TextView
             android:id="@+id/displayEndTime"
@@ -94,7 +94,7 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/displayDate" />
+            app:layout_constraintTop_toBottomOf="@+id/displayPosition" />
 
         <!-- <TextView
              android:id="@+id/time"

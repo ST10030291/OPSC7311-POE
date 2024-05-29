@@ -37,12 +37,26 @@
                 android:id="@+id/galleryButton"
                 android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="134dp"
+                android:layout_marginStart="64dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/dark_grey"
                 android:text="@string/gallery"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descrptionText"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp" />
+
+            <Button
+                android:id="@+id/cameraButton"
+                android:layout_width="125dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="64dp"
+                android:backgroundTint="@color/dark_grey"
+                android:text="Camera"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descrptionText"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp" />

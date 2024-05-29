@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddTaskBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -59,7 +60,12 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
     private var imageUrl : String? = null
     private var uri: Uri? = null
     private lateinit var saveBtn : Button
-
+    private lateinit var cameraImageUrl : Uri
+    private val contract = registerForActivityResult(ActivityResultContracts.TakePicture()){
+        galleryImage.setImageURI(null)
+        galleryImage.setImageURI(cameraImageUrl)
+        uri = cameraImageUrl
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -77,8 +83,10 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         endText = findViewById(R.id.endText)
         galleryImage = findViewById(R.id.imageView)
         pickImageFromGalleryBtn = findViewById(R.id.galleryButton)
-        //pickImageFromCameraBtn = findViewById(R.id.cameraButton)
+        pickImageFromCameraBtn = findViewById(R.id.cameraButton)
         saveBtn = findViewById(R.id.savebutton)
+        //private lateinit var imageUrl : Uri
+
 
         //this part is for the populating spinner
         val categoryList = mutableListOf<String>()
@@ -137,6 +145,11 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         }
         endText.setOnClickListener {
             endTime()//time picker function
+        }
+        //images from camera
+        cameraImageUrl = createImageUri()
+        pickImageFromCameraBtn.setOnClickListener{
+            contract.launch(cameraImageUrl)
         }
         //images from gallery
        /* val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
@@ -335,7 +348,12 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         }
         timePickerDialog.show()
     }
-
+    private fun createImageUri():Uri{
+        val image = File(filesDir, "camera_photos.png")
+        return FileProvider.getUriForFile(this,
+            "com.coding.captureimage.FileProvider",
+            image)
+    }
    /* private fun saveImage() {
         val storageReference = FirebaseStorage.getInstance().reference.child("Task Images")
             .child(uri!!.lastPathSegment!!)
@@ -363,10 +381,10 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         //saveImage()
         val taskImg = imageUrl.toString()
         if(taskName.isEmpty() || description.isEmpty() || category.isEmpty() || taskDate.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || taskImg.equals(null)){
-            Toast.makeText(this, "Enter Required Details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Invalid, enter the required details to add a task successfully.", Toast.LENGTH_SHORT).show()
         }
         else if(endTime < startTime){
-            Toast.makeText(this, "Invalid, Time cannot be before Start Time", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Invalid, time cannot be before start time. Please enter a valid time.", Toast.LENGTH_SHORT).show()
         }
         else {
             val firebaseAuth = FirebaseAuth.getInstance().currentUser
@@ -388,7 +406,7 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
             //val newTask = Tasks(taskID,userID, taskName, description, category, taskDate, startTime, endTime, timeDifference, taskImg)
             //val newTask = Tasks(taskID, userID, taskName, description, category, taskDate, startTime, endTime,timeDifference , taskImg)
            // databaseReference.child(taskID).setValue(newTask)
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, TaskAvailable::class.java)
             startActivity(intent)
             finish()
         }

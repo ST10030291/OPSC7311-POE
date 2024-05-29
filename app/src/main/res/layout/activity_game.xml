@@ -69,8 +69,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="333dp"
+                android:layout_height="match_parent"
+                android:text="Global Ranking"
+                android:textAlignment="center"
+                android:textColor="@color/dark_grey"
+                android:textSize="45dp"
+                android:textStyle="bold" />
+
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/gameRecyclerView"
                 android:layout_width="407dp"
                 android:layout_height="570dp"
                 android:layout_above="@+id/fabPopupTray"

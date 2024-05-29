@@ -1,20 +1,26 @@
 package com.example.time_compassopsc7311_part1
 
+import Points
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.content.SharedPreferences
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.time_compassopsc7311_part1.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var fireBaseAuth : FirebaseAuth
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var username : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -64,7 +70,13 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     fireBaseAuth.createUserWithEmailAndPassword(enteredEmail, enteredPassword)
 
                     saveUserData(enteredEmail)
-                    Toast.makeText(this,"User Created Successfully", Toast.LENGTH_SHORT).show()
+
+                    val firebaseAuth = FirebaseAuth.getInstance().currentUser
+                    val userID = firebaseAuth?.uid.toString()
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Points")
+
+                    val points = Points(userID, username, 0)
+                    databaseReference.child(userID).setValue(points)
 
                     //Proceed to Home Screen
                     val intent = Intent(this, HomeActivity::class.java)
@@ -77,7 +89,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     // Function to save user data to SharedPreferences
     private fun saveUserData(email: String) {
         // Extract username
-        val username = email.substringBefore('@')
+         username = email.substringBefore('@')
 
         sharedPreferences.edit().apply {
             putString("EMAIL", email)

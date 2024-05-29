@@ -12,10 +12,15 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityAddCategoryBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
@@ -25,6 +30,7 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private lateinit var categoryName : TextView
     private lateinit var colorOptn : Spinner
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseReference: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,15 +173,13 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         val categoryName = binding.categoryNameText.text.toString()
         val categoryColor = colorOptn.selectedItem.toString()
         if(categoryName.isEmpty() || categoryColor.isEmpty() || categoryColor.equals("Select Color")){
-            Toast.makeText(this, "Enter Required Details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Invalid, enter the required details to add a category.", Toast.LENGTH_SHORT).show()
         }
         else {
             val firebaseAuth = FirebaseAuth.getInstance().currentUser
             val userID = firebaseAuth?.uid.toString()
             databaseReference = FirebaseDatabase.getInstance().getReference("Categories")
             val categoryID = databaseReference.push().key.toString()
-
-
             val newCategory = Category(categoryID, userID, categoryName, categoryColor)
             databaseReference.child(categoryID).setValue(newCategory)
             //CategoryList.categoryList.add(newCategory)
@@ -183,5 +187,18 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
             startActivity(intent)
             finish()
         }
+    }
+    private fun updatePoints() {
+        var currentPoints = 0
+        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+        val userID = firebaseAuth?.uid.toString()
+        firebaseReference = FirebaseDatabase.getInstance()
+        val pointRef =
+            firebaseReference.getReference("Points").orderByChild("userID").equalTo(userID).get()
+                .addOnSuccessListener {
+                    currentPoints = it.value as Int + 200
+                }
+        val updatedatabase = FirebaseDatabase.getInstance().getReference("Points")
+        updatedatabase.child("userPoints").setValue(currentPoints)
     }
 }

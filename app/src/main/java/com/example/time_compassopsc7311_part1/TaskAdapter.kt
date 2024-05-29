@@ -1,12 +1,6 @@
 package com.example.time_compassopsc7311_part1
 
 import Task
-import TaskList
-import android.content.ContentResolver
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +16,9 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
     var onItemClick : ((Task) -> Unit)? = null
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //declare all variables here
-        val taskName: TextView = itemView.findViewById(R.id.displayTaskName)
-        val description : TextView = itemView.findViewById(R.id.displayDescription)
-        val date : TextView = itemView.findViewById(R.id.displayDate)
+        val taskName: TextView = itemView.findViewById(R.id.displayPoints)
+        val description : TextView = itemView.findViewById(R.id.displayUser)
+        val date : TextView = itemView.findViewById(R.id.displayPosition)
         val startTime : TextView = itemView.findViewById(R.id.displayStartTime)
         val endTime : TextView = itemView.findViewById(R.id.displayEndTime)
         val taskIcon : ImageView = itemView.findViewById(R.id.displaytaskImage)
