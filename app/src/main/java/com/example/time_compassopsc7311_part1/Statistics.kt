@@ -28,6 +28,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -313,5 +316,66 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
                 TODO("Not yet implemented")
             }
         })
+    }
+    private fun filterByDate() {
+        val startTime = "01/05/2024"
+        val endTime = "31/05/2024"
+
+        //use this code when you can select the start and end dates
+        //val startTime = startDate.text.toString()
+        //val endTime = endDate.text.toString()
+
+        // Check if start date and end date are not empty
+        if (startTime.isNotEmpty() && endTime.isNotEmpty()) {
+            val startDateMillis = getDateInMillis(startTime)
+            val endDateMillis = getDateInMillis(endTime)
+
+            // Check if start date is before end date
+            if (startDateMillis <= endDateMillis) {
+                //setting the display
+                val firebaseAuth = FirebaseAuth.getInstance().currentUser
+                val userID = firebaseAuth?.uid.toString()
+                databaseReference = FirebaseDatabase.getInstance()
+
+                val dailyGoalRef = databaseReference.getReference("DailyGoals").orderByChild("userID").equalTo(userID)
+                dailyGoalList.clear()
+
+                dailyGoalRef.addValueEventListener(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (dailyGoalShot in snapshot.children) {
+                            val dailyGoal = dailyGoalShot.getValue(DailyGoal::class.java)
+                            if (dailyGoal != null) {
+//                        val minValue = dailyGoal.minValue.toFloat()
+//                        val maxValue = dailyGoal.maxValue.toFloat()
+                                dailyGoalList.add(dailyGoal)
+                            }
+                        }
+
+                        val filteredDailyGoals = dailyGoalList.filter { daily ->
+                            val taskDateMillis = getDateInMillis(daily.currentDate)
+                            taskDateMillis in startDateMillis..endDateMillis
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+            } else {
+                //showToast("Start date cannot be after end date")
+            }
+        } else {
+            //showToast("Please select start and end dates")
+        }
+    }
+    private fun getDateInMillis(dateString: String): Long {
+        val pattern = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+        return try {
+            val date = sdf.parse(dateString)
+            date?.time ?: 0
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            0
+        }
     }
 }

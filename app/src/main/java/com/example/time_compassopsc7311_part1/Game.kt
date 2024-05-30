@@ -89,7 +89,11 @@ class Game : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClic
                         pointsList.add(point)
                     }
                 }
-                val adapter = GameAdapter(pointsList)
+                val descendingOrderList = pointsList.sortedByDescending { user ->
+                    val userPos = user.userPoints
+                    userPos
+                }
+                val adapter = GameAdapter(descendingOrderList)
                 recyclerView.adapter = adapter
             }
 

@@ -172,8 +172,14 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
     private fun saveCategory(){
         val categoryName = binding.categoryNameText.text.toString()
         val categoryColor = colorOptn.selectedItem.toString()
-        if(categoryName.isEmpty() || categoryColor.isEmpty() || categoryColor.equals("Select Color")){
-            Toast.makeText(this, "Invalid, enter the required details to add a category.", Toast.LENGTH_SHORT).show()
+        if(categoryName.isEmpty()){
+            Toast.makeText(this, "Invalid, enter a category name.", Toast.LENGTH_SHORT).show()
+        }
+        else if(categoryColor.isEmpty() || categoryColor.equals("Select Color")){
+            Toast.makeText(this, "Invalid, select a color for the category.", Toast.LENGTH_SHORT).show()
+        }
+        else if(categoryName.isEmpty() || categoryColor.isEmpty() || categoryColor.equals("Select Color")){
+            Toast.makeText(this, "Invalid, enter the required details.", Toast.LENGTH_SHORT).show()
         }
         else {
             val firebaseAuth = FirebaseAuth.getInstance().currentUser
