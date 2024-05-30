@@ -86,6 +86,7 @@
     <string name="maximum_hours">Maximum Hours</string>
     <string name="app_usage_hours">App Usage Hours</string>
     <string name="time_spent_in_app">Time spent in app</string>
+    <string name="keys">KEYS</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>
