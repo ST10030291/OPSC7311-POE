@@ -26,7 +26,7 @@ class GameAdapter (private val pointsList: List<Points>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
         //this is where you can set your values
         val point = pointsList[position]
-        holder.userPosition.setText(pointsList[position].toString())
+        //holder.userPosition.setText(pointsList[position].toString())
         holder.userName.setText(point.userName)
         holder.userPoints.setText(point.userPoints)
         //holder.date.setText(task.taskDate)

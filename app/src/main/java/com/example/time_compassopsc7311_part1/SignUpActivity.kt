@@ -71,13 +71,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
                     saveUserData(enteredEmail)
 
-                    val firebaseAuth = FirebaseAuth.getInstance().currentUser
-                    val userID = firebaseAuth?.uid.toString()
-                    databaseReference = FirebaseDatabase.getInstance().getReference("Points")
-
-                    val points = Points(userID, username, 0)
-                    databaseReference.child(userID).setValue(points)
-
                     //Proceed to Home Screen
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)

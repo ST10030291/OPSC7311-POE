@@ -196,9 +196,9 @@ class AddCategory : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         val pointRef =
             firebaseReference.getReference("Points").orderByChild("userID").equalTo(userID).get()
                 .addOnSuccessListener {
-                    currentPoints = it.value as Int + 200
+                    currentPoints = it.value as Int + 50
                 }
         val updatedatabase = FirebaseDatabase.getInstance().getReference("Points")
-        updatedatabase.child("userPoints").setValue(currentPoints)
+        updatedatabase.setValue(currentPoints)
     }
 }
