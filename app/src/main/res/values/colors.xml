@@ -10,4 +10,7 @@
     <color name="orange">#F8B400</color>
     <color name="purple">#7209B7</color>
     <color name="red">#Ff0000</color>
+    <color name="green">#00ff80</color>
+    <color name="pink">#ff1493</color>
+    <color name="yellow">#ffff00</color>
 </resources>

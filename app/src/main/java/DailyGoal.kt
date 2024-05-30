@@ -1,3 +1,7 @@
+object DailyGoalList{
+    val dailyGoalList = mutableListOf<DailyGoal>()
+}
+
 class DailyGoal(
     var userID: String = "", // Assuming these are the properties of DailyGoal
     var currentDate: String = "",
