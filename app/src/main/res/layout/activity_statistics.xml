@@ -69,6 +69,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/gradient_background">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/line_graph"
+                    android:textColor="@color/grey"
+                    android:textSize="35sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="83dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/graph2" />
+
+            </LinearLayout>
 
             <!-- Put your design inside here  -->
             <com.github.mikephil.charting.charts.LineChart
@@ -76,11 +104,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="500dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/gradient_background">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/bar_graph"
+                    android:textColor="@color/grey"
+                    android:textSize="35sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="83dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/graph" />
+
+            </LinearLayout>
+
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barChart1"
                 android:layout_width="match_parent"
                 android:layout_height="520dp"
                 />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
         </LinearLayout>
     </ScrollView>
 

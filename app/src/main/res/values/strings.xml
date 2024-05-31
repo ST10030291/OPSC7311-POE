@@ -87,6 +87,8 @@
     <string name="app_usage_hours">App Usage Hours</string>
     <string name="time_spent_in_app">Time spent in app</string>
     <string name="keys">KEYS</string>
+    <string name="line_graph">Line Graph</string>
+    <string name="bar_graph">Bar Graph</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>
