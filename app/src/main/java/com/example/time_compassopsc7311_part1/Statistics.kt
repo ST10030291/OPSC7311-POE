@@ -189,28 +189,33 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         entries2.add(Entry(3f, 35f))
         entries2.add(Entry(4f, 45f))
 
-//        val entries3 = ArrayList<Entry>()
-//        entries3.add(Entry(0f, 16f))
-//        entries3.add(Entry(1f, 32f))
-//        entries3.add(Entry(2f, 48f))
-//        entries3.add(Entry(3f, 64f))
-//        entries3.add(Entry(4f, 80f))
+        val entries3 = ArrayList<Entry>()
+        entries3.add(Entry(0f, 16f))
+        entries3.add(Entry(1f, 32f))
+        entries3.add(Entry(2f, 48f))
+        entries3.add(Entry(3f, 64f))
+        entries3.add(Entry(4f, 80f))
 
-        setLineChartDataSet(entries1, entries2)
+        setLineChartDataSet(entries1, entries2, entries3)
     }
 
-    private fun setLineChartDataSet(entries1 : ArrayList<Entry>, entries2 : ArrayList<Entry>) {
+    private fun setLineChartDataSet(entries1 : ArrayList<Entry>, entries2 : ArrayList<Entry>, entries3 : ArrayList<Entry>) {
         val dataSet1 = LineDataSet(entries1, "Minimum Hours")
-        dataSet1.setColor(Color.MAGENTA)
+        dataSet1.setColor(Color.RED)
         dataSet1.valueTextColor = Color.WHITE
         dataSet1.valueTextSize = 16f
 
         val dataSet2 = LineDataSet(entries2, "Maximum Hours")
-        dataSet2.setColor(Color.YELLOW)
+        dataSet2.setColor(Color.MAGENTA)
         dataSet2.valueTextColor = Color.WHITE
         dataSet2.valueTextSize = 16f
 
-        val lineData = LineData(dataSet1, dataSet2)
+        val dataSet3 = LineDataSet(entries3, "App usage Hours")
+        dataSet3.setColor(Color.CYAN)
+        dataSet3.valueTextColor = Color.WHITE
+        dataSet3.valueTextSize = 16f
+
+        val lineData = LineData(dataSet1, dataSet2, dataSet3)
 
         lineChart.setNoDataText("No min and max hours recorded! Please set them first")
         lineChart.data = lineData
@@ -281,13 +286,9 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
     private fun createGraphColorsArray() : ArrayList<Int> {
         val colors = ArrayList<Int>()
 
-        colors.add(ContextCompat.getColor(this, R.color.blue))
         colors.add(ContextCompat.getColor(this, R.color.red))
-        colors.add(ContextCompat.getColor(this, R.color.green))
-        colors.add(ContextCompat.getColor(this, R.color.orange))
         colors.add(ContextCompat.getColor(this, R.color.purple))
-        colors.add(ContextCompat.getColor(this, R.color.pink))
-        colors.add(ContextCompat.getColor(this, R.color.yellow))
+        colors.add(ContextCompat.getColor(this, R.color.blue))
 
         return colors
     }
