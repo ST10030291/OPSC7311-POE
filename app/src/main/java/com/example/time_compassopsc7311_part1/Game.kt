@@ -1,18 +1,24 @@
 package com.example.time_compassopsc7311_part1
 
 import Points
+import android.R.attr.duration
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.time_compassopsc7311_part1.databinding.ActivityGameBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import java.util.concurrent.TimeUnit
+
 
 class Game : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -44,6 +50,8 @@ class Game : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClic
         // Set Listeners
         fabPopupTray.setOnClickListener(this)
         popupMenu.setOnMenuItemClickListener(this)
+
+        initUI()
 
         // Update or set the points for the user
         getTotalCounts()
@@ -102,7 +110,20 @@ class Game : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClic
             }
         })
     }
+    private fun initUI(){
+        val party = Party(
+            speed = 0f,
+            maxSpeed = 30f,
+            damping = 0.9f,
+            spread = 360,
+            colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+            emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100),
+            position = Position.Relative(0.5, 0.3)
+        )
+        //viewKonfetti.start(party)
+            binding.konfettiView.start(party)
 
+    }
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.fabPopupTray -> popupMenu.show()
