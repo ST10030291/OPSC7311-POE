@@ -213,7 +213,7 @@ class FilterCategories : AppCompatActivity(), View.OnClickListener, PopupMenu.On
         datePickerDialog.show()
     }
 
-    fun totalHoursForCategory() {
+    private fun totalHoursForCategory() {
 
         val category = categoryChoice.selectedItem.toString()
         val startDateInput = getDateInMillis(startDate.text.toString())

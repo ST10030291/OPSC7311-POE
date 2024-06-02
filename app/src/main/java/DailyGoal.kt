@@ -7,7 +7,7 @@ class DailyGoal(
     var currentDate: String = "",
     var minValue: Double = 0.0,
     var maxValue: Double = 0.0,
-    var AppUsageTime: String = ""
+    var appUsageTime: String = ""
 ) {
     // No-argument constructor
     constructor() : this("", "", 0.0, 0.0, "")

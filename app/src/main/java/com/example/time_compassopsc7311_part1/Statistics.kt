@@ -2,6 +2,7 @@ package com.example.time_compassopsc7311_part1
 
 import DailyGoal
 import DailyGoalList.dailyGoalList
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +10,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.time_compassopsc7311_part1.databinding.ActivityProfileBinding
 import com.example.time_compassopsc7311_part1.databinding.ActivityStatisticsBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -30,22 +31,39 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
+    private lateinit var binding: ActivityStatisticsBinding
+    private lateinit var startDateTv : TextView
+    private lateinit var endDateTv : TextView
     private lateinit var databaseReference: FirebaseDatabase
     private lateinit var lineChart : LineChart
     private lateinit var barChart : BarChart
     private val xValues = listOf("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityStatisticsBinding.inflate(layoutInflater)
+        binding = ActivityStatisticsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initialiseLineChart()
-        initialiseBarChart()
+//        getDailyGoalsFromDb()
+
+        startDateTv = binding.startDate
+        endDateTv = binding.endDate
+        startDateTv.setOnClickListener(this)
+        endDateTv.setOnClickListener(this)
+
+        binding.filterIcon.setOnClickListener {
+            if (startDateTv.text.isEmpty() || endDateTv.text.isEmpty()) {
+                Toast.makeText(this, "Please select a date range for both fields", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                getFilteredDataFromDb()
+            }
+        }
 
         // Get references to views using view binding
         val bottomNavigationView = binding.bottomNavigationView
@@ -62,7 +80,7 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         fabPopupTray.setOnClickListener(this)
         popupMenu.setOnMenuItemClickListener(this)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.profile_icon -> {
                     // Proceed to Profile page
@@ -94,6 +112,12 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         when (v?.id) {
             R.id.fabPopupTray -> {
                 popupMenu.show()
+            }
+            R.id.startDate -> {
+                datePicker(startDateTv)
+            }
+            R.id.endDate -> {
+                datePicker(endDateTv)
             }
         }
     }
@@ -141,21 +165,15 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         val intent = Intent(this, Profile::class.java)
         startActivity(intent)
     }
-    private fun initialiseLineChart() {
-        lineChart = findViewById(R.id.lineChart1)
+    private fun initialiseLineChart(entryList: List<DailyGoal>) {
+        lineChart = binding.lineChart1
 
-        val description = Description()
-        description.text = "Min vs Max hours graph"
-        description.textColor = Color.WHITE
-        description.textSize = 20f
-        description.setPosition(800f, 35f)
-
-        lineChart.description = description
+        lineChart.description.isEnabled = false
         lineChart.axisRight.setDrawLabels(false)
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
+
         xAxis.setLabelCount(7)
         xAxis.granularity = 1f
         xAxis.axisLineColor = Color.WHITE
@@ -164,72 +182,63 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
 
         val yAxis = lineChart.axisLeft
         yAxis.axisMinimum = 0f
-        yAxis.axisMaximum = 180f
         yAxis.axisLineWidth = 2f
         yAxis.axisLineColor = Color.WHITE
         yAxis.labelCount = 10
         yAxis.textColor = Color.WHITE
         yAxis.setDrawGridLines(false)
 
-        addEntriesForLineChart()
+        setGraphEntriesUsingDb(entryList)
     }
 
-    private fun addEntriesForLineChart() {
+    private fun setGraphEntriesUsingDb(entryList: List<DailyGoal>){
         val entries1 = ArrayList<Entry>()
-        entries1.add(Entry(0f, 10f))
-        entries1.add(Entry(1f, 20f))
-        entries1.add(Entry(2f, 30f))
-        entries1.add(Entry(3f, 40f))
-        entries1.add(Entry(4f, 50f))
-
         val entries2 = ArrayList<Entry>()
-        entries2.add(Entry(0f, 5f))
-        entries2.add(Entry(1f, 15f))
-        entries2.add(Entry(2f, 25f))
-        entries2.add(Entry(3f, 35f))
-        entries2.add(Entry(4f, 45f))
-
+        var positionInGraph = 0f
         val entries3 = ArrayList<Entry>()
-        entries3.add(Entry(0f, 16f))
-        entries3.add(Entry(1f, 32f))
-        entries3.add(Entry(2f, 48f))
-        entries3.add(Entry(3f, 64f))
-        entries3.add(Entry(4f, 80f))
 
+        for (element in entryList){
+            entries1.add(Entry(positionInGraph, element.minValue.toFloat()))
+            entries2.add(Entry(positionInGraph, element.maxValue.toFloat()))
+            entries3.add(Entry(positionInGraph, splitAppUsageIntoHours(element.appUsageTime)))
+
+            positionInGraph++
+        }
         setLineChartDataSet(entries1, entries2, entries3)
     }
 
     private fun setLineChartDataSet(entries1 : ArrayList<Entry>, entries2 : ArrayList<Entry>, entries3 : ArrayList<Entry>) {
-        val dataSet1 = LineDataSet(entries1, "Minimum Hours")
+        val dataSet1 = LineDataSet(entries1, "Minimum daily goal in Hours")
         dataSet1.setColor(Color.RED)
         dataSet1.valueTextColor = Color.WHITE
         dataSet1.valueTextSize = 16f
 
-        val dataSet2 = LineDataSet(entries2, "Maximum Hours")
+        val dataSet2 = LineDataSet(entries2, "Maximum daily goal in hours")
         dataSet2.setColor(Color.MAGENTA)
         dataSet2.valueTextColor = Color.WHITE
         dataSet2.valueTextSize = 16f
 
-        val dataSet3 = LineDataSet(entries3, "App usage Hours")
+        val dataSet3 = LineDataSet(entries3, "Daily app usage in Hours")
         dataSet3.setColor(Color.CYAN)
         dataSet3.valueTextColor = Color.WHITE
         dataSet3.valueTextSize = 16f
 
         val lineData = LineData(dataSet1, dataSet2, dataSet3)
 
-        lineChart.setNoDataText("No min and max hours recorded! Please set them first")
+        lineChart.setNoDataText("Not enough information available to create graph!")
         lineChart.data = lineData
         lineChart.legend.textColor = Color.WHITE
 
+        lineChart.animateX(300)
 
         lineChart.invalidate()
     }
 
-    private fun initialiseBarChart() {
-        barChart = findViewById(R.id.barChart1)
+    private fun initialiseBarChart(entryList: List<DailyGoal>) {
+        barChart = binding.barChart1
         barChart.axisRight.setDrawLabels(false)
 
-        addEntriesForBarChart()
+        addEntriesForBarChart(entryList)
 
         val xAxis = barChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -243,7 +252,6 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
 
         val yAxis = barChart.axisLeft
         yAxis.axisMinimum = 0f
-        yAxis.axisMaximum = 180f
         yAxis.axisLineWidth = 2f
         yAxis.axisLineColor = Color.WHITE
         yAxis.labelCount = 10
@@ -251,15 +259,15 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         yAxis.setDrawGridLines(false)
     }
 
-    private fun addEntriesForBarChart() {
+    private fun addEntriesForBarChart(entryList: List<DailyGoal>) {
         val entries1 = ArrayList<BarEntry>()
-        entries1.add(BarEntry(0f, 43f))
-        entries1.add(BarEntry(1f, 99f))
-        entries1.add(BarEntry(2f, 61f))
-        entries1.add(BarEntry(3f, 12f))
-        entries1.add(BarEntry(4f, 28f))
-        entries1.add(BarEntry(5f, 34f))
-        entries1.add(BarEntry(6f, 70f))
+        var positionInGraph = 0f
+
+        for (element in entryList){
+            entries1.add(BarEntry(positionInGraph, splitAppUsageIntoHours(element.appUsageTime)))
+
+            positionInGraph++
+        }
 
         setBarChartDataSet(entries1)
     }
@@ -280,6 +288,8 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         barChart.legend.textColor = Color.WHITE
         barChart.legend.textSize = 16f
 
+        barChart.animateY(2000)
+
         barChart.invalidate()
     }
 
@@ -293,43 +303,15 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         return colors
     }
 
-    // Not yet working, using dummy data above
-    private fun getDailyGoalsFromDb() {
-        val firebaseAuth = FirebaseAuth.getInstance().currentUser
-        val userID = firebaseAuth?.uid.toString()
-        databaseReference = FirebaseDatabase.getInstance()
-
-        val dailyGoalRef = databaseReference.getReference("DailyGoals").orderByChild("userID").equalTo(userID)
-        dailyGoalList.clear()
-
-        dailyGoalRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dailyGoalShot in snapshot.children) {
-                    val dailyGoal = dailyGoalShot.getValue(DailyGoal::class.java)
-                    if (dailyGoal != null) {
-//                        val minValue = dailyGoal.minValue.toFloat()
-//                        val maxValue = dailyGoal.maxValue.toFloat()
-                        dailyGoalList.add(dailyGoal)
-                    }
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
-    private fun filterByDate() {
-        val startTime = "01/05/2024"
-        val endTime = "31/05/2024"
-
+    private fun getFilteredDataFromDb() {
         //use this code when you can select the start and end dates
-        //val startTime = startDate.text.toString()
-        //val endTime = endDate.text.toString()
+        val startDate = binding.startDate.text.toString()
+        val endDate = binding.endDate.text.toString()
 
         // Check if start date and end date are not empty
-        if (startTime.isNotEmpty() && endTime.isNotEmpty()) {
-            val startDateMillis = getDateInMillis(startTime)
-            val endDateMillis = getDateInMillis(endTime)
+        if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
+            val startDateMillis = getDateInMillis(startDate)
+            val endDateMillis = getDateInMillis(endDate)
 
             // Check if start date is before end date
             if (startDateMillis <= endDateMillis) {
@@ -346,30 +328,45 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
                         for (dailyGoalShot in snapshot.children) {
                             val dailyGoal = dailyGoalShot.getValue(DailyGoal::class.java)
                             if (dailyGoal != null) {
-//                        val minValue = dailyGoal.minValue.toFloat()
-//                        val maxValue = dailyGoal.maxValue.toFloat()
                                 dailyGoalList.add(dailyGoal)
+
                             }
                         }
 
                         val filteredDailyGoals = dailyGoalList.filter { daily ->
-                            val taskDateMillis = getDateInMillis(daily.currentDate)
-                            taskDateMillis in startDateMillis..endDateMillis
+                            val dailyGoalDateMillis = getDateInMillis(daily.currentDate)
+                            dailyGoalDateMillis in startDateMillis..endDateMillis
                         }
+
+                        if (filteredDailyGoals.isEmpty()) {
+                            Toast.makeText(this@Statistics, "No daily goals with this data range available, charts not updated", Toast.LENGTH_LONG).show()
+                        }
+//                        else if(filteredDailyGoals.any {it.appUsageTime == "00:00:00"})
+//                        {
+//                            Toast.makeText(this@Statistics, "No app usage recorded! Please use the app for longer", Toast.LENGTH_LONG).show()
+//                        }
+                        else {
+                            initialiseLineChart(filteredDailyGoals)
+                            initialiseBarChart(filteredDailyGoals)
+                            Toast.makeText(this@Statistics, "Charts updated", Toast.LENGTH_LONG).show()
+                        }
+
                     }
                     override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
+                        Toast.makeText(this@Statistics, "Failed to retrieve daily goals.", Toast.LENGTH_SHORT).show()
                     }
                 })
-            } else {
-                //showToast("Start date cannot be after end date")
             }
-        } else {
-            //showToast("Please select start and end dates")
+            else {
+                Toast.makeText(this@Statistics, "Start date cannot be after end date", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else {
+            Toast.makeText(this@Statistics, "Please select start and end dates", Toast.LENGTH_SHORT).show()
         }
     }
     private fun getDateInMillis(dateString: String): Long {
-        val pattern = "dd/MM/yyyy"
+        val pattern = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         return try {
             val date = sdf.parse(dateString)
@@ -379,4 +376,62 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
             0
         }
     }
+
+    private fun splitAppUsageIntoHours (appUsage: String) : Float{
+        val parts = appUsage.split(":")
+        val hours = parts[0].toFloat()
+        val minutes = parts[1].toFloat() / 60
+        val seconds = parts[2].toFloat() / 3600
+        val total = hours + minutes + seconds
+        return total
+    }
+
+    private fun datePicker(textView: TextView) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, year, monthOfYear, dayOfMonth ->
+                val date = "$year-${monthOfYear + 1}-$dayOfMonth"
+                textView.text = date
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.setOnShowListener {
+            val dateLayout = it as DatePickerDialog
+            val okButton = dateLayout.getButton(DatePickerDialog.BUTTON_POSITIVE)
+            okButton.setTextColor(Color.BLACK)
+        }
+
+        datePickerDialog.show()
+    }
+
+//    private fun getDailyGoalsFromDb() {
+//        val firebaseAuth = FirebaseAuth.getInstance().currentUser
+//        val userID = firebaseAuth?.uid.toString()
+//        databaseReference = FirebaseDatabase.getInstance()
+//
+//        val dailyGoalRef = databaseReference.getReference("DailyGoals").orderByChild("userID").equalTo(userID)
+//        dailyGoalList.clear()
+//
+//        dailyGoalRef.addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for (dailyGoalShot in snapshot.children) {
+//                    val dailyGoal = dailyGoalShot.getValue(DailyGoal::class.java)
+//                    if (dailyGoal != null) {
+//                        dailyGoalList.add(dailyGoal)
+//                    }
+//                }
+//                initialiseLineChart(dailyGoalList)
+//                initialiseBarChart(dailyGoalList)
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//                Toast.makeText(this@Statistics, "Failed to retrieve daily goals.", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
 }
