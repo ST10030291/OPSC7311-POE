@@ -341,10 +341,10 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
                         if (filteredDailyGoals.isEmpty()) {
                             Toast.makeText(this@Statistics, "No daily goals with this data range available, charts not updated", Toast.LENGTH_LONG).show()
                         }
-//                        else if(filteredDailyGoals.any {it.appUsageTime == "00:00:00"})
-//                        {
-//                            Toast.makeText(this@Statistics, "No app usage recorded! Please use the app for longer", Toast.LENGTH_LONG).show()
-//                        }
+                        else if(filteredDailyGoals.any {it.appUsageTime == "00:00:00"})
+                        {
+                            Toast.makeText(this@Statistics, "No app usage recorded! Please use the app for longer", Toast.LENGTH_LONG).show()
+                        }
                         else {
                             initialiseLineChart(filteredDailyGoals)
                             initialiseBarChart(filteredDailyGoals)
