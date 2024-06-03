@@ -102,6 +102,7 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         val bottomNavigationView = binding.bottomNavigationView
         val fabPopupTray = binding.fabPopupTray
         val searchbtn = binding.searchBtn
+        val timer = binding.timerbtn
 
         // Initialize PopupMenu
         popupMenu = PopupMenu(this, fabPopupTray)
@@ -112,6 +113,9 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
         popupMenu.setOnMenuItemClickListener(this)
         searchbtn.setOnClickListener {
             navigateToFilter()
+        }
+        timer.setOnClickListener {
+            navigateToTimer()
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -195,6 +199,12 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
     private fun navigateToProfile() {
         // Proceed to profile page
         val intent = Intent(this, Profile::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToTimer() {
+        // Proceed to Timer
+        val intent = Intent(this, Timer::class.java)
         startActivity(intent)
     }
 }

@@ -15,9 +15,20 @@
         android:layout_below="@id/linearLayout2"
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
-
         android:backgroundTint="@color/dark_background"
         android:src="@drawable/search_icon" />
+
+
+    <ImageView
+        android:id="@+id/timerbtn"
+        android:layout_width="56dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/linearLayout2"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="74dp"
+        android:backgroundTint="@color/dark_background"
+        android:src="@drawable/timer_clock" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"

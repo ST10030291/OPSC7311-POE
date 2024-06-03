@@ -117,7 +117,6 @@
                     android:layout_height="53dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="42dp"
-                    android:layout_marginEnd="38dp"
                     android:layout_marginBottom="34dp"
                     android:background="@drawable/inputbox"
                     android:clickable="false"
@@ -125,14 +124,14 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/start_date"
-                    android:paddingLeft="24dp"
+                    android:paddingStart="24dp"
+
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-
                     app:layout_constraintBottom_toTopOf="@+id/savebutton"
-                    app:layout_constraintEnd_toStartOf="@+id/endDate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:ignore="MissingConstraints" />
 
                 <EditText
@@ -155,8 +154,10 @@
 
                     app:layout_constraintBottom_toTopOf="@+id/savebutton"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/startDate"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
+                    app:layout_constraintVertical_bias="1.0"
                     tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -89,6 +89,9 @@
     <string name="keys">KEYS</string>
     <string name="line_graph">Line Graph</string>
     <string name="bar_graph">Bar Graph</string>
+    <string name="reset">Reset</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>
