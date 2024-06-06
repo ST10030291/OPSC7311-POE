@@ -5,13 +5,13 @@ import DailyGoalList.dailyGoalList
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.time_compassopsc7311_part1.databinding.ActivityStatisticsBinding
 import com.github.mikephil.charting.charts.BarChart
@@ -23,7 +23,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+
 class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
@@ -43,22 +44,44 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
     private lateinit var databaseReference: FirebaseDatabase
     private lateinit var lineChart : LineChart
     private lateinit var barChart : BarChart
-    private val xValues = listOf("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN")
+    private val daysOfTheWeek = listOf("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 //        getDailyGoalsFromDb()
+        /*
+           This code was taken from an online blog
+           Titled: MPAndroidChart - Change message "No chart data available
+           Uploaded by: Ricky Dev
+           Available at:https://stackoverflow.com/questions/30892275/mpandroidchart-change-message-no-chart-data-available
+           Accessed: 1 June 2024
+        */
+        binding.lineChart1.setNoDataText("Please set a start and end date first then click on search icon")
+        binding.barChart1.setNoDataText("Please set a start and end date first then click on search icon")
 
         startDateTv = binding.startDate
         endDateTv = binding.endDate
         startDateTv.setOnClickListener(this)
         endDateTv.setOnClickListener(this)
 
+        /*
+            The code below was inspired by a Stack overflow post
+            Titled: Checking if string is empty in Kotlin
+            Uploaded by: Pixel Elephant
+            Available at: https://stackoverflow.com/questions/45336954/checking-if-string-is-empty-in-kotlin
+            Accessed: 2 June 2024
+        */
         binding.filterIcon.setOnClickListener {
-            if (startDateTv.text.isEmpty() || endDateTv.text.isEmpty()) {
-                Toast.makeText(this, "Please select a date range for both fields", Toast.LENGTH_SHORT).show()
+            if (startDateTv.text.isEmpty() && endDateTv.text.isEmpty()) {
+                Toast.makeText(this, "Please select a date range for both fields to generate graph", Toast.LENGTH_SHORT).show()
+            }
+            else if (startDateTv.text.isEmpty() && endDateTv.text.isNotEmpty()) {
+                Toast.makeText(this, "Please select a start date to generate graph", Toast.LENGTH_SHORT).show()
+            }
+            else if (startDateTv.text.isNotEmpty() && endDateTv.text.isEmpty()) {
+                Toast.makeText(this, "Please select an end date to generate graph", Toast.LENGTH_SHORT).show()
             }
             else {
                 getFilteredDataFromDb()
@@ -165,6 +188,13 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         val intent = Intent(this, Profile::class.java)
         startActivity(intent)
     }
+    /*
+        The next set of functions were inspired by a GitHub repository
+        Titled: MPAndroidChart
+        Uploaded by: PhilJay
+        Available at: https://github.com/PhilJay/MPAndroidChart
+        Accessed: 31 May 2024
+    */
     private fun initialiseLineChart(entryList: List<DailyGoal>) {
         lineChart = binding.lineChart1
 
@@ -187,6 +217,7 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         yAxis.labelCount = 10
         yAxis.textColor = Color.WHITE
         yAxis.setDrawGridLines(false)
+        yAxis.axisMinimum = 0f
 
         setGraphEntriesUsingDb(entryList)
     }
@@ -194,8 +225,8 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
     private fun setGraphEntriesUsingDb(entryList: List<DailyGoal>){
         val entries1 = ArrayList<Entry>()
         val entries2 = ArrayList<Entry>()
-        var positionInGraph = 0f
         val entries3 = ArrayList<Entry>()
+        var positionInGraph = 0f
 
         for (element in entryList){
             entries1.add(Entry(positionInGraph, element.minValue.toFloat()))
@@ -208,32 +239,58 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
     }
 
     private fun setLineChartDataSet(entries1 : ArrayList<Entry>, entries2 : ArrayList<Entry>, entries3 : ArrayList<Entry>) {
-        val dataSet1 = LineDataSet(entries1, "Minimum daily goal in Hours")
-        dataSet1.setColor(Color.RED)
+        val dataSet1 = LineDataSet(entries1, "Minimum daily goals in hours")
+        dataSet1.color = ContextCompat.getColor(this, R.color.red)
         dataSet1.valueTextColor = Color.WHITE
-        dataSet1.valueTextSize = 16f
+        dataSet1.valueTextSize = 14f
+        dataSet1.lineWidth = 3f
+        dataSet1.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
 
-        val dataSet2 = LineDataSet(entries2, "Maximum daily goal in hours")
-        dataSet2.setColor(Color.MAGENTA)
+        val dataSet2 = LineDataSet(entries2, "Maximum daily goals in hours")
+        dataSet2.color = ContextCompat.getColor(this, R.color.purple)
         dataSet2.valueTextColor = Color.WHITE
-        dataSet2.valueTextSize = 16f
+        dataSet2.valueTextSize = 14f
+        dataSet2.lineWidth = 3f
+        dataSet2.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
 
-        val dataSet3 = LineDataSet(entries3, "Daily app usage in Hours")
-        dataSet3.setColor(Color.CYAN)
+        val dataSet3 = LineDataSet(entries3, "Daily hours spent in app")
+        dataSet3.color = ContextCompat.getColor(this, R.color.blue)
         dataSet3.valueTextColor = Color.WHITE
-        dataSet3.valueTextSize = 16f
+        dataSet3.valueTextSize = 14f
+        dataSet3.lineWidth = 3f
+        dataSet3.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+
+        lineChart.legend.isWordWrapEnabled = true
+
+        lineChart.legend.maxSizePercent = 0.60f
 
         val lineData = LineData(dataSet1, dataSet2, dataSet3)
 
-        lineChart.setNoDataText("Not enough information available to create graph!")
         lineChart.data = lineData
+
+        lineChart.description.isEnabled = false
+
         lineChart.legend.textColor = Color.WHITE
+
+
+
+
+        //lineChart.legend.textSize = 14f
+
+        lineChart.setNoDataText("Not enough information available to create graph!")
 
         lineChart.animateX(300)
 
         lineChart.invalidate()
     }
 
+    /*
+        The next set of functions were taken from an online blog
+        Titled: Android – Create Group BarChart with Kotlin
+        Uploaded by: Chaitanyamunje
+        Available at: https://www.geeksforgeeks.org/android-create-group-barchart-with-kotlin/
+        Accessed: 2 June 2024
+    */
     private fun initialiseBarChart(entryList: List<DailyGoal>) {
         barChart = binding.barChart1
         barChart.axisRight.setDrawLabels(false)
@@ -242,13 +299,25 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
 
         val xAxis = barChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                //Logger.log("WeeklyDistance", "value = " + (value.toInt()))
+                if ((value.toInt()) > -1 && (value.toInt()) < 7) {
+                    return daysOfTheWeek[value.toInt()]
+                }
+                return ""
+            }
+        }
+        //xAxis.valueFormatter = IndexAxisValueFormatter(daysOfTheWeek)
         xAxis.setLabelCount(7)
         xAxis.granularity = 1f
         xAxis.isGranularityEnabled = true
         xAxis.axisLineColor = Color.WHITE
         xAxis.textColor = Color.WHITE
         xAxis.setDrawGridLines(false)
+        xAxis.setCenterAxisLabels(true)
+        xAxis.axisMinimum = 0f
+        xAxis.axisMaximum = barChart.highestVisibleX + 0.25f
 
         val yAxis = barChart.axisLeft
         yAxis.axisMinimum = 0f
@@ -257,52 +326,100 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         yAxis.labelCount = 10
         yAxis.textColor = Color.WHITE
         yAxis.setDrawGridLines(false)
+        yAxis.axisMinimum = 0f
     }
 
     private fun addEntriesForBarChart(entryList: List<DailyGoal>) {
         val entries1 = ArrayList<BarEntry>()
+        val entries2 = ArrayList<BarEntry>()
+        val entries3 = ArrayList<BarEntry>()
         var positionInGraph = 0f
 
         for (element in entryList){
-            entries1.add(BarEntry(positionInGraph, splitAppUsageIntoHours(element.appUsageTime)))
+            entries1.add(BarEntry(positionInGraph, element.minValue.toFloat()))
+            entries2.add(BarEntry(positionInGraph, element.maxValue.toFloat()))
+            entries3.add(BarEntry(positionInGraph, splitAppUsageIntoHours(element.appUsageTime)))
 
             positionInGraph++
         }
 
-        setBarChartDataSet(entries1)
+        setBarChartDataSet(entries1, entries2, entries3)
     }
 
-    private fun setBarChartDataSet(entries1 : ArrayList<BarEntry>){
-        val dataSet1 = BarDataSet(entries1, "Daily hours spent in app")
-        dataSet1.colors = createGraphColorsArray()
+    private fun setBarChartDataSet(entries1 : ArrayList<BarEntry>, entries2 : ArrayList<BarEntry>, entries3 : ArrayList<BarEntry>){
+        val dataSet1 = BarDataSet(entries1, "Minimum daily goals in hours")
+        dataSet1.color = ContextCompat.getColor(this, R.color.red)
         dataSet1.valueTextColor = Color.WHITE
-        dataSet1.valueTextSize = 16f
+        dataSet1.valueTextSize = 14f
 
-        val barData = BarData(dataSet1)
+        val dataSet2 = BarDataSet(entries2, "Maximum daily goals in hours")
+        dataSet2.color = ContextCompat.getColor(this, R.color.purple)
+        dataSet2.valueTextColor = Color.WHITE
+        dataSet2.valueTextSize = 14f
+
+        val dataSet3 = BarDataSet(entries3, "Daily hours spent in app")
+        dataSet3.color = ContextCompat.getColor(this, R.color.blue)
+        dataSet3.valueTextColor = Color.WHITE
+        dataSet3.valueTextSize = 14f
+
+        val barData = BarData(dataSet1, dataSet2, dataSet3)
+
+        val barSpace = 0.06f
+
+        val groupSpace = 0.5f
+
+        barData.barWidth = 0.10f
 
         barChart.data = barData
 
+        barChart.setFitBars(true)
+
         barChart.description.isEnabled = false
 
-        barChart.setNoDataText("Daily hours spent not recorded! Please use the app for at least an hour")
         barChart.legend.textColor = Color.WHITE
-        barChart.legend.textSize = 16f
+
+        barChart.legend.isWordWrapEnabled = true
+
+        barChart.legend.maxSizePercent = 0.65f
+//        barChart.legend.textSize = 14f
+
+        barChart.setVisibleXRangeMaximum(7f)
+
+        barChart.setNoDataText("Daily hours spent not recorded! Please use the app for at least an hour")
+
+        barChart.isHorizontalScrollBarEnabled = true
 
         barChart.animateY(2000)
+
+        barChart.groupBars(0f, groupSpace, barSpace)
 
         barChart.invalidate()
     }
 
-    private fun createGraphColorsArray() : ArrayList<Int> {
-        val colors = ArrayList<Int>()
+    /*
+        This code was taken from an online blog
+        Titled: Setting different colors to bars in MPAndroidChart Bar Chart
+        Uploaded by: Sauvik
+        Available at: https://stackoverflow.com/questions/46947275/setting-different-colors-to-bars-in-mpandroidchart-bar-chart
+        Accessed: 31 May 2024
+    */
+//    private fun createGraphColorsArray() : ArrayList<Int> {
+//        val colors = ArrayList<Int>()
+//
+//        colors.add(ContextCompat.getColor(this, R.color.red))
+//        colors.add(ContextCompat.getColor(this, R.color.purple))
+//        colors.add(ContextCompat.getColor(this, R.color.blue))
+//
+//        return colors
+//    }
 
-        colors.add(ContextCompat.getColor(this, R.color.red))
-        colors.add(ContextCompat.getColor(this, R.color.purple))
-        colors.add(ContextCompat.getColor(this, R.color.blue))
-
-        return colors
-    }
-
+    /*
+        The some of the code for this function was taken from an online blog
+        Titled: Retrieving Data
+        Uploaded by: Google
+        Available at: https://firebase.google.com/docs/database/admin/retrieve-data
+        Accessed: 29 May 2024
+     */
     private fun getFilteredDataFromDb() {
         //use this code when you can select the start and end dates
         val startDate = binding.startDate.text.toString()
@@ -339,11 +456,18 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
                         }
 
                         if (filteredDailyGoals.isEmpty()) {
-                            Toast.makeText(this@Statistics, "No daily goals with this data range available, charts not updated", Toast.LENGTH_LONG).show()
+                            binding.lineChart1.clear()
+                            binding.barChart1.clear()
+                            binding.lineChart1.setNoDataText("No daily goals with this data range exist, please set a different date range")
+                            binding.barChart1.setNoDataText("No daily goals with this data range available, please set a different date range")
+                            binding.lineChart1.invalidate()
+                            binding.barChart1.invalidate()
                         }
                         else if(filteredDailyGoals.any {it.appUsageTime == "00:00:00"})
                         {
-                            Toast.makeText(this@Statistics, "No app usage recorded! Please use the app for longer", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@Statistics, "One or more daily goals do not have daily app usage recorded!", Toast.LENGTH_LONG).show()
+                            initialiseLineChart(filteredDailyGoals)
+                            initialiseBarChart(filteredDailyGoals)
                         }
                         else {
                             initialiseLineChart(filteredDailyGoals)
@@ -362,7 +486,7 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
             }
         }
         else {
-            Toast.makeText(this@Statistics, "Please select start and end dates", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@Statistics, "Please select a start and end date", Toast.LENGTH_SHORT).show()
         }
     }
     private fun getDateInMillis(dateString: String): Long {
@@ -377,6 +501,13 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         }
     }
 
+    /*
+        A part of this code was taken from a Stack overflow post
+        Uploaded by: JK Ly
+        Titled: How could I split a String into an array in Kotlin?
+        Available at: https://stackoverflow.com/questions/46038476/how-could-i-split-a-string-into-an-array-in-kotlin
+        Accessed: 30 May 2024
+     */
     private fun splitAppUsageIntoHours (appUsage: String) : Float{
         val parts = appUsage.split(":")
         val hours = parts[0].toFloat()
@@ -386,6 +517,13 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
         return total
     }
 
+    /*
+        This code was taken from an online blog
+        Titled: DatePicker in Kotlin
+        Uploaded by: Praveenruhil
+        Available at: https://www.geeksforgeeks.org/datepicker-in-kotlin/
+        Accessed: 1 June 2024
+     */
     private fun datePicker(textView: TextView) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -406,7 +544,6 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
             val okButton = dateLayout.getButton(DatePickerDialog.BUTTON_POSITIVE)
             okButton.setTextColor(Color.BLACK)
         }
-
         datePickerDialog.show()
     }
 
@@ -434,4 +571,5 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
 //            }
 //        })
 //    }
+
 }
