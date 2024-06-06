@@ -463,6 +463,12 @@ class Statistics : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuIt
                             binding.lineChart1.invalidate()
                             binding.barChart1.invalidate()
                         }
+                        else if(filteredDailyGoals.size < 3){
+                            initialiseBarChart(filteredDailyGoals)
+                            binding.lineChart1.clear()
+                            binding.lineChart1.setNoDataText("Insufficient data. Set min and max values and use app for at least 3 days")
+                            binding.lineChart1.invalidate()
+                        }
                         else if(filteredDailyGoals.any {it.appUsageTime == "00:00:00"})
                         {
                             Toast.makeText(this@Statistics, "One or more daily goals do not have daily app usage recorded!", Toast.LENGTH_LONG).show()
