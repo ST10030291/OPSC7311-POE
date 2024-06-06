@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="130dp"
             android:fontFamily="sans-serif"
-            android:text="@string/tasks_available"
+            android:text="Focus Mode"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"/>
@@ -116,7 +116,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
-                android:text="@string/start"
+                android:text="Focus Mode"
                 android:textColor="@color/black"
                 app:icon="@drawable/play_pause_icon"
                 app:iconTint="@color/black" />

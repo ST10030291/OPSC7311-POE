@@ -380,11 +380,32 @@ class AddTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemC
         val timeDifference = (endTimeValue.time - startTimeValue.time)
         //saveImage()
         val taskImg = imageUrl.toString()
-        if(taskName.isEmpty() || description.isEmpty() || category.isEmpty() || taskDate.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || taskImg.equals(null)){
-            Toast.makeText(this, "Invalid, enter the required details to add a task successfully.", Toast.LENGTH_SHORT).show()
+        if(taskName.isEmpty()){
+            Toast.makeText(this, "Invalid, enter task name to add a task successfully.", Toast.LENGTH_SHORT).show()
+        }
+        else if(description.isEmpty()){
+            Toast.makeText(this, "Invalid, enter a description to add a task successfully.", Toast.LENGTH_SHORT).show()
+        }
+        else if(category.isEmpty()){
+            Toast.makeText(this, "Invalid, select a category to add a task successfully.", Toast.LENGTH_SHORT).show()
+        }
+        else if(taskDate.isEmpty()){
+            Toast.makeText(this, "Invalid, enter a task date to add a task successfully.", Toast.LENGTH_SHORT).show()
+        }
+        else if(startTime.isEmpty()){
+            Toast.makeText(this, "Invalid, enter a start time to add a task successfully.", Toast.LENGTH_SHORT).show()
+        }
+        else if(endTime.isEmpty()){
+            Toast.makeText(this, "Invalid, enter an end time to add a task successfully.", Toast.LENGTH_SHORT).show()
+        }
+        else if(taskImg.equals(null)){
+            Toast.makeText(this, "Invalid, upload an image to add a task successfully.", Toast.LENGTH_SHORT).show()
         }
         else if(endTime < startTime){
             Toast.makeText(this, "Invalid, time cannot be before start time. Please enter a valid time.", Toast.LENGTH_SHORT).show()
+        }
+        else if(taskName.isEmpty() || description.isEmpty() || category.isEmpty() || taskDate.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || taskImg.equals(null)){
+            Toast.makeText(this, "Invalid, enter the required details.", Toast.LENGTH_SHORT).show()
         }
         else {
             val firebaseAuth = FirebaseAuth.getInstance().currentUser

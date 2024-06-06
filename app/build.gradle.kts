@@ -47,6 +47,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx:21.0.0")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("nl.dionsegijn:konfetti-xml:2.0.4")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.activity:activity:1.8.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     testImplementation("junit:junit:4.13.2")
