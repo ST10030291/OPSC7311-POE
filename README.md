@@ -21,7 +21,7 @@ These are details(Email, Password) of already registered users to login:
   (avish1@gmail.com, avish123),
   (kaushildajee@gmail.com, kaushil),
   (tivolan@gmail.com, tivolan),
-  (eben@gmail.com, eben)
+  (eben@gmail.com, @H3ll0&By3)
 
 On the Home page you will be greeted by a message with your desired username,
 A tracker will start to monitor the time spent using the app on the profile page.
@@ -46,9 +46,8 @@ Worked on the Login/SignUp pages, Home page, Game page, Profile page as well as 
 staying logged in to the app if already authenticated and ability to sign out, filtering tasks and categories and alot of focus on the UI. Planning and Design for theory.
 ### Kaushil Dajee, ST10079389
 Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page. Planning and Design for theory. 
-
 ### Eben Nkulu Mwema, ST10091324
-
+Worked on everything involving the statistics page, bug bounties and recorded the demostration video
 ### Tivolan Velayadum, ST10183038
 
 Thank you for using our application :) 
