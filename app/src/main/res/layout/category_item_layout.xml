@@ -6,13 +6,25 @@
     android:layout_height="80dp"
     app:cardBackgroundColor="@color/dark_background">
 
-    <Button
-        android:id="@+id/CategoryBtn"
-        android:layout_width="385dp"
-        android:layout_height="65dp"
-        android:text="Category"
-        android:textColor="@color/black"
-        android:textSize="34sp"
-        app:strokeColor="@color/black"
-        app:strokeWidth="3dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/CategoryBtn"
+            android:layout_width="360dp"
+            android:layout_height="65dp"
+            android:text="@string/category1"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            app:strokeColor="@color/black"
+            app:strokeWidth="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.5"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

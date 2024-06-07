@@ -10,18 +10,70 @@
     <!-- Bottom Navigation View -->
 
     <!-- Floating Action Button -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/light_background"
+        app:itemTextColor="@color/grey"
+        app:menu="@menu/bottom_navigation_menu" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPopupTray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNavigationView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="-25dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/plus_icon" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/dark_background"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="112dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="-20dp"
+            android:background="@color/dark_background"
+            android:src="@drawable/time_compass_icon" />
+
+        <TextView
+            android:layout_width="218dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:text="@string/add_task"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1000dp">
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigationView"
+        android:layout_below="@id/linearLayout"
+        android:layout_marginBottom="40dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/infolayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_corners">
 
             <ImageView
@@ -37,8 +89,8 @@
                 android:id="@+id/galleryButton"
                 android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/dark_grey"
                 android:text="@string/gallery"
                 android:textColor="@color/black"
@@ -51,8 +103,8 @@
                 android:id="@+id/cameraButton"
                 android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="40dp"
                 android:backgroundTint="@color/dark_grey"
                 android:text="Camera"
                 android:textColor="@color/black"
@@ -102,7 +154,7 @@
                 android:layout_width="179dp"
                 android:layout_height="62dp"
                 android:layout_marginTop="56dp"
-                android:layout_marginEnd="113dp"
+                android:layout_marginEnd="104dp"
                 android:layout_marginBottom="21dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/blue"
@@ -112,6 +164,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintVertical_bias="1.0"
                 app:strokeColor="@color/black"
                 app:strokeWidth="4dp" />
 
@@ -184,54 +237,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/light_background"
-        app:itemTextColor="@color/grey"
-        app:menu="@menu/bottom_navigation_menu" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPopupTray"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottomNavigationView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="176dp"
-        android:layout_marginBottom="-25dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/plus_icon" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/dark_background"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <ImageView
-            android:layout_width="112dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="-20dp"
-            android:background="@color/dark_background"
-            android:src="@drawable/time_compass_icon" />
-
-        <TextView
-            android:layout_width="218dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:fontFamily="sans-serif"
-            android:paddingLeft="20dp"
-            android:text="@string/add_task"
-            android:textColor="@color/white"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 
 </RelativeLayout>

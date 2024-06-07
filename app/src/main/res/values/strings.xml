@@ -92,6 +92,7 @@
     <string name="reset">Reset</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="category1">Category</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>
