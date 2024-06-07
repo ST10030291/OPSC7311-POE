@@ -43,9 +43,9 @@ the ability for users to have a profile picture so in total we added 3 features.
 ## Who implemented what ?
 ### Avish Judnarain, ST10030291
 Worked on the Login/SignUp pages, Home page, Game page, Profile page as well as setting daily goals, animation when the app starts, viewing daily goal progress, timer feature, 
-staying logged in to the app if already authenticated and ability to sign out, filtering tasks and categories and alot of focus on the UI. 
+staying logged in to the app if already authenticated and ability to sign out, filtering tasks and categories and alot of focus on the UI. Planning and Design for theory.
 ### Kaushil Dajee, ST10079389
-Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page
+Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page. Planning and Design for theory. 
 
 ### Eben Nkulu Mwema, ST10091324
 
