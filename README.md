@@ -37,6 +37,7 @@ You will also be able to View these after creating them and also filter them aft
 Worked on the Login/SignUp pages, Home page, Game page, Profile page as well as setting daily goals, viewing daily goal progress, timer feature, 
 staying logged in to the app if already authenticated and ability to sign out, filtering tasks and categories and alot of focus on the UI.
 ### Kaushil Dajee, ST10079389
+Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page
 
 ### Eben Nkulu Mwema, ST10091324
 
