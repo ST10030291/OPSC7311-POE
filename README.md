@@ -8,7 +8,7 @@
 
 ## Updates since Part 2
 We have incorporated all feedback from part 2 such as moving features from the home page to keep it less congested and took all of sirs advice.
-The application now entirely uses Google firebase as the database to store data and lists have been removed. Data is securely saved such as passwords and no user can see another users data. We have added features like setting a profile picture for a user, a timer to keep track of your time and ability to view visual progress of daily goals. The Game page is now up and running which features a leaderboard ranking various users based on how much they have used the app, The stats page is also implemented wonderfully with not just one but two graphs being a bar and line graph. We have also massively updated the UI of the application as a big focus of ours to make the app more user friendly.
+The application now entirely uses Google firebase as the database to store data and lists have been removed. Data is securely saved such as passwords and no user can see another users data. We have added features like setting a profile picture for a user, a timer to keep track of your time and ability to view visual progress of daily goals. The Game page is now up and running which features a leaderboard ranking various users based on how much they have used the app, The stats page is also implemented wonderfully with not just one but two graphs being a bar and line graph. We have also massively updated the UI of the application as a big focus of ours to make the app more user friendly. We are using 3 firebase products, firebase authentication for the login and sign up for accounts, the real time database for categories, tasks, daily goal, points and profile, and we used firebase storage to save task images and the profile pictures image.
 
 ## Installation
 Clone this repository to your local machine using git clone <repository_url>.
@@ -21,7 +21,13 @@ These are details(Email, Password) of already registered users to login:
   (avish@gmail.com, avish),
   (kaushil@gmail.com, kaushil),
   (tivolan@gmail.com, tivolan),
-  (eben@gmail.com, eben)1
+  (eben@gmail.com, eben)
+  
+## Feature 1
+Feature 1 is the game page, which works based on the number of tasks and categories you have, for every task you will get 100 points and for every category you will get 50 points. And it shows in descending order based on the user with the most points as it read our 
+real time database and disaplys the correct data according to the number of points the users have.
+
+## Feature 2
 
 On the Home page you will be greeted by a message with your desired username,
 A tracker will start to monitor the time spent using the app on the profile page.
