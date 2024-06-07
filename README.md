@@ -18,16 +18,10 @@ Build and run the app on your Android device or emulator.
 ## How to use our App
 When you open the app you will be required to either Sign Up for a new account or Log In. 
 These are details(Email, Password) of already registered users to login:
-  (avish@gmail.com, avish),
+  (avish1@gmail.com, avish123),
   (kaushildajee@gmail.com, kaushil),
   (tivolan@gmail.com, tivolan),
   (eben@gmail.com, eben)
-  
-## Feature 1
-Feature 1 is the game page, which works based on the number of tasks and categories you have, for every task you will get 100 points and for every category you will get 50 points. And it shows in descending order based on the user with the most points as it read our 
-real time database and disaplys the correct data according to the number of points the users have.
-
-## Feature 2
 
 On the Home page you will be greeted by a message with your desired username,
 A tracker will start to monitor the time spent using the app on the profile page.
@@ -37,11 +31,19 @@ set a daily goal for the amount of hours you wish to spend using the app which r
 If you want you can explore the app via the bottom navigation bar to the Home, Game, Stats and Profile Pages.
 This is also where you can add a new Category or Task by clicking the plus icon and following the steps which will save these in Google firebase.
 You will also be able to View these after creating them and also filter them after creation.
+  
+## Feature 1
+Feature 1 is the game page, which works based on the number of tasks and categories you have, for every task you will get 100 points and for every category you will get 50 points. And it shows in descending order based on the user with the most points as it read our 
+real time database and disaplys the correct data according to the number of points the users have.
+
+## Feature 2
+For Feature 2 we added a timer to help user track their time while completing tasks, we also added another graph ontop of one of our graphs and we also added
+the ability for users to have a profile picture so in total we added 3 features.
 
 ## Who implemented what ?
 ### Avish Judnarain, ST10030291
-Worked on the Login/SignUp pages, Home page, Game page, Profile page as well as setting daily goals, viewing daily goal progress, timer feature, 
-staying logged in to the app if already authenticated and ability to sign out, filtering tasks and categories and alot of focus on the UI.
+Worked on the Login/SignUp pages, Home page, Game page, Profile page as well as setting daily goals, animation when the app starts, viewing daily goal progress, timer feature, 
+staying logged in to the app if already authenticated and ability to sign out, filtering tasks and categories and alot of focus on the UI. 
 ### Kaushil Dajee, ST10079389
 Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page
 
