@@ -46,7 +46,7 @@ staying logged in to the app if already authenticated and ability to sign out, f
 ### Kaushil Dajee, ST10079389
 Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page. Planning and Design for theory. And added the delete task feature. 
 ### Eben Nkulu Mwema, ST10091324
-Worked on everything involving the statistics page, bug bounties and recorded the demostration video
+Worked on everything involving the statistic's page, bug bounties and recorded the demostration videos
 ### Tivolan Velayadum, ST10183038
 
 Thank you for using our application :) 
