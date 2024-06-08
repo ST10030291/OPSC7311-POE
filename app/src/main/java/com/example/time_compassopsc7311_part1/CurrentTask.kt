@@ -6,10 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.example.time_compassopsc7311_part1.databinding.ActivityCurrentTaskBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -22,6 +29,9 @@ import java.util.Locale
 class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var popupMenu: PopupMenu
+    private lateinit var delete : ImageButton
+    private lateinit var edit : ImageButton
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +47,7 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         val taskEnd = intent.getStringExtra("taskEnd")
         val taskDate =intent.getStringExtra("taskDate")
         val taskImgPath = intent.getStringExtra("taskImg")
+        var taskID = intent.getStringExtra("taskID").toString()
         //val taskImg = Uri.parse(taskImgPath)
 
 
@@ -47,6 +58,27 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
         binding.timeDisplay.setText(taskStart + " - " + taskEnd)
         Picasso.get().load(taskImgPath).into(binding.imageView2)
         //binding.imageView2.setImageURI(taskImg)
+        delete = findViewById(R.id.deleteButton)
+
+        delete.setOnClickListener {
+            val artDialogBuilder = AlertDialog.Builder(this@CurrentTask)
+
+            artDialogBuilder.setMessage("Are you sure you want to delete this task?")
+            artDialogBuilder.setTitle("Confirm")
+            artDialogBuilder.setCancelable(false)
+
+            artDialogBuilder.setPositiveButton("Yes"){_,_ ->
+                deleteTask(taskID)
+            }
+            artDialogBuilder.setNegativeButton("No"){_,_ ->
+                Toast.makeText(this, "Cancelled Delete", Toast.LENGTH_SHORT).show()
+            }
+            val alertDialogBox = artDialogBuilder.create()
+            alertDialogBox.show()
+            alertDialogBox.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.black))
+            alertDialogBox.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.black))
+        }
+
 
 
         // Get references to views using view binding
@@ -87,6 +119,16 @@ class CurrentTask : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuI
             }
         }
     }
+
+
+    private fun deleteTask(taskID: String) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Tasks")
+        databaseReference.child(taskID).removeValue().addOnSuccessListener {
+            val intent = Intent(this, TaskAvailable::class.java)
+            startActivity(intent)
+        }
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {

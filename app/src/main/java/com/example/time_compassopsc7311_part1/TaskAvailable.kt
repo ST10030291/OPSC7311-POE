@@ -66,6 +66,7 @@ class TaskAvailable : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMen
                     intent.putExtra("taskEnd", taskList.endTime)
                     intent.putExtra("taskDate", taskList.taskDate)
                     intent.putExtra("taskImg", taskList.taskImg)
+                    intent.putExtra("taskID", taskList.taskID)
                     startActivity(intent)
                 }
 
