@@ -44,7 +44,7 @@ For Feature 2 we added a timer to help user track their time while completing ta
 Worked on the Login/SignUp pages, Home page, Game page, Profile page as well as setting daily goals, animation when the app starts, viewing daily goal progress, timer feature, 
 staying logged in to the app if already authenticated and ability to sign out, filtering tasks and categories and alot of focus on the UI. Planning and Design for theory.
 ### Kaushil Dajee, ST10079389
-Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page. Planning and Design for theory. 
+Worked on the Add Category, View Category, Add Task, View Task, Filter Tasks, Game Page, adding a profile picture to the profile and helped with mostly back end features such as the confetti effect for the game page. Planning and Design for theory. And added the delete task feature. 
 ### Eben Nkulu Mwema, ST10091324
 Worked on everything involving the statistics page, bug bounties and recorded the demostration video
 ### Tivolan Velayadum, ST10183038
