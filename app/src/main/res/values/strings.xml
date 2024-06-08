@@ -93,6 +93,8 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="category1">Category</string>
+    <string name="enter_minimum_hours">Enter Minimum Hours</string>
+    <string name="enter_maximum_hours">Enter Maximum Hours</string>
     <string-array name="categories">
         <item>PROG</item>
         <item>CLDV</item>
