@@ -37,8 +37,7 @@ Feature 1 is the game page, which works based on the number of tasks and categor
 real time database and disaplys the correct data according to the number of points the users have.
 
 ## Feature 2
-For Feature 2 we added a timer to help user track their time while completing tasks, we also added another graph ontop of one of our graphs and we also added
-the ability for users to have a profile picture so in total we added 3 features.
+For Feature 2 we added a timer to help user track their time while completing tasks, we added a delete feature for tasks when ou view tasks, click the task and it will take you to the current task and there will be a delete icon for you to delete a task if you want to and we added another feature which is the ability for users to have a profile picture so in total we added 3 features.
 
 ## Who implemented what ?
 ### Avish Judnarain, ST10030291
