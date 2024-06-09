@@ -7,7 +7,7 @@
 - Eben Nkulu Mwema, ST10091324
 
 ## Updates since Part 2
-We have incorporated all feedback from part 2 such as moving features from the home page to keep it less congested and took all of sirs advice.
+We have incorporated all feedback from part 2 such as moving features from the home page to keep it less congested and took all of sirs advice. We also included more detailed error handling.
 The application now entirely uses Google firebase as the database to store data and lists have been removed. Data is securely saved such as passwords and no user can see another users data. We have added features like setting a profile picture for a user, a timer to keep track of your time and ability to view visual progress of daily goals. The Game page is now up and running which features a leaderboard ranking various users based on how much they have used the app, The stats page is also implemented wonderfully with not just one but two graphs being a bar and line graph. We have also massively updated the UI of the application as a big focus of ours to make the app more user friendly. We are using 3 firebase products, firebase authentication for the login and sign up for accounts, the real time database for categories, tasks, daily goal, points and profile, and we used firebase storage to save task images and the profile pictures image.
 
 ## Installation
@@ -37,7 +37,7 @@ Feature 1 is the game page, which works based on the number of tasks and categor
 real time database and disaplys the correct data according to the number of points the users have.
 
 ## Feature 2
-For Feature 2 we added a timer to help user track their time while completing tasks, we added a delete feature for tasks when ou view tasks, click the task and it will take you to the current task and there will be a delete icon for you to delete a task if you want to and we added another feature which is the ability for users to have a profile picture so in total we added 3 features.
+For Feature 2 we added a timer to help user track their time while completing tasks, we added a delete feature for tasks when our view tasks, click the task and it will take you to the current task and there will be a delete icon for you to delete a task if you want to and we added another feature which is the ability for users to have a profile picture so in total we added 3 features.
 
 ## Who implemented what ?
 ### Avish Judnarain, ST10030291
